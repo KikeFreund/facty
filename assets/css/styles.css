@@ -7,7 +7,10 @@
 
 /* Sobrescribir colores de Bootstrap con mayor especificidad */
 .btn.btn-primary,
-
+.btn-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
 .btn.btn-primary:hover,
 .btn-primary:hover {
     background-color: var(--bs-primary-dark) !important;
@@ -27,10 +30,7 @@
     border-color: var(--bs-primary-dark) !important;
 }
 
-.text-primary,
-.text-primary:hover {
-    color: var(--bs-primary) !important;
-}
+
 .bg-primary,
 .bg-primary:hover {
     background-color: var(--bs-primary) !important;
@@ -180,7 +180,14 @@
 
 /* General styles (from header.php) */
 
-
+/* Estilos para enlaces */
+a:not(.btn):not(.nav-link):not(.navbar-brand) {
+    color: var(--bs-primary) !important;
+    transition: all 0.3s ease;
+}
+a:not(.btn):not(.nav-link):hover {
+    color: var(--bs-primary-dark) !important;
+}
 
 /* Estilos para inputs */
 /* Already covered in login styles, but keeping the focus style here for consistency */
