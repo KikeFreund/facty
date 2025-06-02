@@ -15,7 +15,7 @@ require('route.php');
 
   <div class="text-center">
   <img src="assets/img/gato.jpg" alt="" class="img-fluid">
-    <h1 class="display-1 fw-bold text-primary">  <i class="fas fa-file-invoice"></i>404</h1>
+    <h1 class="display-1 fw-bold text-primary"> 404</h1>
     <p class="fs-3"> <span class="text-danger">Ups!</span> Página no encontrada.</p>
     <p class="lead">
       La página que buscas no existe o fue movida.
