@@ -183,7 +183,7 @@
 /* General styles (from header.php) */
 
 /* Estilos para enlaces */
-a:not(.btn):not(.nav-link) {
+a:not(.btn):not(.nav-link):not(.navbar-brand) {
     color: var(--bs-primary) !important;
     transition: all 0.3s ease;
 }
