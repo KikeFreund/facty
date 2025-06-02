@@ -1,6 +1,5 @@
 <?php
- require('assets/php/conexiones/conexionMySqli.php');
-
+require('assets/php/conexiones/conexionMySqli.php');
 
 // Función para generar token seguro
 function generarTokenSeguro($longitud = 64) {
@@ -51,95 +50,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Facturación</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            width: 100%;
-            max-width: 420px;
-            backdrop-filter: blur(10px);
-        }
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .login-header i {
-            font-size: 3rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-        .login-header h2 {
-            color: #2d3748;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .login-header p {
-            color: #718096;
-            font-size: 0.95rem;
-        }
-        .form-floating {
-            margin-bottom: 1rem;
-        }
-        .form-floating input {
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            padding: 1rem 0.75rem;
-        }
-        .form-floating input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        }
-        .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 8px;
-            padding: 0.8rem;
-            font-weight: 600;
-            width: 100%;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        .error-message {
-            background-color: #fff5f5;
-            color: #c53030;
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            text-align: center;
-            border: 1px solid #feb2b2;
-            display: none;
-        }
-        .error-message.show {
-            display: block;
-        }
-    </style>
-</head>
-<body>
+<style>
+    .login-section {
+        min-height: calc(100vh - 200px); /* Ajusta según el alto de tu nav y footer */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 420px;
+        backdrop-filter: blur(10px);
+    }
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .login-header i {
+        font-size: 3rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+    }
+    .login-header h2 {
+        color: #2d3748;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    .login-header p {
+        color: #718096;
+        font-size: 0.95rem;
+    }
+    .form-floating {
+        margin-bottom: 1rem;
+    }
+    .form-floating input {
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        padding: 1rem 0.75rem;
+    }
+    .form-floating input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    .btn-login {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 0.8rem;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    .error-message {
+        background-color: #fff5f5;
+        color: #c53030;
+        padding: 0.75rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        text-align: center;
+        border: 1px solid #feb2b2;
+        display: none;
+    }
+    .error-message.show {
+        display: block;
+    }
+</style>
+
+<div class="login-section">
     <div class="login-container">
         <div class="login-header">
             <i class="fas fa-file-invoice"></i>
@@ -173,27 +161,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </button>
         </form>
     </div>
+</div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        function generarDeviceId() {
-            return btoa(navigator.userAgent + screen.width + screen.height + Math.random()).substring(0, 64);
-        }
+<script>
+    function generarDeviceId() {
+        return btoa(navigator.userAgent + screen.width + screen.height + Math.random()).substring(0, 64);
+    }
 
-        function leerCookie(nombre) {
-            let match = document.cookie.match(new RegExp('(^| )' + nombre + '=([^;]+)'));
-            return match ? match[2] : null;
-        }
+    function leerCookie(nombre) {
+        let match = document.cookie.match(new RegExp('(^| )' + nombre + '=([^;]+)'));
+        return match ? match[2] : null;
+    }
 
-        let deviceId = leerCookie('device_id');
-        if (!deviceId) {
-            deviceId = generarDeviceId();
-            document.cookie = `device_id=${deviceId}; path=/; max-age=31536000; SameSite=Strict`;
-        }
+    let deviceId = leerCookie('device_id');
+    if (!deviceId) {
+        deviceId = generarDeviceId();
+        document.cookie = `device_id=${deviceId}; path=/; max-age=31536000; SameSite=Strict`;
+    }
 
-        document.getElementById('device_id').value = deviceId;
-    </script>
-</body>
-</html>
+    document.getElementById('device_id').value = deviceId;
+</script>
