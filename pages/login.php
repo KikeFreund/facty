@@ -1,6 +1,6 @@
 <?php
 if (isset($_SESSION['tipoUsuario'])) {
-    header("Location: index.php");
+    header("Location: index");
     exit;
 }else{
  
