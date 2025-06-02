@@ -1,7 +1,7 @@
 <?php
 // index.php
 require('header.php');
-require 'pages/nav.php';
+require('pages/nav.php');
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = trim($uri, '/');
 
