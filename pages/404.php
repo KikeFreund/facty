@@ -1,3 +1,16 @@
+
+<?php
+require('route.php');
+
+
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
 
   <div class="text-center">
@@ -10,3 +23,4 @@
   </div>
 
 </body>
+</html>
