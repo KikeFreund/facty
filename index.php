@@ -17,6 +17,7 @@ switch ($uri) {
         case 'login':
             require 'pages/login.php';
             break;
+            
             case 'logout':
                 header("Location: funciones/logout.php");
                 break;
