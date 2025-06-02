@@ -11,7 +11,7 @@
 
         <!-- Aquí puedes agregar más contenido según necesites -->
         <div class="row">
-            <a href="">
+            <a class="text-decoration-none" href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             </a>
-            <a href="">
+            <a class="text-decoration-none" href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
@@ -31,7 +31,7 @@
                 </div>
                 </div>
             </a>
-            <a href="">
+            <a class="text-decoration-none" href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
