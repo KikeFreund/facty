@@ -57,6 +57,7 @@
     gap: 0.5rem;
 }
 .navbar-brand i {
+    color: rgba(255, 255, 255, 0.9) !important;
     font-size: 1.6rem;
 }
 .nav-link {
