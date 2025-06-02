@@ -48,7 +48,7 @@
     background: var(--bs-primary);
     box-shadow: 0 2px 10px rgba(var(--bs-primary-rgb), 0.2);
 }
-.navbar-brand {
+.navbar .navbar-brand {
     font-weight: 600;
     font-size: 1.4rem;
     color: white !important;
