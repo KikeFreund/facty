@@ -30,10 +30,7 @@
     border-color: var(--bs-primary-dark) !important;
 }
 
-.text-primary,
-.text-primary:hover {
-    color: var(--bs-primary) !important;
-}
+
 .bg-primary,
 .bg-primary:hover {
     background-color: var(--bs-primary) !important;
