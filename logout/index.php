@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .hero {
-            background: url('assets/img/conta') no-repeat center center;
+            background: url('assets/img/laptop.jpg') no-repeat center center;
             background-size: cover;
             height: 300px;
             color: white;
@@ -48,7 +48,7 @@
         <!-- Contenido adicional -->
         <div class="row mt-5">
             <div class="col-md-6">
-                <img src="assets/img/robot" class="img-fluid rounded shadow" alt="Facturación electrónica">
+                <img src="assets/img/papeles.jpg" class="img-fluid rounded shadow" alt="Facturación electrónica">
             </div>
             <div class="col-md-6">
                 <div class="info-box">
