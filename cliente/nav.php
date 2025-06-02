@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'login') ? 'active' : ''; ?>" href="/logout">
+                    <a class="nav-link <?php echo ($uri === 'login') ? 'active' : ''; ?>" href="funciones/logout.php">
                         <i class="fas fa-sign-in-alt me-1"></i>Cerrar sesión
                     </a>
                 </li>
