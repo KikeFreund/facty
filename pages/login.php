@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION['id_usuario'])) {
+if (isset($_SESSION['tipoUsuario'])) {
     header("Location: index.php");
     exit;
 }else{
