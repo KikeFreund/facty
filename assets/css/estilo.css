@@ -182,6 +182,14 @@
 
 /* General styles (from header.php) */
 
+/* Estilos para enlaces */
+a:not(.btn):not(.nav-link) {
+    color: var(--bs-primary) !important;
+    transition: all 0.3s ease;
+}
+a:not(.btn):not(.nav-link):hover {
+    color: var(--bs-primary-dark) !important;
+}
 
 /* Estilos para inputs */
 /* Already covered in login styles, but keeping the focus style here for consistency */
