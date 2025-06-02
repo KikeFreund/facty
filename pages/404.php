@@ -11,7 +11,7 @@ require('route.php');
 <!DOCTYPE html>
 <html lang="es">
 
-<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+<body class="">
 
   <div class="text-center">
     <h1 class="display-1 fw-bold text-danger">404</h1>
