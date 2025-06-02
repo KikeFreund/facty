@@ -23,26 +23,30 @@
                 </a>
             </div>
            
-            <a class="text-decoration-none" href="">
+           
             <div class="col-md-4 mb-4">
+            <a class="text-decoration-none" href="">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-cogs me-2"></i>Mis Servicios</h5>
                         <p class="card-text">Consulta y administra los servicios contratados.</p>
                     </div>
                 </div>
-                </div>
             </a>
-            <a class="text-decoration-none" href="">
+
+                </div>
+          
             <div class="col-md-4 mb-4">
+            <a class="text-decoration-none" href="">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-file-invoice me-2"></i>Facturas</h5>
                         <p class="card-text">Accede a tu historial de facturas y pagos.</p>
                     </div>
                 </div>
+                </a>
             </div>
-            </a>
+            
         </div>
     </div>
 
