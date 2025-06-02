@@ -27,3 +27,4 @@ switch ($uri) {
         echo "Página no encontrada.";
         break;
 }
+require($ruta."/footer.php");

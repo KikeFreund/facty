@@ -14,9 +14,9 @@ require('route.php');
 
  <?php
  
- require($ruta."/nav.php");
+
 require($ruta."/index.php");
-require($ruta."/footer.php");
+
  ?>
 
 
