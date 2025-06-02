@@ -21,6 +21,6 @@ require('route.php');
     </p>
     <a href="/index" class="btn btn-primary">Volver al inicio</a>
   </div>
-
+<br>
 </body>
 </html>
