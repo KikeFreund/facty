@@ -1,7 +1,7 @@
 <style>
     .navbar {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background: var(--bs-primary);
+        box-shadow: 0 2px 10px rgba(var(--bs-primary-rgb), 0.2);
     }
     .navbar-brand {
         font-weight: 600;
@@ -23,7 +23,7 @@
     }
     .nav-link:hover {
         color: white !important;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.15);
         transform: translateY(-1px);
     }
     .nav-link.active {

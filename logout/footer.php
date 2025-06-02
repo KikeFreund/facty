@@ -1,9 +1,10 @@
 <style>
     .footer {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--bs-primary);
         color: white;
         padding: 1.5rem 0;
         margin-top: auto;
+        box-shadow: 0 -2px 10px rgba(var(--bs-primary-rgb), 0.2);
     }
     .footer p {
         margin: 0;
@@ -20,7 +21,7 @@
     <div class="container">
         <p>
             <i class="fas fa-copyright"></i>
-            <?php echo date('Y'); ?> Facturación | Todos los derechos reservados
+            <?php echo date('Y'); ?> FactyFlow | Todos los derechos reservados
         </p>
     </div>
 </footer>
