@@ -11,16 +11,18 @@
 
         <!-- Aquí puedes agregar más contenido según necesites -->
         <div class="row">
-            <a class="text-decoration-none" href="">
+            
             <div class="col-md-4 mb-4">
+            <a class="text-decoration-none" href="">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-info-circle me-2"></i>Información Personal</h5>
                         <p class="card-text">Gestiona tu información personal y datos de contacto.</p>
                     </div>
                 </div>
+                </a>
             </div>
-            </a>
+           
             <a class="text-decoration-none" href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
