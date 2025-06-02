@@ -1,4 +1,9 @@
 <?php
+if (isset($_SESSION['id_usuario'])) {
+    header("Location: index.php");
+    exit;
+}else{
+ 
 require('assets/php/conexiones/conexionMySqli.php');
 
 // Función para generar token seguro
@@ -104,3 +109,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     document.getElementById('device_id').value = deviceId;
 </script>
+<?php
+}
