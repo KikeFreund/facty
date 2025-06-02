@@ -52,33 +52,131 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Facturación</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body { font-family: Arial; background: #f3f3f3; padding: 50px; }
-        form { max-width: 400px; margin: auto; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin-bottom: 15px; }
-        input[type="submit"] { padding: 10px 20px; background: #007bff; border: none; color: white; border-radius: 4px; cursor: pointer; }
-        h2 { text-align: center; }
-        .error { color: red; text-align: center; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            backdrop-filter: blur(10px);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-header i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .login-header h2 {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .login-header p {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+        .form-floating input {
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 1rem 0.75rem;
+        }
+        .form-floating input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .error-message {
+            background-color: #fff5f5;
+            color: #c53030;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 1px solid #feb2b2;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
-   <form method="POST" action="funciones/login.php">
-  <input type="email" name="correo" placeholder="Correo" required>
-  <input type="password" name="password" placeholder="Contraseña" required>
-  <input type="hidden" name="device_id" id="device_id">
-  <button type="submit">Iniciar Sesión</button>
-</form>
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fas fa-file-invoice"></i>
+            <h2>Bienvenido</h2>
+            <p>Ingresa tus credenciales para continuar</p>
+        </div>
 
-<script>
-  // Simulación simple de device_id
-  document.getElementById('device_id').value = btoa(navigator.userAgent + screen.width + screen.height);
-</script>
+        <?php if (isset($error)): ?>
+        <div class="error-message show">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <?php echo htmlspecialchars($error); ?>
+        </div>
+        <?php endif; ?>
 
+        <form method="POST" action="funciones/login.php">
+            <div class="form-floating">
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo electrónico" required>
+                <label for="correo"><i class="fas fa-envelope me-2"></i>Correo electrónico</label>
+            </div>
+            
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                <label for="password"><i class="fas fa-lock me-2"></i>Contraseña</label>
+            </div>
 
+            <input type="hidden" name="device_id" id="device_id">
+            
+            <button type="submit" class="btn btn-login text-white">
+                <i class="fas fa-sign-in-alt me-2"></i>
+                Iniciar Sesión
+            </button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         function generarDeviceId() {
             return btoa(navigator.userAgent + screen.width + screen.height + Math.random()).substring(0, 64);
