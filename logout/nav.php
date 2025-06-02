@@ -46,7 +46,7 @@
     <div class="container">
         <a class="navbar-brand" href="/">
             <i class="fas fa-file-invoice"></i>
-            Facturación
+            FactyFlow
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
