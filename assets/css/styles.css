@@ -7,10 +7,7 @@
 
 /* Sobrescribir colores de Bootstrap con mayor especificidad */
 .btn.btn-primary,
-.btn-primary {
-    background-color: var(--bs-primary) !important;
-    border-color: var(--bs-primary) !important;
-}
+
 .btn.btn-primary:hover,
 .btn-primary:hover {
     background-color: var(--bs-primary-dark) !important;
