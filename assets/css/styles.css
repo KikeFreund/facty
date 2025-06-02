@@ -5,6 +5,17 @@
     --bs-primary-dark-rgb: 128, 0, 128 !important;
 }
 
+/* General styles (from header.php) */
+
+/* Estilos para enlaces */
+a:not(.btn):not(.nav-link) {
+    color: var(--bs-primary) !important;
+    transition: all 0.3s ease;
+}
+a:not(.btn):not(.nav-link):hover {
+    color: var(--bs-primary-dark) !important;
+}
+
 /* Sobrescribir colores de Bootstrap con mayor especificidad */
 .btn.btn-primary,
 .btn-primary {
@@ -179,17 +190,6 @@
 }
 .error-message.show {
     display: block;
-}
-
-/* General styles (from header.php) */
-
-/* Estilos para enlaces */
-a:not(.btn):not(.nav-link) {
-    color: var(--bs-primary) !important;
-    transition: all 0.3s ease;
-}
-a:not(.btn):not(.nav-link):hover {
-    color: var(--bs-primary-dark) !important;
 }
 
 /* Estilos para inputs */
