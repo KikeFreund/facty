@@ -1,37 +1,4 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Cliente</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        .navbar {
-            background-color: #2c3e50;
-        }
-        .navbar-brand {
-            color: white !important;
-            font-weight: bold;
-        }
-        .btn-logout {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            transition: all 0.3s ease;
-        }
-        .btn-logout:hover {
-            background-color: #c0392b;
-            color: white;
-            transform: scale(1.05);
-        }
-        .welcome-section {
-            background-color: #f8f9fa;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-    </style>
-</head>
+
 <body>
  
 
