@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">
+        <a class="nav-link" href="/">
             <i class="fas fa-file-invoice"></i>
             FactyFlow
         </a>
