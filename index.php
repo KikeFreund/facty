@@ -14,10 +14,12 @@ switch ($uri) {
           require 'pages/home.php';
         break;
 
-    case 'login':
-        require 'pages/login.php';
-        break;
-
+        case 'login':
+            require 'pages/login.php';
+            break;
+            case 'logout':
+                require 'funciones/logout.php';
+                break;
     case 'facturacion':
         require 'pages/facturacion.php';
         break;

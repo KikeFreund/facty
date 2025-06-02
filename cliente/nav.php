@@ -26,8 +26,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'login') ? 'active' : ''; ?>" href="/login">
-                        <i class="fas fa-sign-in-alt me-1"></i>Iniciar sesión
+                    <a class="nav-link <?php echo ($uri === 'login') ? 'active' : ''; ?>" href="/logout">
+                        <i class="fas fa-sign-in-alt me-1"></i>Cerrar sesión
                     </a>
                 </li>
             </ul>
