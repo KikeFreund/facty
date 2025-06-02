@@ -11,6 +11,7 @@
 
         <!-- Aquí puedes agregar más contenido según necesites -->
         <div class="row">
+            <a href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
@@ -19,6 +20,8 @@
                     </div>
                 </div>
             </div>
+            </a>
+            <a href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
@@ -26,7 +29,9 @@
                         <p class="card-text">Consulta y administra los servicios contratados.</p>
                     </div>
                 </div>
-            </div>
+                </div>
+            </a>
+            <a href="">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
@@ -35,6 +40,7 @@
                     </div>
                 </div>
             </div>
+            </a>
         </div>
     </div>
 
