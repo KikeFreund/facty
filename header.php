@@ -15,10 +15,10 @@ $tipoUsuario=$_SESSION['tipoUsuario'];
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     :root {
-      --bs-primary: #667eea !important;
-      --bs-primary-rgb: 102, 126, 234 !important;
-      --bs-primary-dark: #764ba2 !important;
-      --bs-primary-dark-rgb: 118, 75, 162 !important;
+      --bs-primary: #9932cc !important;
+      --bs-primary-rgb: 153, 50, 204 !important;
+      --bs-primary-dark: #800080 !important;
+      --bs-primary-dark-rgb: 128, 0, 128 !important;
     }
 
     /* Sobrescribir colores de Bootstrap con mayor especificidad */
