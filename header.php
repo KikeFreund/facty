@@ -15,53 +15,73 @@ $tipoUsuario=$_SESSION['tipoUsuario'];
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     :root {
-      --bs-primary: #667eea;
-      --bs-primary-rgb: 102, 126, 234;
-      --bs-primary-dark: #764ba2;
-      --bs-primary-dark-rgb: 118, 75, 162;
+      --bs-primary: #667eea !important;
+      --bs-primary-rgb: 102, 126, 234 !important;
+      --bs-primary-dark: #764ba2 !important;
+      --bs-primary-dark-rgb: 118, 75, 162 !important;
     }
 
-    /* Sobrescribir colores de Bootstrap */
+    /* Sobrescribir colores de Bootstrap con mayor especificidad */
+    .btn.btn-primary,
     .btn-primary {
-      background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark) 100%);
-      border: none;
+      background-color: var(--bs-primary) !important;
+      border-color: var(--bs-primary) !important;
     }
+    .btn.btn-primary:hover,
     .btn-primary:hover {
-      background: linear-gradient(135deg, var(--bs-primary-dark) 0%, var(--bs-primary) 100%);
+      background-color: var(--bs-primary-dark) !important;
+      border-color: var(--bs-primary-dark) !important;
       transform: translateY(-1px);
       box-shadow: 0 5px 15px rgba(var(--bs-primary-rgb), 0.4);
     }
+    .btn.btn-primary:focus,
     .btn-primary:focus {
-      background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark) 100%);
+      background-color: var(--bs-primary) !important;
+      border-color: var(--bs-primary) !important;
       box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
     }
+    .btn.btn-primary:active,
     .btn-primary:active {
-      background: linear-gradient(135deg, var(--bs-primary-dark) 0%, var(--bs-primary) 100%);
+      background-color: var(--bs-primary-dark) !important;
+      border-color: var(--bs-primary-dark) !important;
     }
 
-    .text-primary {
+    .text-primary,
+    .text-primary:hover {
       color: var(--bs-primary) !important;
     }
-    .bg-primary {
+    .bg-primary,
+    .bg-primary:hover {
       background-color: var(--bs-primary) !important;
     }
-    .border-primary {
+    .border-primary,
+    .border-primary:hover {
       border-color: var(--bs-primary) !important;
     }
 
+    /* Navbar específico */
+    .navbar.navbar-dark {
+      background-color: var(--bs-primary) !important;
+    }
+
+    /* Footer específico */
+    .footer {
+      background-color: var(--bs-primary) !important;
+    }
+
     /* Estilos para enlaces */
-    a {
-      color: var(--bs-primary);
+    a:not(.btn):not(.nav-link) {
+      color: var(--bs-primary) !important;
       transition: all 0.3s ease;
     }
-    a:hover {
-      color: var(--bs-primary-dark);
+    a:not(.btn):not(.nav-link):hover {
+      color: var(--bs-primary-dark) !important;
     }
 
     /* Estilos para inputs */
     .form-control:focus {
-      border-color: var(--bs-primary);
-      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+      border-color: var(--bs-primary) !important;
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25) !important;
     }
 
     /* Estilos para cards */
@@ -73,40 +93,40 @@ $tipoUsuario=$_SESSION['tipoUsuario'];
       box-shadow: 0 5px 15px rgba(var(--bs-primary-rgb), 0.1);
     }
     .card-header {
-      background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark) 100%);
+      background-color: var(--bs-primary) !important;
       color: white;
     }
 
     /* Estilos para badges */
     .badge.bg-primary {
-      background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark) 100%) !important;
+      background-color: var(--bs-primary) !important;
     }
 
     /* Estilos para paginación */
     .page-item.active .page-link {
-      background-color: var(--bs-primary);
-      border-color: var(--bs-primary);
+      background-color: var(--bs-primary) !important;
+      border-color: var(--bs-primary) !important;
     }
     .page-link {
-      color: var(--bs-primary);
+      color: var(--bs-primary) !important;
     }
     .page-link:hover {
-      color: var(--bs-primary-dark);
+      color: var(--bs-primary-dark) !important;
     }
 
     /* Estilos para alertas */
     .alert-primary {
-      background-color: rgba(var(--bs-primary-rgb), 0.1);
-      border-color: rgba(var(--bs-primary-rgb), 0.2);
-      color: var(--bs-primary);
+      background-color: rgba(var(--bs-primary-rgb), 0.1) !important;
+      border-color: rgba(var(--bs-primary-rgb), 0.2) !important;
+      color: var(--bs-primary) !important;
     }
 
     /* Estilos para tooltips */
     .tooltip .tooltip-inner {
-      background-color: var(--bs-primary);
+      background-color: var(--bs-primary) !important;
     }
     .tooltip.bs-tooltip-top .tooltip-arrow::before {
-      border-top-color: var(--bs-primary);
+      border-top-color: var(--bs-primary) !important;
     }
   </style>
 </head>
