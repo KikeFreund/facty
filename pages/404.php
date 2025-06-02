@@ -14,7 +14,7 @@ require('route.php');
 <body class="">
 
   <div class="text-center">
-    <h1 class="display-1 fw-bold text-danger">404</h1>
+    <h1 class="display-1 fw-bold text-primary">404</h1>
     <p class="fs-3"> <span class="text-danger">Ups!</span> Página no encontrada.</p>
     <p class="lead">
       La página que buscas no existe o fue movida.
