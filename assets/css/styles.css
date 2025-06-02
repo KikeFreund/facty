@@ -212,6 +212,22 @@ a:not(.btn):not(.nav-link):hover {
     color: white;
 }
 
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    color: var(--bs-primary-dark); /* Color morado oscuro para títulos */
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    color: #4a5568; /* Un color gris oscuro para el texto */
+    font-size: 1rem;
+}
+
 /* Estilos para badges */
 .badge.bg-primary {
     background-color: var(--bs-primary) !important;
