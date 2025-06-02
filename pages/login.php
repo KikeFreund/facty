@@ -1,6 +1,6 @@
 <?php
  require('assets/php/conexiones/conexionMySqli.php');
-session_start();
+
 
 // Función para generar token seguro
 function generarTokenSeguro($longitud = 64) {
