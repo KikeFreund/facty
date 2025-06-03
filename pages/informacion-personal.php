@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,7 +8,7 @@
  <?php
  
 
-require($ruta."/index.php");
+require($ruta."/informacion-personal.php");
 
  ?>
 

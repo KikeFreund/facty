@@ -17,7 +17,15 @@ switch ($uri) {
         case 'login':
             require 'pages/login.php';
             break;
-
+            case 'informacion-personal':
+                require 'pages/informacion-personal.php';
+                break;
+                case 'mis-servicios':
+                    require 'pages/mis-servicios.php';
+                    break;
+                    case 'facturas':
+                        require 'pages/facturas.php';
+                        break;
     
 
     case 'facturacion':
