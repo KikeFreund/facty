@@ -6,8 +6,8 @@ if (!$id_ticket) {
     die("ID no válido.");
 }
 
-$url = "https://tupagina.com/facturacion?id=$id_ticket";
-$directorioQR = 'qrs/';
+$url = "https://movilistica.com/visualizar-ticket?id=$id_ticket";
+$directorioQR = '../../archivos/qrs/';
 $archivoQR = $directorioQR . "qr_" . $id_ticket . ".png";
 
 // Crear la carpeta si no existe
