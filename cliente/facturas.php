@@ -1,6 +1,6 @@
 <?php
 require('assets/php/conexiones/conexionMySqli.php');
-$ticket_id = $_GET['ticket_id'] ?? '';
+$cliente_id = $_GET['cliente_id'] ?? '';
 
 // ───────────────────────────────── FORMULARIO DE BÚSQUEDA
 ?>
