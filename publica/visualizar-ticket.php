@@ -2,9 +2,9 @@
 $id_ticket = $_GET['id'] ?? null;
 if (!$id_ticket) die("Falta el ID.");
 
-$archivoQR = "qrs/qr_$id_ticket.png";
+$archivoQR = "../archivos/qrs/qr_$id_ticket.png";
 $urlFactura = "https://tupagina.com/facturacion?id=$id_ticket";
-$urlQR = "https://movilistica.com/archivos/qrs/$archivoQR";
+$urlQR = "https://movilistica.com/$archivoQR";
 
 $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $urlFactura\nCódigo QR: $urlQR";
 ?>
