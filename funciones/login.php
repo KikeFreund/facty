@@ -31,20 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
             $_SESSION['tipoUsuario']=$usuario['tipo'];
             
-            // ✅ Generar token
+            // ✅ Generar token con 30 días de expiración
             $token = generarToken();
-            $expiracion = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 7)); // 7 días
+            $expiracion = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 30)); // 30 días
+            $ultima_actividad = date('Y-m-d H:i:s');
 
             $ip = obtenerIp();
             $user_agent = obtenerUserAgent();
 
-            $stmt2 = $conn->prepare("INSERT INTO sesiones (id_usuario, token, expiracion, ip, user_agent, device_id, estatus) VALUES (?, ?, ?, ?, ?, ?, 1)");
-            $stmt2->bind_param("isssss", $usuario['id'], $token, $expiracion, $ip, $user_agent, $device_id);
+            $stmt2 = $conn->prepare("INSERT INTO sesiones (id_usuario, token, expiracion, ip, user_agent, device_id, estatus, ultima_actividad) VALUES (?, ?, ?, ?, ?, ?, 1, ?)");
+            $stmt2->bind_param("issssss", $usuario['id'], $token, $expiracion, $ip, $user_agent, $device_id, $ultima_actividad);
             $stmt2->execute();
 
-            // ✅ Guardar token en cookie (7 días, httpOnly)
+            // ✅ Guardar token en cookie (30 días, httpOnly)
             setcookie("token_sesion", $token, [
-                'expires' => time() + (60 * 60 * 24 * 7),
+                'expires' => time() + (60 * 60 * 24 * 30),
                 'path' => '/',
                 'httponly' => true,
                 'secure' => isset($_SERVER['HTTPS']),
