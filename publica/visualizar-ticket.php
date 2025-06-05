@@ -38,6 +38,13 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $
                                         <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
                                     </button>
                                 </div>
+                                <div class="mt-3">
+                                    <label for="telefono" class="form-label">Enviar por WhatsApp (con código de país)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-whatsapp"></i></span>
+                                        <input type="tel" class="form-control" id="telefono" placeholder="Ej. 5215555555555">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -120,15 +127,6 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $
                             <div class="col-md-6">
                                 <label class="form-label">Teléfono</label>
                                 <p class="copiable form-control" onclick="copiarTexto(this)">5555555555</p>
-                            </div>
-                        </div>
-
-                        <!-- WhatsApp Input -->
-                        <div class="mt-4">
-                            <label for="telefono" class="form-label">Enviar por WhatsApp (con código de país)</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-whatsapp"></i></span>
-                                <input type="tel" class="form-control" id="telefono" placeholder="Ej. 5215555555555">
                             </div>
                         </div>
                     </div>
