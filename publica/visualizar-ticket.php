@@ -4,7 +4,7 @@ if (!$id_ticket) die("Falta el ID.");
 
 $archivoQR = "qrs/qr_$id_ticket.png";
 $urlFactura = "https://tupagina.com/facturacion?id=$id_ticket";
-$urlQR = "https://tupagina.com/$archivoQR";
+$urlQR = "https://movilistica.com/archivos/qrs/$archivoQR";
 
 $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $urlFactura\nCódigo QR: $urlQR";
 ?>
