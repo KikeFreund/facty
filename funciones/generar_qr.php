@@ -1,5 +1,5 @@
 <?php
-require_once 'assets/libs/phpqrcode/qrlib.php';
+require_once '../assets/libs/phpqrcode/qrlib.php';
 
 $id_ticket = $_GET['id'] ?? null;
 if (!$id_ticket) {
