@@ -37,6 +37,7 @@ function enviarWhatsApp() {
   const mensaje = <?= json_encode($mensaje) ?>;
   if (telefono === '') {
     alert('Escribe un número válido.');
+    const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
     return;
   }
   const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
