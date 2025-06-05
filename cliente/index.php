@@ -35,6 +35,17 @@
             </a>
 
                 </div>
+                <div class="col-md-4 mb-4">
+            <a class="text-decoration-none" href="generar-ticket">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-cogs me-2"></i>Generar Ticket</h5>
+                        <p class="card-text">Registra un nuevo ticket.</p>
+                    </div>
+                </div>
+            </a>
+
+                </div>
           
             <div class="col-md-4 mb-4">
             <a class="text-decoration-none" href="facturas">
