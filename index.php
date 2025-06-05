@@ -29,7 +29,7 @@ switch ($uri) {
                         require 'pages/facturas.php';
                         break;
     
-                        case 'lector-qr':
+                        case 'hola':
                             require 'pages/lector-qr.php';
                             break;
                      case 'hola':
