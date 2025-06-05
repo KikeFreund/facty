@@ -31,9 +31,9 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $
   }
 </style>
 
-<p class="copiable" onclick="copiarTexto(this)">Ticket: #<?= htmlspecialchars($id_ticket) ?></p>
-<p class="copiable" onclick="copiarTexto(this)">Régimen: Persona Física</p>
-<p class="copiable" onclick="copiarTexto(this)">RFC: ABC123456XYZ</p>
+<label for="">Id de Ticket:</label><p class="copiable" onclick="copiarTexto(this)"><?= htmlspecialchars($id_ticket) ?></p>
+<label for="">Regimen Fiscal:</label><p class="copiable" onclick="copiarTexto(this)"> Persona Física</p>
+<label for="">RFC:</label><p class="copiable" onclick="copiarTexto(this)">ABC123456XYZ</p>
 
 <script>
 function copiarTexto(elemento) {
