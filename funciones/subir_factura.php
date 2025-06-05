@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verifica errores
     if (empty($errores)) {
-        $carpeta = '../archivos/facturas/';
+        $carpeta = '../../archivos/facturas/';
         $nombre_pdf = uniqid("pdf_") . '.pdf';
         $nombre_xml = uniqid("xml_") . '.xml';
 
