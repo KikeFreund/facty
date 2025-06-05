@@ -8,9 +8,9 @@ $ticket_id = $_GET['ticket_id'] ?? '';
 <body class="bg-light">
 
 <div class="container py-5">
-  <h2 class="mb-4 text-center">Consultar facturas por Ticket</h2>
+  <!-- <h2 class="mb-4 text-center">Consultar facturas por Ticket</h2> -->
 
-  <form class="row g-3 mb-4" method="GET">
+  <!-- <form class="row g-3 mb-4" method="GET">
     <div class="col-auto">
       <input type="text" name="ticket_id" class="form-control" placeholder="ID del ticket"
              value="<?= htmlspecialchars($ticket_id) ?>" required>
@@ -18,14 +18,17 @@ $ticket_id = $_GET['ticket_id'] ?? '';
     <div class="col-auto">
       <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
-  </form>
+  </form> -->
 
 <?php
 // ───────────────────────────────── RESULTADOS (si se envió un ticket)
-if ($ticket_id !== '') {
-    $stmt = $conn->prepare("SELECT id, nombre_archivo, archivo_pdf, archivo_xml, creado_en
-                            FROM facturas WHERE ticket_id = ?");
-    $stmt->bind_param("s", $ticket_id);
+if ($cliente_id !== '') {
+    $stmt = $conn->prepare("SELECT f.id, f.nombre_archivo, f.archivo_pdf, f.archivo_xml, f.creado_en
+                            FROM facturas f
+                            LEFT JOIN ticket t  ON f.ticket_id=t.id
+                            
+                             WHERE t.id_cliente = ?");
+    $stmt->bind_param("s", $cliente_id);
     $stmt->execute();
     $res = $stmt->get_result();
 

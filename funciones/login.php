@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //Guardar tipo de usuario 
             session_start();
             $_SESSION['tipoUsuario']=$usuario['tipo'];
-            
+            $_SESSION['id_usuario']=$usuario['id'];
             // ✅ Generar token con 30 días de expiración
             $token = generarToken();
             $expiracion = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 30)); // 30 días
