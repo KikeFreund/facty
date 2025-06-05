@@ -50,12 +50,12 @@ if ($cliente_id !== '') {
                 <td><?= $f['id'] ?></td>
                 <td><?= htmlspecialchars($f['nombre_archivo']) ?></td>
                 <td>
-                  <a href="../<?= htmlspecialchars($f['archivo_pdf']) ?>" target="_blank" class="btn btn-sm btn-outline-primary">
+                  <a href="https://www.movilistica.com/<?= htmlspecialchars($f['archivo_pdf']) ?>" target="_blank" class="btn btn-sm btn-outline-primary">
                     Ver / Descargar PDF
                   </a>
                 </td>
                 <td>
-                  <a href="../<?= htmlspecialchars($f['archivo_xml']) ?>" download class="btn btn-sm btn-outline-secondary">
+                  <a href="https://www.movilistica.com/<?= htmlspecialchars($f['archivo_xml']) ?>" download class="btn btn-sm btn-outline-secondary">
                     Descargar XML
                   </a>
                 </td>
