@@ -29,12 +29,12 @@ switch ($uri) {
                         require 'pages/facturas.php';
                         break;
     
-                        case 'hola':
+                        case 'lector-qr':
                             require 'pages/lector-qr.php';
                             break;
-                     case 'hola':
-                    require 'pages/visualizar-ticket.php';
-              break;
+                            case 'visualizar-ticket':
+                                require 'pages/visualizar-ticket.php';
+                                break;
 
     case 'facturacion':
         require 'pages/facturacion.php';

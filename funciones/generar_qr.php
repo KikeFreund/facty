@@ -17,5 +17,5 @@ if (!file_exists($directorioQR)) {
 
 // Generar QR
 QRcode::png($url, $archivoQR, QR_ECLEVEL_H, 6);
-header("Location: visualizar-ticket?id=$id_ticket");
+header("Location: ../visualizar-ticket?id=$id_ticket");
 exit;
