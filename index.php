@@ -32,7 +32,7 @@ switch ($uri) {
                         case 'lector-qr':
                             require 'pages/lector-qr.php';
                             break;
-                            case 'visualizar-ticket':
+                            case 'visualizar':
                                 require 'pages/visualizar-ticket.php';
                                 break;
 
