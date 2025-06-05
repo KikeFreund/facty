@@ -18,8 +18,38 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $
 </head>
 <body>
 <div class="container mt-5 text-center">
-  <h3>Factura generada exitosamente</h3>
-  <p>Ticket: #<?= htmlspecialchars($id_ticket) ?></p>
+  <h3>Datos para facturar.</h3>
+
+  <style>
+  .copiable {
+    cursor: pointer;
+    user-select: all;
+    transition: background-color 0.2s ease;
+  }
+  .copiable:hover {
+    background-color: #f1f1f1;
+  }
+</style>
+
+<p class="copiable" onclick="copiarTexto(this)">Ticket: #<?= htmlspecialchars($id_ticket) ?></p>
+<p class="copiable" onclick="copiarTexto(this)">Régimen: Persona Física</p>
+<p class="copiable" onclick="copiarTexto(this)">RFC: ABC123456XYZ</p>
+
+<script>
+function copiarTexto(elemento) {
+  const texto = elemento.innerText;
+  navigator.clipboard.writeText(texto).then(() => {
+    const original = elemento.innerText;
+    elemento.innerText = '✅ Copiado';
+    setTimeout(() => {
+      elemento.innerText = original;
+    }, 1500);
+  }).catch(err => {
+    alert("No se pudo copiar");
+    console.error(err);
+  });
+}
+</script>
 
   <img src="<?= $archivoQR ?>" class="img-thumbnail mb-3" style="max-width: 250px;">
 
@@ -36,7 +66,7 @@ function enviarWhatsApp() {
   const telefono = document.getElementById('telefono').value.trim();
   const mensaje = <?= json_encode($mensaje) ?>;
   if (telefono === '') {
-    alert('Escribe un número válido.');
+    alert('sin un numero de telefono seleccionalo entre tus contactos.');
     const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
  
