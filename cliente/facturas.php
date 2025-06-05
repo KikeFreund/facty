@@ -1,5 +1,5 @@
 <?php
-require 'cone/conect3245.php';
+require('assets/php/conexiones/conexionMySqli.php');
 $ticket_id = $_GET['ticket_id'] ?? '';
 
 // ───────────────────────────────── FORMULARIO DE BÚSQUEDA
