@@ -6,7 +6,7 @@ $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://factu.movilistica.com/visualizar-ticket?id=$id_ticket";
 $urlQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 
-$mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $urlTicket\nCódigo QR: $urlQR";
+$mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $urlTicket";
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $u
                                     <button onclick="copiarTodo()" class="btn btn-outline-primary">
                                         <i class="bi bi-clipboard"></i> Copiar Todos los Datos
                                     </button>
-                                    <button onclick="enviarWhatsApp()" class="btn btn-success">
+                                    <button onclick="compartirDatos()" class="btn btn-success">
                                         <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
                                     </button>
                                 </div>
@@ -204,16 +204,44 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $u
     function enviarWhatsApp() {
         const telefono = document.getElementById('telefono').value.trim();
         const mensaje = <?= json_encode($mensaje) ?>;
+        const qrUrl = <?= json_encode($urlQR) ?>;
         
         if (telefono === '') {
-            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            // Si no hay teléfono, abrimos WhatsApp Web con el mensaje y la imagen
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje + '\n\nImagen del QR: ' + qrUrl)}`;
             window.open(url, '_blank');
             return;
         }
         
-        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+        // Intentamos enviar la imagen directamente usando la API de WhatsApp Business
+        // Si el usuario tiene WhatsApp Business instalado, se abrirá con la imagen
+        // Si no, caerá en el mensaje normal
+        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}&media=${encodeURIComponent(qrUrl)}`;
         window.open(url, '_blank');
     }
+
+    // Función alternativa para compartir usando la API Web Share si está disponible
+    function compartirDatos() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Datos de Facturación',
+                text: <?= json_encode($mensaje) ?>,
+                url: <?= json_encode($urlTicket) ?>,
+                files: [<?= json_encode($archivoQR) ?>]
+            })
+            .catch(error => {
+                console.log('Error al compartir:', error);
+                // Si falla el compartir nativo, usamos el método de WhatsApp
+                enviarWhatsApp();
+            });
+        } else {
+            // Si el navegador no soporta compartir, usamos el método de WhatsApp
+            enviarWhatsApp();
+        }
+    }
+
+    // Actualizamos el botón de WhatsApp para usar la nueva función
+    document.querySelector('button[onclick="enviarWhatsApp()"]').setAttribute('onclick', 'compartirDatos()');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
