@@ -29,6 +29,9 @@ switch ($uri) {
                         require 'pages/facturas.php';
                         break;
     
+                        case 'lector-qr':
+                            require 'pages/lector-qr.php';
+                            break;
 
     case 'facturacion':
         require 'pages/facturacion.php';

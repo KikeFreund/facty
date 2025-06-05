@@ -16,8 +16,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'reportes') ? 'active' : ''; ?>" href="/reportes">
-                        <i class="fas fa-chart-bar me-1"></i>Reportes
+                    <a class="nav-link <?php echo ($uri === 'reportes') ? 'active' : ''; ?>" href="/lector-qr">
+                        <i class="fas fa-chart-bar me-1"></i>QR
                     </a>
                 </li>
                 <li class="nav-item">
