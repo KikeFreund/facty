@@ -1,6 +1,8 @@
 <?php
 // index.php
 require('header.php');
+require('verificacion.php');
+
 require('route.php');
 require($ruta.'/nav.php');
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
