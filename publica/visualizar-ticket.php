@@ -32,7 +32,7 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $
 </style>
 
 <label for="">Id de Ticket:</label><p class="copiable" onclick="copiarTexto(this)"><?= htmlspecialchars($id_ticket) ?></p>
-<label for="">Regimen Fiscal:</label><p class="copiable" onclick="copiarTexto(this)"> Persona Física</p>
+<label for="">Regimen Fiscal:</label><p class="copiable" onclick="copiarTexto(this)"> Persona Física con actividades empresariales y/o profesionales</p>
 <label for="">RFC:</label><p class="copiable" onclick="copiarTexto(this)">ABC123456XYZ</p>
 
 <script>
