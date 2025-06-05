@@ -6,7 +6,7 @@ $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://movilistica.com/visualizar-ticket?id=$id_ticket";
 $urlQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 
-$mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer factura: $urlFactura\nCódigo QR: $urlQR";
+$mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $urlTicket\nCódigo QR: $urlQR";
 ?>
 
 <!DOCTYPE html>
