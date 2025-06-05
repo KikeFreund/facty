@@ -1,6 +1,6 @@
 <?php
 require('assets/php/conexiones/conexionMySqli.php');
-$cliente_id = $_GET['cliente_id'] ?? '';
+$cliente_id = $_SESSION['id_usuario'];
 
 // ───────────────────────────────── FORMULARIO DE BÚSQUEDA
 ?>
