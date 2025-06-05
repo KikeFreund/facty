@@ -6,7 +6,49 @@ $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://factu.movilistica.com/visualizar-ticket?id=$id_ticket";
 $urlQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 
-$mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $urlTicket";
+// Datos de facturación (estos vendrían de la base de datos)
+$datosFacturacion = [
+    'ID de Ticket' => $id_ticket,
+    'Régimen Fiscal' => 'Persona Física con actividades empresariales y/o profesionales',
+    'RFC' => 'ABC123456XYZ',
+    'Uso de CFDI' => 'G01 - Adquisición de mercancías',
+    'Nombre o Razón Social' => 'Juan Pérez García',
+    'Correo Electrónico' => 'correo@ejemplo.com',
+    'Calle y Número' => 'Av. Reforma 123',
+    'Colonia' => 'Centro',
+    'Código Postal' => '06000',
+    'Municipio/Alcaldía' => 'Cuauhtémoc',
+    'Estado' => 'Ciudad de México',
+    'País' => 'México',
+    'Teléfono' => '5555555555'
+];
+
+// Construir el mensaje con todos los datos
+$mensaje = "📋 *Datos para Facturación*\n\n";
+$mensaje .= "🔗 *Enlaces:*\n";
+$mensaje .= "Ver Ticket: $urlTicket\n";
+$mensaje .= "Código QR: $urlQR\n\n";
+
+$mensaje .= "📝 *Datos Fiscales:*\n";
+$mensaje .= "ID de Ticket: {$datosFacturacion['ID de Ticket']}\n";
+$mensaje .= "Régimen Fiscal: {$datosFacturacion['Régimen Fiscal']}\n";
+$mensaje .= "RFC: {$datosFacturacion['RFC']}\n";
+$mensaje .= "Uso de CFDI: {$datosFacturacion['Uso de CFDI']}\n\n";
+
+$mensaje .= "👤 *Datos de Contacto:*\n";
+$mensaje .= "Nombre/Razón Social: {$datosFacturacion['Nombre o Razón Social']}\n";
+$mensaje .= "Correo: {$datosFacturacion['Correo Electrónico']}\n";
+$mensaje .= "Teléfono: {$datosFacturacion['Teléfono']}\n\n";
+
+$mensaje .= "📍 *Dirección Fiscal:*\n";
+$mensaje .= "Calle y Número: {$datosFacturacion['Calle y Número']}\n";
+$mensaje .= "Colonia: {$datosFacturacion['Colonia']}\n";
+$mensaje .= "C.P.: {$datosFacturacion['Código Postal']}\n";
+$mensaje .= "Municipio/Alcaldía: {$datosFacturacion['Municipio/Alcaldía']}\n";
+$mensaje .= "Estado: {$datosFacturacion['Estado']}\n";
+$mensaje .= "País: {$datosFacturacion['País']}\n\n";
+
+$mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correctos antes de procesar la factura.";
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +76,7 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $u
                                     <button onclick="copiarTodo()" class="btn btn-outline-primary">
                                         <i class="bi bi-clipboard"></i> Copiar Todos los Datos
                                     </button>
-                                    <button onclick="compartirDatos()" class="btn btn-success">
+                                    <button onclick="enviarWhatsApp()" class="btn btn-success">
                                         <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
                                     </button>
                                 </div>
@@ -204,44 +246,16 @@ $mensaje = "Aquí tienes los datos para la factura solicitada:\n\nVer Ticket: $u
     function enviarWhatsApp() {
         const telefono = document.getElementById('telefono').value.trim();
         const mensaje = <?= json_encode($mensaje) ?>;
-        const qrUrl = <?= json_encode($urlQR) ?>;
         
         if (telefono === '') {
-            // Si no hay teléfono, abrimos WhatsApp Web con el mensaje y la imagen
-            const url = `https://wa.me/?text=${encodeURIComponent(mensaje + '\n\nImagen del QR: ' + qrUrl)}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
             return;
         }
         
-        // Intentamos enviar la imagen directamente usando la API de WhatsApp Business
-        // Si el usuario tiene WhatsApp Business instalado, se abrirá con la imagen
-        // Si no, caerá en el mensaje normal
-        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}&media=${encodeURIComponent(qrUrl)}`;
+        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
         window.open(url, '_blank');
     }
-
-    // Función alternativa para compartir usando la API Web Share si está disponible
-    function compartirDatos() {
-        if (navigator.share) {
-            navigator.share({
-                title: 'Datos de Facturación',
-                text: <?= json_encode($mensaje) ?>,
-                url: <?= json_encode($urlTicket) ?>,
-                files: [<?= json_encode($archivoQR) ?>]
-            })
-            .catch(error => {
-                console.log('Error al compartir:', error);
-                // Si falla el compartir nativo, usamos el método de WhatsApp
-                enviarWhatsApp();
-            });
-        } else {
-            // Si el navegador no soporta compartir, usamos el método de WhatsApp
-            enviarWhatsApp();
-        }
-    }
-
-    // Actualizamos el botón de WhatsApp para usar la nueva función
-    document.querySelector('button[onclick="enviarWhatsApp()"]').setAttribute('onclick', 'compartirDatos()');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
