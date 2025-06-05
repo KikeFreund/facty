@@ -1,5 +1,5 @@
 <?php
-require '../cone/conect3245.php'; // Ajusta la ruta a tu archivo de conexión
+require('../assets/php/conexiones/conexionMySqli.php');
 
 // Verificamos si se envió el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
