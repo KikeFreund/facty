@@ -38,7 +38,8 @@ function enviarWhatsApp() {
   if (telefono === '') {
     alert('Escribe un número válido.');
     const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-    return;
+    window.open(url, '_blank');
+ 
   }
   const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
