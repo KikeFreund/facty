@@ -1,4 +1,4 @@
-<form action="subir_factura.php" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm">
+<form action="funciones/subir_factura.php" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm">
   <h4 class="mb-4">Subir factura (PDF + XML)</h4>
 
   <div class="mb-3">
