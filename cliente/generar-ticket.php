@@ -217,11 +217,11 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 document.getElementById('telefono').value = data.telefono || '';
 
                 // Seleccionar el uso de CFDI favorito del dato fiscal seleccionado
-                if (data.usoFavorito) {
+                if (data.id_usoFavorito) {
                     const selectUsoCfdi = document.getElementById('uso_cfdi');
-                    const opcion = Array.from(selectUsoCfdi.options).find(option => option.value === data.usoFavorito);
+                    const opcion = Array.from(selectUsoCfdi.options).find(option => option.value === data.id_usoFavorito);
                     if (opcion) {
-                        selectUsoCfdi.value = data.usoFavorito;
+                        selectUsoCfdi.value = data.id_usoFavorito;
                     }
                 }
 
