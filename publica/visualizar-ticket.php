@@ -5,7 +5,7 @@ if (!$id_ticket) die("Falta el ID.");
 $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://factu.movilistica.com/visualizar-ticket?id=$id_ticket";
 $urlQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
-
+$urlConstancia='';
 // Datos de facturación (estos vendrían de la base de datos)
 $datosFacturacion = [
     'ID de Ticket' => $id_ticket,
@@ -27,7 +27,7 @@ $datosFacturacion = [
 $mensaje = "📋 *Datos para Facturación*\n\n";
 $mensaje .= "🔗 *Enlaces:*\n";
 $mensaje .= "Ver Ticket: $urlTicket\n";
-$mensaje .= "Código QR: $urlQR\n\n";
+$mensaje .= "Constancia de situacion fiscal: $urlConstancia\n\n";
 
 $mensaje .= "📝 *Datos Fiscales:*\n";
 $mensaje .= "ID de Ticket: {$datosFacturacion['ID de Ticket']}\n";
