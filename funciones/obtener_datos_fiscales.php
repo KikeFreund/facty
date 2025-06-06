@@ -15,3 +15,6 @@ $result =  $conn->query($query);
 $datos = $result->fetch_assoc();
 echo json_encode($datos);
 ?>
+<script>
+alert('Entro');
+    </script>
