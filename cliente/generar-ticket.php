@@ -157,38 +157,91 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
             return;
         }
 
-        // Aquí iría la llamada AJAX para obtener los datos fiscales
+        // Mostrar indicador de carga
+        document.getElementById('vista_previa').style.display = 'block';
+        document.getElementById('vista_previa').innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+
+        // Llamada AJAX para obtener los datos fiscales
         fetch(`funciones/obtener_datos_fiscales.php?id=${id}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                console.log('Datos recibidos:', data); // Debug
+
                 // Llenar los campos ocultos
-                document.getElementById('rfc').value = data.rfc;
-                document.getElementById('razon_social').value = data.razon_social;
-                document.getElementById('regimen_fiscal').value = data.regimen_fiscal;
-                document.getElementById('correo').value = data.correo;
-                document.getElementById('calle').value = data.calle;
-                document.getElementById('cp').value = data.cp;
-                document.getElementById('colonia').value = data.colonia;
-                document.getElementById('municipio').value = data.municipio;
-                document.getElementById('estado').value = data.estado;
-                document.getElementById('telefono').value = data.telefono;
+                document.getElementById('rfc').value = data.rfc || '';
+                document.getElementById('razon_social').value = data.razon_social || '';
+                document.getElementById('regimen_fiscal').value = data.regimen_fiscal || '';
+                document.getElementById('correo').value = data.correo || '';
+                document.getElementById('calle').value = data.calle || '';
+                document.getElementById('cp').value = data.cp || '';
+                document.getElementById('colonia').value = data.colonia || '';
+                document.getElementById('municipio').value = data.municipio || '';
+                document.getElementById('estado').value = data.estado || '';
+                document.getElementById('telefono').value = data.telefono || '';
 
                 // Actualizar la vista previa
-                document.getElementById('preview_rfc').textContent = data.rfc;
-                document.getElementById('preview_razon_social').textContent = data.razon_social;
-                document.getElementById('preview_regimen_fiscal').textContent = data.regimen_fiscal;
-                document.getElementById('preview_correo').textContent = data.correo;
-                document.getElementById('preview_telefono').textContent = data.telefono;
-                document.getElementById('preview_direccion').textContent = 
-                    `${data.calle}, ${data.colonia}, ${data.municipio}, ${data.estado}, CP ${data.cp}`;
+                document.getElementById('preview_rfc').textContent = data.rfc || 'No disponible';
+                document.getElementById('preview_razon_social').textContent = data.razon_social || 'No disponible';
+                document.getElementById('preview_regimen_fiscal').textContent = data.regimen_fiscal || 'No disponible';
+                document.getElementById('preview_correo').textContent = data.correo || 'No disponible';
+                document.getElementById('preview_telefono').textContent = data.telefono || 'No disponible';
+                
+                // Construir la dirección solo si tenemos los datos necesarios
+                const direccion = [
+                    data.calle,
+                    data.colonia,
+                    data.municipio,
+                    data.estado,
+                    data.cp ? `CP ${data.cp}` : ''
+                ].filter(Boolean).join(', ');
+                
+                document.getElementById('preview_direccion').textContent = direccion || 'No disponible';
 
-                // Mostrar la vista previa
-                document.getElementById('vista_previa').style.display = 'block';
+                // Restaurar la vista previa normal
+                document.getElementById('vista_previa').innerHTML = `
+                    <div class="card-body">
+                        <h6 class="card-title">Datos Fiscales Seleccionados</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>RFC:</strong> <span id="preview_rfc">${data.rfc || 'No disponible'}</span></p>
+                                <p class="mb-1"><strong>Razón Social:</strong> <span id="preview_razon_social">${data.razon_social || 'No disponible'}</span></p>
+                                <p class="mb-1"><strong>Régimen Fiscal:</strong> <span id="preview_regimen_fiscal">${data.regimen_fiscal || 'No disponible'}</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Correo:</strong> <span id="preview_correo">${data.correo || 'No disponible'}</span></p>
+                                <p class="mb-1"><strong>Teléfono:</strong> <span id="preview_telefono">${data.telefono || 'No disponible'}</span></p>
+                                <p class="mb-1"><strong>Dirección:</strong> <span id="preview_direccion">${direccion || 'No disponible'}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
             })
             .catch(error => {
                 console.error('Error al cargar los datos fiscales:', error);
-                alert('Error al cargar los datos fiscales. Por favor, intenta de nuevo.');
+                document.getElementById('vista_previa').innerHTML = `
+                    <div class="card-body">
+                        <div class="alert alert-danger mb-0">
+                            <i class="bi bi-exclamation-triangle"></i> Error al cargar los datos fiscales: ${error.message}
+                        </div>
+                    </div>
+                `;
             });
     }
+
+    // Validación del monto
+    document.getElementById('monto').addEventListener('input', function(e) {
+        if (this.value < 0) {
+            this.value = 0;
+        }
+    });
     </script>
 </body>
