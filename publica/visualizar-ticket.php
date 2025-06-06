@@ -12,7 +12,7 @@ if (!$conn) {
 // Consulta para obtener los datos del ticket y datos fiscales
 $query = "SELECT t.*, 
                  df.razonSocial, df.rfc, df.correo, df.telefono,
-                 df.calle, df.colonia, df.cp, df.municipio, df.estado,
+                 df.calle, df.colonia, df.codigoPostal, df.municipio, df.estado,
                  rf.descripcion as regimen_fiscal,
                  uc.clave as clave_cfdi, uc.descripcion as descripcion_cfdi
           FROM ticket t
