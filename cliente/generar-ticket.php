@@ -2,7 +2,9 @@
 // Aquí irían las consultas a la base de datos
 $query_regimenes = ""; // SELECT * FROM regimenes_fiscales
 $query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
-$query_datos_fiscales = ""; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
+$id_usuario=$_SESSION['id_usuario'];
+$query_datos_fiscales = "SELECT * FROM datosFiscales WHERE id_usuario = '$id_usuario'"; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
+$result_datos_fiscales = $query_datos_fiscales->get_result();
 ?>
 
 <body class="bg-light">
@@ -44,9 +46,9 @@ $query_datos_fiscales = ""; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
                                         <option value="">Selecciona tus datos fiscales</option>
                                         <?php
                                         // Aquí iría el while para los datos fiscales
-                                        // while($datos = $result_datos_fiscales->fetch_assoc()) {
-                                        //     echo "<option value='{$datos['id']}'>{$datos['razon_social']} - {$datos['rfc']}</option>";
-                                        // }
+                                        while($datos = $result_datos_fiscales->fetch_assoc()) {
+                                            echo "<option value='{$datos['id']}'>{$datos['razonSocial']} - {$datos['rfc']}</option>";
+                                        }
                                         ?>
                                     </select>
                                     <div class="invalid-feedback">
