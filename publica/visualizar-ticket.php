@@ -90,6 +90,7 @@ $mensaje .= "📝 *Datos Fiscales:*\n";
 $mensaje .= "ID de Ticket: {$datosFacturacion['ID de Ticket']}\n";
 $mensaje .= "Régimen Fiscal: {$datosFacturacion['Régimen Fiscal']}\n";
 $mensaje .= "RFC: {$datosFacturacion['RFC']}\n";
+$mensaje .= "Metodo de Pago: {$datosFacturacion['metodoPago']}\n";
 $mensaje .= "Uso de CFDI: {$datosFacturacion['Uso de CFDI']}\n\n";
 
 $mensaje .= "👤 *Datos de Contacto:*\n";
