@@ -38,7 +38,7 @@
             <p>Ingresa el ID de datos fiscales.</p>
         </div>
 
-        <form action="factura.php" method="GET" class="mx-auto" style="max-width: 500px;">
+        <form action="visualizar-ticket" method="GET" class="mx-auto" style="max-width: 500px;">
             <div class="input-group mb-3">
                 <input type="text" name="id" class="form-control" placeholder="ID de facturación" required>
                 <button class="btn btn-primary" type="submit">Buscar</button>
