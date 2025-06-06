@@ -158,7 +158,7 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
         }
 
         // Aquí iría la llamada AJAX para obtener los datos fiscales
-        fetch(`obtener_datos_fiscales.php?id=${id}`)
+        fetch(`funciones/obtener_datos_fiscales.php?id=${id}`)
             .then(response => response.json())
             .then(data => {
                 // Llenar los campos ocultos
