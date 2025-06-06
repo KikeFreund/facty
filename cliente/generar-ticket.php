@@ -2,6 +2,7 @@
 // Aquí irían las consultas a la base de datos
 $query_regimenes = ""; // SELECT * FROM regimenes_fiscales
 $query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
+$query_datos_fiscales = ""; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
 ?>
 
 <body class="bg-light">
@@ -36,36 +37,34 @@ $query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
                             <div class="mb-4">
                                 <h5 class="border-bottom pb-2">Datos Fiscales</h5>
                                 
-                                <!-- Régimen Fiscal -->
+                                <!-- Select de Datos Fiscales -->
                                 <div class="mb-3">
-                                    <label for="regimen_fiscal" class="form-label">Régimen Fiscal</label>
-                                    <select class="form-select" id="regimen_fiscal" name="regimen_fiscal" required>
-                                        <option value="">Selecciona un régimen fiscal</option>
+                                    <label for="datos_fiscales" class="form-label">Seleccionar Datos Fiscales</label>
+                                    <select class="form-select" id="datos_fiscales" name="datos_fiscales" required onchange="cargarDatosFiscales(this.value)">
+                                        <option value="">Selecciona tus datos fiscales</option>
                                         <?php
-                                        // Aquí iría el while para los regímenes fiscales
-                                        // while($regimen = $result_regimenes->fetch_assoc()) {
-                                        //     echo "<option value='{$regimen['id']}'>{$regimen['descripcion']}</option>";
+                                        // Aquí iría el while para los datos fiscales
+                                        // while($datos = $result_datos_fiscales->fetch_assoc()) {
+                                        //     echo "<option value='{$datos['id']}'>{$datos['razon_social']} - {$datos['rfc']}</option>";
                                         // }
                                         ?>
                                     </select>
                                     <div class="invalid-feedback">
-                                        Por favor selecciona un régimen fiscal
+                                        Por favor selecciona tus datos fiscales
                                     </div>
                                 </div>
 
-                                <!-- RFC -->
-                                <div class="mb-3">
-                                    <label for="rfc" class="form-label">RFC</label>
-                                    <input type="text" 
-                                           class="form-control" 
-                                           id="rfc" 
-                                           name="rfc" 
-                                           pattern="^[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}$"
-                                           required>
-                                    <div class="invalid-feedback">
-                                        Ingresa un RFC válido
-                                    </div>
-                                </div>
+                                <!-- Campos ocultos para los datos fiscales -->
+                                <input type="hidden" id="rfc" name="rfc">
+                                <input type="hidden" id="razon_social" name="razon_social">
+                                <input type="hidden" id="regimen_fiscal" name="regimen_fiscal">
+                                <input type="hidden" id="correo" name="correo">
+                                <input type="hidden" id="calle" name="calle">
+                                <input type="hidden" id="cp" name="cp">
+                                <input type="hidden" id="colonia" name="colonia">
+                                <input type="hidden" id="municipio" name="municipio">
+                                <input type="hidden" id="estado" name="estado">
+                                <input type="hidden" id="telefono" name="telefono">
 
                                 <!-- Uso de CFDI -->
                                 <div class="mb-3">
@@ -84,29 +83,22 @@ $query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
                                     </div>
                                 </div>
 
-                                <!-- Nombre o Razón Social -->
-                                <div class="mb-3">
-                                    <label for="razon_social" class="form-label">Nombre o Razón Social</label>
-                                    <input type="text" 
-                                           class="form-control" 
-                                           id="razon_social" 
-                                           name="razon_social" 
-                                           required>
-                                    <div class="invalid-feedback">
-                                        Por favor ingresa el nombre o razón social
-                                    </div>
-                                </div>
-
-                                <!-- Correo Electrónico -->
-                                <div class="mb-3">
-                                    <label for="correo" class="form-label">Correo Electrónico</label>
-                                    <input type="email" 
-                                           class="form-control" 
-                                           id="correo" 
-                                           name="correo" 
-                                           required>
-                                    <div class="invalid-feedback">
-                                        Por favor ingresa un correo electrónico válido
+                                <!-- Vista previa de datos fiscales -->
+                                <div id="vista_previa" class="card bg-light mb-3" style="display: none;">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Datos Fiscales Seleccionados</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p class="mb-1"><strong>RFC:</strong> <span id="preview_rfc"></span></p>
+                                                <p class="mb-1"><strong>Razón Social:</strong> <span id="preview_razon_social"></span></p>
+                                                <p class="mb-1"><strong>Régimen Fiscal:</strong> <span id="preview_regimen_fiscal"></span></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="mb-1"><strong>Correo:</strong> <span id="preview_correo"></span></p>
+                                                <p class="mb-1"><strong>Teléfono:</strong> <span id="preview_telefono"></span></p>
+                                                <p class="mb-1"><strong>Dirección:</strong> <span id="preview_direccion"></span></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -239,5 +231,46 @@ $query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
     document.getElementById('cp').addEventListener('input', function(e) {
         this.value = this.value.replace(/[^0-9]/g, '').substring(0, 5);
     });
+
+    // Función para cargar los datos fiscales
+    function cargarDatosFiscales(id) {
+        if (!id) {
+            document.getElementById('vista_previa').style.display = 'none';
+            return;
+        }
+
+        // Aquí iría la llamada AJAX para obtener los datos fiscales
+        fetch(`obtener_datos_fiscales.php?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                // Llenar los campos ocultos
+                document.getElementById('rfc').value = data.rfc;
+                document.getElementById('razon_social').value = data.razon_social;
+                document.getElementById('regimen_fiscal').value = data.regimen_fiscal;
+                document.getElementById('correo').value = data.correo;
+                document.getElementById('calle').value = data.calle;
+                document.getElementById('cp').value = data.cp;
+                document.getElementById('colonia').value = data.colonia;
+                document.getElementById('municipio').value = data.municipio;
+                document.getElementById('estado').value = data.estado;
+                document.getElementById('telefono').value = data.telefono;
+
+                // Actualizar la vista previa
+                document.getElementById('preview_rfc').textContent = data.rfc;
+                document.getElementById('preview_razon_social').textContent = data.razon_social;
+                document.getElementById('preview_regimen_fiscal').textContent = data.regimen_fiscal;
+                document.getElementById('preview_correo').textContent = data.correo;
+                document.getElementById('preview_telefono').textContent = data.telefono;
+                document.getElementById('preview_direccion').textContent = 
+                    `${data.calle}, ${data.colonia}, ${data.municipio}, ${data.estado}, CP ${data.cp}`;
+
+                // Mostrar la vista previa
+                document.getElementById('vista_previa').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error al cargar los datos fiscales:', error);
+                alert('Error al cargar los datos fiscales. Por favor, intenta de nuevo.');
+            });
+    }
     </script>
 </body>
