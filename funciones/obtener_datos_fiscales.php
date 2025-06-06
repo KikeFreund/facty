@@ -12,7 +12,7 @@ if (!$id) {
 // Ajustamos la consulta para usar el ID correcto
 $query = "SELECT df.*,rf.descripcion AS regimenf FROM datosFiscales df
 LEFT JOIN regimenesFiscales rf ON rf.id=df.regimen
- WHERE id = '$id'";
+ WHERE df.id = '$id'";
 $result = $conn->query($query);
 
 if ($result && $result->num_rows > 0) {
