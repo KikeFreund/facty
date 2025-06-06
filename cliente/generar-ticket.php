@@ -2,7 +2,8 @@
  require('assets/php/conexiones/conexionMySqli.php');
 // Aquí irían las consultas a la base de datos
 $query_regimenes = ""; // SELECT * FROM regimenes_fiscales
-$query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
+$query_usos_cfdi = "SELECT * FROM usos_cfdi"; // SELECT * FROM usos_cfdi
+$result_usos_cfdi=$conn->query($query_usos_cfdi);
 $id_usuario=$_SESSION['id_usuario'];
 $query_datos_fiscales = "SELECT * FROM datosFiscales WHERE id_usuario = '$id_usuario'"; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
 $result_datos_fiscales =  $conn->query($query_datos_fiscales);
@@ -64,9 +65,9 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                         <option value="">Selecciona un uso de CFDI</option>
                                         <?php
                                         // Aquí iría el while para los usos de CFDI
-                                        // while($uso = $result_usos_cfdi->fetch_assoc()) {
-                                        //     echo "<option value='{$uso['clave']}'>{$uso['clave']} - {$uso['descripcion']}</option>";
-                                        // }
+                                        while($uso = $result_usos_cfdi->fetch_assoc()) {
+                                            echo "<option value='{$uso['clave']}'>{$uso['clave']} - {$uso['descripcion']}</option>";
+                                        }
                                         ?>
                                     </select>
                                     <div class="invalid-feedback">
