@@ -128,7 +128,7 @@ try {
         'tipo' => 'success',
         'texto' => "Ticket generado exitosamente. Número de ticket: {$numeroTicket}"
     ];
-    header('Location: ../visualizar-ticket?id=$idTicket');
+    header('Location: generar_qr.php?id=$idTicket');
     exit;
 
 } catch (Exception $e) {
