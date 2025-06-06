@@ -5,6 +5,16 @@ $query_regimenes = ""; // SELECT * FROM regimenes_fiscales
 $query_usos_cfdi = "SELECT * FROM usosCfdi"; // SELECT * FROM usos_cfdi
 $result_usos_cfdi = $conn->query($query_usos_cfdi);
 $id_usuario=$_SESSION['id_usuario'];
+
+// Obtener el uso favorito del usuario
+$query_uso_favorito = "SELECT df.usoFavorito, uc.descripcion as nombre_usoFavorito 
+                       FROM datosFiscales df 
+                       LEFT JOIN usosCfdi uc ON df.usoFavorito = uc.clave 
+                       WHERE df.id_usuario = '$id_usuario' 
+                       LIMIT 1";
+$result_uso_favorito = $conn->query($query_uso_favorito);
+$uso_favorito = $result_uso_favorito->fetch_assoc();
+
 $query_datos_fiscales = "SELECT * FROM datosFiscales WHERE id_usuario = '$id_usuario'"; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
 $result_datos_fiscales =  $conn->query($query_datos_fiscales);
 ?>
@@ -103,7 +113,8 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                         <?php
                                         // Aquí iría el while para los usos de CFDI
                                         while($uso = $result_usos_cfdi->fetch_assoc()) {
-                                            echo "<option value='{$uso['clave']}'>{$uso['clave']} - {$uso['descripcion']}</option>";
+                                            $selected = ($uso_favorito && $uso['clave'] === $uso_favorito['usoFavorito']) ? 'selected' : '';
+                                            echo "<option value='{$uso['clave']}' {$selected}>{$uso['clave']} - {$uso['descripcion']}</option>";
                                         }
                                         ?>
                                     </select>
