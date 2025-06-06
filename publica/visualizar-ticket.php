@@ -213,7 +213,7 @@ $conn->close();
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Metodo de Pago</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['metodopago']) ?></p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datos['metodopago']) ?></p>
                             </div>
                             <!-- Datos de Contacto -->
                             <div class="col-12 mt-4">
