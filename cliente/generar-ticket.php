@@ -18,7 +18,7 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                         <h3 class="mb-0">Generar Ticket de Facturación</h3>
                     </div>
                     <div class="card-body">
-                        <form action="procesar-ticket.php" method="POST" class="needs-validation" novalidate>
+                        <form action="../funciones/procesar-ticket.php" method="POST" class="needs-validation" novalidate>
                             <!-- Monto -->
                             <div class="mb-4">
                                 <label for="monto" class="form-label">Monto a Facturar</label>
