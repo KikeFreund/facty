@@ -6,14 +6,10 @@ $query_usos_cfdi = "SELECT * FROM usosCfdi"; // SELECT * FROM usos_cfdi
 $result_usos_cfdi = $conn->query($query_usos_cfdi);
 $id_usuario=$_SESSION['id_usuario'];
 
-// Obtener el uso favorito del usuario
-$query_uso_favorito = "SELECT df.usoFavorito, uc.descripcion as nombre_usoFavorito 
-                       FROM datosFiscales df 
-                       LEFT JOIN usosCfdi uc ON df.usoFavorito = uc.clave 
-                       WHERE df.id_usuario = '$id_usuario' 
-                       LIMIT 1";
+// Obtener el uso favorito del usuario (siempre existe)
+$query_uso_favorito = "SELECT usoFavorito FROM datosFiscales WHERE id_usuario = '$id_usuario' LIMIT 1";
 $result_uso_favorito = $conn->query($query_uso_favorito);
-$uso_favorito = $result_uso_favorito->fetch_assoc();
+$uso_favorito = $result_uso_favorito->fetch_assoc()['usoFavorito'];
 
 $query_datos_fiscales = "SELECT * FROM datosFiscales WHERE id_usuario = '$id_usuario'"; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
 $result_datos_fiscales =  $conn->query($query_datos_fiscales);
@@ -109,11 +105,10 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                 <div class="mb-3">
                                     <label for="uso_cfdi" class="form-label">Uso de CFDI</label>
                                     <select class="form-select" id="uso_cfdi" name="uso_cfdi" required>
-                                        <option value="">Selecciona un uso de CFDI</option>
                                         <?php
                                         // Aquí iría el while para los usos de CFDI
                                         while($uso = $result_usos_cfdi->fetch_assoc()) {
-                                            $selected = ($uso_favorito && $uso['clave'] === $uso_favorito['usoFavorito']) ? 'selected' : '';
+                                            $selected = ($uso['clave'] === $uso_favorito) ? 'selected' : '';
                                             echo "<option value='{$uso['clave']}' {$selected}>{$uso['clave']} - {$uso['descripcion']}</option>";
                                         }
                                         ?>
@@ -227,15 +222,6 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 document.getElementById('estado').value = data.estado || '';
                 document.getElementById('telefono').value = data.telefono || '';
 
-                // Seleccionar el uso de CFDI favorito si está disponible
-                if (data.id_usoFavorito) {
-                    const selectUsoCfdi = document.getElementById('uso_cfdi');
-                    const opcion = Array.from(selectUsoCfdi.options).find(option => option.value === data.id_usoFavorito);
-                    if (opcion) {
-                        selectUsoCfdi.value = data.id_usoFavorito;
-                    }
-                }
-
                 // Construir la dirección solo si tenemos los datos necesarios
                 const direccion = [
                     data.calle,
@@ -254,7 +240,6 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                 <p class="mb-1"><strong>RFC:</strong> ${data.rfc || 'No disponible'}</p>
                                 <p class="mb-1"><strong>Razón Social:</strong> ${data.razon_social || 'No disponible'}</p>
                                 <p class="mb-1"><strong>Régimen Fiscal:</strong> ${data.regimen_fiscal || 'No disponible'}</p>
-                                <p class="mb-1"><strong>Uso CFDI Favorito:</strong> ${data.nombre_usoFavorito || 'No disponible'}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-1"><strong>Correo:</strong> ${data.correo || 'No disponible'}</p>
