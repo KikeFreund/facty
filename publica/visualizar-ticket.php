@@ -19,6 +19,8 @@ $query = "SELECT t.*,
           LEFT JOIN datosFiscales df ON t.id_datos = df.id
           LEFT JOIN regimenesFiscales rf ON df.regimen = rf.id
           LEFT JOIN usosCfdi uc ON t.usoCfdi = uc.id
+          LEFT JOIN metodosPago mp ON mp.id = t.metodoPago
+
           WHERE t.id = ?";
 
 // Debug de la consulta
