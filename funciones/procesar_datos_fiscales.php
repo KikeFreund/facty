@@ -17,9 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 function procesarConstancia($archivo, $id_usuario) {
     // Verificar si se subió un archivo
     if (!isset($archivo['constancia']) || $archivo['constancia']['error'] !== UPLOAD_ERR_OK) {
-        if (isset($_POST['id_datos'])) {
-            return true; // Si es actualización y no se subió archivo, mantener el existente
-        }
         throw new Exception('Por favor suba su constancia de situación fiscal');
     }
 
@@ -84,51 +81,18 @@ try {
     // Procesar constancia
     $ruta_constancia = procesarConstancia($_FILES, $_SESSION['id_usuario']);
 
-    // Preparar la consulta SQL
-    if (isset($_POST['id_datos'])) {
-        // Actualización
-        $query = "UPDATE datosFiscales SET 
-                  razonSocial = ?, rfc = ?, regimen = ?, uso_cfdi = ?, 
-                  correo = ?, telefono = ?, calle = ?, colonia = ?, 
-                  codigoPostal = ?, municipio = ?, estado = ?";
-        
-        if ($ruta_constancia !== true) {
-            $query .= ", constancia = ?";
-        }
-        
-        $query .= " WHERE id = ? AND id_usuario = ?";
-        
-        $stmt = $conn->prepare($query);
-        
-        if ($ruta_constancia === true) {
-            $stmt->bind_param("ssiisssssssii", 
-                $_POST['razonSocial'], $_POST['rfc'], $_POST['regimen'], $_POST['uso_cfdi'],
-                $_POST['correo'], $_POST['telefono'], $_POST['calle'], $_POST['colonia'],
-                $_POST['codigoPostal'], $_POST['municipio'], $_POST['estado'],
-                $_POST['id_datos'], $_SESSION['id_usuario']
-            );
-        } else {
-            $stmt->bind_param("ssiissssssssii", 
-                $_POST['razonSocial'], $_POST['rfc'], $_POST['regimen'], $_POST['uso_cfdi'],
-                $_POST['correo'], $_POST['telefono'], $_POST['calle'], $_POST['colonia'],
-                $_POST['codigoPostal'], $_POST['municipio'], $_POST['estado'],
-                $ruta_constancia, $_POST['id_datos'], $_SESSION['id_usuario']
-            );
-        }
-    } else {
-        // Inserción
-        $query = "INSERT INTO datosFiscales (id_usuario, razonSocial, rfc, regimen, uso_cfdi, 
-                  correo, telefono, calle, colonia, codigoPostal, municipio, estado, constancia) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("isssissssssss", 
-            $_SESSION['id_usuario'], $_POST['razonSocial'], $_POST['rfc'], $_POST['regimen'], 
-            $_POST['uso_cfdi'], $_POST['correo'], $_POST['telefono'], $_POST['calle'], 
-            $_POST['colonia'], $_POST['codigoPostal'], $_POST['municipio'], $_POST['estado'],
-            $ruta_constancia
-        );
-    }
+    // Preparar la consulta SQL para inserción
+    $query = "INSERT INTO datosFiscales (id_usuario, razonSocial, rfc, regimen, uso_cfdi, 
+              correo, telefono, calle, colonia, codigoPostal, municipio, estado, constancia) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("isssissssssss", 
+        $_SESSION['id_usuario'], $_POST['razonSocial'], $_POST['rfc'], $_POST['regimen'], 
+        $_POST['uso_cfdi'], $_POST['correo'], $_POST['telefono'], $_POST['calle'], 
+        $_POST['colonia'], $_POST['codigoPostal'], $_POST['municipio'], $_POST['estado'],
+        $ruta_constancia
+    );
 
     // Ejecutar la consulta
     if (!$stmt->execute()) {
@@ -136,7 +100,7 @@ try {
     }
 
     // Redirigir con mensaje de éxito
-    $_SESSION['mensaje'] = "Datos fiscales " . (isset($_POST['id_datos']) ? "actualizados" : "registrados") . " correctamente";
+    $_SESSION['mensaje'] = "Datos fiscales registrados correctamente";
     header('Location: ../cliente/registrar-datos-fiscales.php');
     exit();
 

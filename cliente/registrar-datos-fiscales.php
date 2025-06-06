@@ -1,7 +1,6 @@
 <?php
 require_once('assets/php/conexiones/conexionMySqli.php');
 
-
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['id_usuario'])) {
     header('Location: login.php');
@@ -15,16 +14,7 @@ $regimenes = $conn->query($query_regimenes);
 // Obtener los usos de CFDI
 $query_usos = "SELECT id, clave, descripcion FROM usosCfdi ORDER BY clave";
 $usos = $conn->query($query_usos);
-
-// Verificar si ya existen datos fiscales para este usuario
-$query_existente = "SELECT * FROM datosFiscales WHERE id_usuario = ?";
-$stmt = $conn->prepare($query_existente);
-$stmt->bind_param("i", $_SESSION['id_usuario']);
-$stmt->execute();
-$resultado = $stmt->get_result();
-$datos_existentes = $resultado->fetch_assoc();
 ?>
-
 
 <body class="bg-light">
     <div class="container py-5">
@@ -32,28 +22,22 @@ $datos_existentes = $resultado->fetch_assoc();
             <div class="col-md-8">
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0"><?= $datos_existentes ? 'Actualizar' : 'Registrar' ?> Datos Fiscales</h3>
+                        <h3 class="mb-0">Registro de Datos Fiscales</h3>
                     </div>
                     <div class="card-body">
                         <form action="../funciones/procesar_datos_fiscales.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                            <?php if ($datos_existentes): ?>
-                                <input type="hidden" name="id_datos" value="<?= $datos_existentes['id'] ?>">
-                            <?php endif; ?>
-
                             <!-- Datos Básicos -->
                             <div class="mb-4">
                                 <h5 class="border-bottom pb-2">Datos Básicos</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label for="razonSocial" class="form-label">Razón Social</label>
-                                        <input type="text" class="form-control" id="razonSocial" name="razonSocial" 
-                                               value="<?= htmlspecialchars($datos_existentes['razonSocial'] ?? '') ?>" required>
+                                        <input type="text" class="form-control" id="razonSocial" name="razonSocial" required>
                                         <div class="invalid-feedback">Por favor ingrese la razón social</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="rfc" class="form-label">RFC</label>
                                         <input type="text" class="form-control" id="rfc" name="rfc" 
-                                               value="<?= htmlspecialchars($datos_existentes['rfc'] ?? '') ?>" 
                                                pattern="^[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}$" required>
                                         <div class="invalid-feedback">Ingrese un RFC válido</div>
                                     </div>
@@ -62,8 +46,7 @@ $datos_existentes = $resultado->fetch_assoc();
                                         <select class="form-select" id="regimen" name="regimen" required>
                                             <option value="">Seleccione un régimen</option>
                                             <?php while ($regimen = $regimenes->fetch_assoc()): ?>
-                                                <option value="<?= $regimen['id'] ?>" 
-                                                    <?= ($datos_existentes['regimen'] ?? '') == $regimen['id'] ? 'selected' : '' ?>>
+                                                <option value="<?= $regimen['id'] ?>">
                                                     <?= htmlspecialchars($regimen['descripcion']) ?>
                                                 </option>
                                             <?php endwhile; ?>
@@ -75,8 +58,7 @@ $datos_existentes = $resultado->fetch_assoc();
                                         <select class="form-select" id="uso_cfdi" name="uso_cfdi" required>
                                             <option value="">Seleccione un uso de CFDI</option>
                                             <?php while ($uso = $usos->fetch_assoc()): ?>
-                                                <option value="<?= $uso['id'] ?>" 
-                                                    <?= ($datos_existentes['uso_cfdi'] ?? '') == $uso['id'] ? 'selected' : '' ?>>
+                                                <option value="<?= $uso['id'] ?>">
                                                     <?= htmlspecialchars($uso['clave'] . ' - ' . $uso['descripcion']) ?>
                                                 </option>
                                             <?php endwhile; ?>
@@ -92,14 +74,12 @@ $datos_existentes = $resultado->fetch_assoc();
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label for="correo" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="correo" name="correo" 
-                                               value="<?= htmlspecialchars($datos_existentes['correo'] ?? '') ?>" required>
+                                        <input type="email" class="form-control" id="correo" name="correo" required>
                                         <div class="invalid-feedback">Ingrese un correo electrónico válido</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="telefono" class="form-label">Teléfono</label>
-                                        <input type="tel" class="form-control" id="telefono" name="telefono" 
-                                               value="<?= htmlspecialchars($datos_existentes['telefono'] ?? '') ?>" required>
+                                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
                                         <div class="invalid-feedback">Ingrese un número de teléfono</div>
                                     </div>
                                 </div>
@@ -111,33 +91,28 @@ $datos_existentes = $resultado->fetch_assoc();
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <label for="calle" class="form-label">Calle y Número</label>
-                                        <input type="text" class="form-control" id="calle" name="calle" 
-                                               value="<?= htmlspecialchars($datos_existentes['calle'] ?? '') ?>" required>
+                                        <input type="text" class="form-control" id="calle" name="calle" required>
                                         <div class="invalid-feedback">Ingrese la calle y número</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="colonia" class="form-label">Colonia</label>
-                                        <input type="text" class="form-control" id="colonia" name="colonia" 
-                                               value="<?= htmlspecialchars($datos_existentes['colonia'] ?? '') ?>" required>
+                                        <input type="text" class="form-control" id="colonia" name="colonia" required>
                                         <div class="invalid-feedback">Ingrese la colonia</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="codigoPostal" class="form-label">Código Postal</label>
                                         <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" 
-                                               value="<?= htmlspecialchars($datos_existentes['codigoPostal'] ?? '') ?>" 
                                                pattern="[0-9]{5}" required>
                                         <div class="invalid-feedback">Ingrese un código postal válido (5 dígitos)</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="municipio" class="form-label">Municipio/Alcaldía</label>
-                                        <input type="text" class="form-control" id="municipio" name="municipio" 
-                                               value="<?= htmlspecialchars($datos_existentes['municipio'] ?? '') ?>" required>
+                                        <input type="text" class="form-control" id="municipio" name="municipio" required>
                                         <div class="invalid-feedback">Ingrese el municipio o alcaldía</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="estado" class="form-label">Estado</label>
-                                        <input type="text" class="form-control" id="estado" name="estado" 
-                                               value="<?= htmlspecialchars($datos_existentes['estado'] ?? '') ?>" required>
+                                        <input type="text" class="form-control" id="estado" name="estado" required>
                                         <div class="invalid-feedback">Ingrese el estado</div>
                                     </div>
                                 </div>
@@ -150,14 +125,8 @@ $datos_existentes = $resultado->fetch_assoc();
                                     <div class="col-12">
                                         <label for="constancia" class="form-label">Archivo de Constancia (PDF)</label>
                                         <input type="file" class="form-control" id="constancia" name="constancia" 
-                                               accept=".pdf" <?= !$datos_existentes ? 'required' : '' ?>>
-                                        <div class="form-text">
-                                            <?php if ($datos_existentes && $datos_existentes['constancia']): ?>
-                                                Constancia actual: <?= htmlspecialchars(basename($datos_existentes['constancia'])) ?>
-                                            <?php else: ?>
-                                                Suba su constancia de situación fiscal en formato PDF
-                                            <?php endif; ?>
-                                        </div>
+                                               accept=".pdf" required>
+                                        <div class="form-text">Suba su constancia de situación fiscal en formato PDF</div>
                                         <div class="invalid-feedback">Por favor suba su constancia de situación fiscal</div>
                                     </div>
                                 </div>
@@ -165,7 +134,7 @@ $datos_existentes = $resultado->fetch_assoc();
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> <?= $datos_existentes ? 'Actualizar' : 'Guardar' ?> Datos Fiscales
+                                    <i class="bi bi-save"></i> Registrar Datos Fiscales
                                 </button>
                                 <a href="index.php" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-left"></i> Volver
