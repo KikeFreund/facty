@@ -1,7 +1,6 @@
 <?php
 require_once('../assets/php/conexiones/conexionMySqli.php');
 
-
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['id_usuario'])) {
     header('Location: ../cliente/login.php');
