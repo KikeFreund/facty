@@ -71,7 +71,6 @@ try {
         $conn->close();
     }
 }
+// Asegurarse de que no haya salida después del JSON
+exit;
 ?>
-<script>
-alert('Entro');
-    </script>
