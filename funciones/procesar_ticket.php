@@ -8,17 +8,7 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Función para generar número de ticket
-function generarNumeroTicket($conn) {
-    // Obtener el último número de ticket
-    $query = "SELECT MAX(CAST(SUBSTRING(numeroTicket, 4) AS UNSIGNED)) as ultimo_numero FROM tickets";
-    $result = $conn->query($query);
-    $row = $result->fetch_assoc();
-    
-    // Generar nuevo número
-    $siguiente_numero = ($row['ultimo_numero'] ?? 0) + 1;
-    return 'TKT' . str_pad($siguiente_numero, 6, '0', STR_PAD_LEFT);
-}
+
 
 // Función para validar y procesar la imagen
 function procesarImagen($archivo) {
