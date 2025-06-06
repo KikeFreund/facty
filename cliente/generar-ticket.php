@@ -1,5 +1,5 @@
 <?php
- require('assets/php/conexiones/conexionMySqli.php');
+ require('../assets/php/conexiones/conexionMySqli.php');
 // Aquí irían las consultas a la base de datos
 $query_regimenes = ""; // SELECT * FROM regimenes_fiscales
 $query_usos_cfdi = "SELECT * FROM usosCfdi"; // SELECT * FROM usos_cfdi
