@@ -54,18 +54,6 @@ $query_datos_fiscales = ""; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
                                     </div>
                                 </div>
 
-                                <!-- Campos ocultos para los datos fiscales -->
-                                <input type="hidden" id="rfc" name="rfc">
-                                <input type="hidden" id="razon_social" name="razon_social">
-                                <input type="hidden" id="regimen_fiscal" name="regimen_fiscal">
-                                <input type="hidden" id="correo" name="correo">
-                                <input type="hidden" id="calle" name="calle">
-                                <input type="hidden" id="cp" name="cp">
-                                <input type="hidden" id="colonia" name="colonia">
-                                <input type="hidden" id="municipio" name="municipio">
-                                <input type="hidden" id="estado" name="estado">
-                                <input type="hidden" id="telefono" name="telefono">
-
                                 <!-- Uso de CFDI -->
                                 <div class="mb-3">
                                     <label for="uso_cfdi" class="form-label">Uso de CFDI</label>
@@ -83,6 +71,18 @@ $query_datos_fiscales = ""; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
                                     </div>
                                 </div>
 
+                                <!-- Campos ocultos para los datos fiscales -->
+                                <input type="hidden" id="rfc" name="rfc">
+                                <input type="hidden" id="razon_social" name="razon_social">
+                                <input type="hidden" id="regimen_fiscal" name="regimen_fiscal">
+                                <input type="hidden" id="correo" name="correo">
+                                <input type="hidden" id="calle" name="calle">
+                                <input type="hidden" id="cp" name="cp">
+                                <input type="hidden" id="colonia" name="colonia">
+                                <input type="hidden" id="municipio" name="municipio">
+                                <input type="hidden" id="estado" name="estado">
+                                <input type="hidden" id="telefono" name="telefono">
+
                                 <!-- Vista previa de datos fiscales -->
                                 <div id="vista_previa" class="card bg-light mb-3" style="display: none;">
                                     <div class="card-body">
@@ -98,92 +98,6 @@ $query_datos_fiscales = ""; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
                                                 <p class="mb-1"><strong>Teléfono:</strong> <span id="preview_telefono"></span></p>
                                                 <p class="mb-1"><strong>Dirección:</strong> <span id="preview_direccion"></span></p>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Dirección Fiscal -->
-                            <div class="mb-4">
-                                <h5 class="border-bottom pb-2">Dirección Fiscal</h5>
-                                
-                                <div class="row g-3">
-                                    <!-- Calle y Número -->
-                                    <div class="col-md-8">
-                                        <label for="calle" class="form-label">Calle y Número</label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="calle" 
-                                               name="calle" 
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Por favor ingresa la calle y número
-                                        </div>
-                                    </div>
-
-                                    <!-- Código Postal -->
-                                    <div class="col-md-4">
-                                        <label for="cp" class="form-label">Código Postal</label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="cp" 
-                                               name="cp" 
-                                               pattern="[0-9]{5}"
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Ingresa un código postal válido
-                                        </div>
-                                    </div>
-
-                                    <!-- Colonia -->
-                                    <div class="col-md-6">
-                                        <label for="colonia" class="form-label">Colonia</label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="colonia" 
-                                               name="colonia" 
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Por favor ingresa la colonia
-                                        </div>
-                                    </div>
-
-                                    <!-- Municipio/Alcaldía -->
-                                    <div class="col-md-6">
-                                        <label for="municipio" class="form-label">Municipio/Alcaldía</label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="municipio" 
-                                               name="municipio" 
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Por favor ingresa el municipio o alcaldía
-                                        </div>
-                                    </div>
-
-                                    <!-- Estado -->
-                                    <div class="col-md-6">
-                                        <label for="estado" class="form-label">Estado</label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="estado" 
-                                               name="estado" 
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Por favor ingresa el estado
-                                        </div>
-                                    </div>
-
-                                    <!-- Teléfono -->
-                                    <div class="col-md-6">
-                                        <label for="telefono" class="form-label">Teléfono</label>
-                                        <input type="tel" 
-                                               class="form-control" 
-                                               id="telefono" 
-                                               name="telefono" 
-                                               required>
-                                        <div class="invalid-feedback">
-                                            Por favor ingresa un teléfono válido
                                         </div>
                                     </div>
                                 </div>
