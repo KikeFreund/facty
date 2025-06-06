@@ -128,7 +128,7 @@ try {
         'tipo' => 'success',
         'texto' => "Ticket generado exitosamente. Número de ticket: {$numeroTicket}"
     ];
-    header('Location: ../cliente/tickets.php');
+    header('Location: ../visualizar-ticket?id=$idTicket');
     exit;
 
 } catch (Exception $e) {
