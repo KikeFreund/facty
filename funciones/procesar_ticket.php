@@ -108,6 +108,7 @@ try {
     // Ejecutar la consulta
     if (!$stmt->execute()) {
         throw new Exception('Error al guardar el ticket: ' . $stmt->error);
+    echo 'error al guardar el ticket';
     }
 
     $idTicket = $stmt->insert_id;
