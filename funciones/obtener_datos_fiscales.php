@@ -1,7 +1,7 @@
 <?php
 // obtener_datos_fiscales.php
 header('Content-Type: application/json');
-
+require('assets/php/conexiones/conexionMySqli.php');
 $id = $_GET['id'] ?? null;
 if (!$id) {
     http_response_code(400);
@@ -11,7 +11,7 @@ if (!$id) {
 
 // Aquí tu consulta a la base de datos
 $query = "SELECT * FROM datosFiscales WHERE id = ?";
-// ... ejecutar consulta y obtener datos ...
-
+$result =  $conn->query($query);
+$datos = $result->fetch_assoc();
 echo json_encode($datos);
 ?>
