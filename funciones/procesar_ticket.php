@@ -132,7 +132,7 @@ try {
 
     // Vincular parámetros
     $stmt->bind_param(
-        'idsssss',
+        'idssssss',
         $_SESSION['id_usuario'],
         $monto,
         $_POST['uso_cfdi'],
