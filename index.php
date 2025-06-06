@@ -38,6 +38,9 @@ switch ($uri) {
                                 case 'generar-ticket':
                                     require 'pages/generar-ticket.php';
                                     break;
+                                    case 'registrar-datos-fiscales':
+                                        require 'pages/registrar-datos-fiscales.php';
+                                        break;
 
     case 'facturacion':
         require 'pages/facturacion.php';
