@@ -153,7 +153,7 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
         vistaPreviaContent.innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
 
         // Llamada AJAX para obtener los datos fiscales
-        fetch(`funciones/obtener_datos_fiscales.php?id=${id}`)
+        fetch(`../funciones/obtener_datos_fiscales.php?id=${id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);

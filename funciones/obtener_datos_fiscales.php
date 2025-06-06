@@ -1,45 +1,22 @@
 <?php
-// Deshabilitar la salida de errores de PHP
-error_reporting(0);
-ini_set('display_errors', 0);
-
-// Establecer el tipo de contenido como JSON
+require('../assets/php/conexiones/conexionMySqli.php');
 header('Content-Type: application/json');
 
-// Incluir la conexión a la base de datos
-require_once('../assets/php/conexiones/conexionMySqli.php');
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    http_response_code(400);
+    echo json_encode(['error' => 'ID no proporcionado']);
+    exit;
+}
 
-try {
-    // Verificar que se recibió un ID
-    if (!isset($_GET['id']) || empty($_GET['id'])) {
-        throw new Exception('ID no proporcionado');
-    }
+// Ajustamos la consulta para usar el ID correcto
+$query = "SELECT * FROM datosFiscales WHERE id = '$id'";
+$result = $conn->query($query);
 
-    $id = intval($_GET['id']); // Convertir a entero para prevenir inyección SQL
-
-    // Preparar y ejecutar la consulta
-    $query = "SELECT * FROM datosFiscales WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    
-    if (!$stmt) {
-        throw new Exception('Error al preparar la consulta: ' . $conn->error);
-    }
-
-    $stmt->bind_param('i', $id);
-    
-    if (!$stmt->execute()) {
-        throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows === 0) {
-        throw new Exception('No se encontraron datos fiscales para el ID proporcionado');
-    }
-
+if ($result && $result->num_rows > 0) {
     $datos = $result->fetch_assoc();
-
-    // Formatear la respuesta
+    
+    // Verificamos que los campos existan antes de usarlos
     $response = [
         'rfc' => $datos['rfc'] ?? '',
         'razon_social' => $datos['razonSocial'] ?? '',
@@ -53,24 +30,15 @@ try {
         'telefono' => $datos['telefono'] ?? ''
     ];
 
-    // Enviar la respuesta
-    echo json_encode($response);
+    // Debug: Imprimir la consulta y los datos
+    error_log("Query ejecutada: " . $query);
+    error_log("Datos obtenidos: " . print_r($datos, true));
+    error_log("Respuesta JSON: " . json_encode($response));
 
-} catch (Exception $e) {
-    // Enviar error en formato JSON
-    http_response_code(400);
-    echo json_encode([
-        'error' => $e->getMessage()
-    ]);
-} finally {
-    // Cerrar la conexión si existe
-    if (isset($stmt)) {
-        $stmt->close();
-    }
-    if (isset($conn)) {
-        $conn->close();
-    }
+    echo json_encode($response);
+} else {
+    error_log("No se encontraron datos para el ID: " . $id);
+    http_response_code(404);
+    echo json_encode(['error' => 'Datos fiscales no encontrados']);
 }
-// Asegurarse de que no haya salida después del JSON
-exit;
-?>
+?> 
