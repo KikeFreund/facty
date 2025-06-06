@@ -130,6 +130,14 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                         <!-- El contenido se actualizará dinámicamente -->
                                     </div>
                                 </div>
+
+                                <!-- Debug info -->
+                                <div id="debug_info" class="card bg-light mb-3" style="display: none;">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Debug Info</h6>
+                                        <pre id="debug_content" class="mb-0"></pre>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Botones -->
@@ -202,9 +210,18 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                     throw new Error(data.error);
                 }
 
-                console.log('Datos recibidos:', data); // Debug
-                console.log('ID Uso Favorito:', data.id_usoFavorito); // Debug específico del uso favorito
-                console.log('Nombre Uso Favorito:', data.nombre_usoFavorito); // Debug del nombre
+                // Mostrar datos de debug
+                const debugInfo = document.getElementById('debug_info');
+                const debugContent = document.getElementById('debug_content');
+                debugInfo.style.display = 'block';
+                debugContent.textContent = JSON.stringify({
+                    id_usoFavorito: data.id_usoFavorito,
+                    nombre_usoFavorito: data.nombre_usoFavorito,
+                    opciones_cfdi: Array.from(document.getElementById('uso_cfdi').options).map(opt => ({
+                        value: opt.value,
+                        text: opt.text
+                    }))
+                }, null, 2);
 
                 // Llenar los campos ocultos
                 document.getElementById('rfc').value = data.rfc || '';
@@ -218,19 +235,27 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 document.getElementById('estado').value = data.estado || '';
                 document.getElementById('telefono').value = data.telefono || '';
 
+                // Debug con echos para el select
+                <?php
+                echo "const selectUsoCfdi = document.getElementById('uso_cfdi');";
+                echo "console.log('Select CFDI opciones:', Array.from(selectUsoCfdi.options).map(opt => ({value: opt.value, text: opt.text})));";
+                ?>
+
                 // Seleccionar el uso de CFDI favorito del dato fiscal seleccionado
                 if (data.id_usoFavorito) {
                     const selectUsoCfdi = document.getElementById('uso_cfdi');
-                    console.log('Select CFDI:', selectUsoCfdi); // Debug del elemento select
-                    console.log('Opciones disponibles:', Array.from(selectUsoCfdi.options).map(opt => ({value: opt.value, text: opt.text}))); // Debug de las opciones
-                    const opcion = Array.from(selectUsoCfdi.options).find(option => {
-                        console.log('Comparando:', option.value, 'con', data.id_usoFavorito); // Debug de la comparación
-                        return option.value === data.id_usoFavorito;
-                    });
-                    console.log('Opción encontrada:', opcion); // Debug de la opción encontrada
+                    <?php
+                    echo "console.log('Intentando seleccionar:', " . json_encode($data['id_usoFavorito']) . ");";
+                    ?>
+                    const opcion = Array.from(selectUsoCfdi.options).find(option => option.value === data.id_usoFavorito);
+                    <?php
+                    echo "console.log('Opción encontrada:', opcion);";
+                    ?>
                     if (opcion) {
                         selectUsoCfdi.value = data.id_usoFavorito;
-                        console.log('Valor establecido:', selectUsoCfdi.value); // Debug del valor establecido
+                        <?php
+                        echo "console.log('Valor establecido:', selectUsoCfdi.value);";
+                        ?>
                     }
                 }
 
