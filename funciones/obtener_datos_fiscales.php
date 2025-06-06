@@ -10,8 +10,9 @@ if (!$id) {
 }
 
 // Ajustamos la consulta para usar el ID correcto
-$query = "SELECT df.*,rf.descripcion AS regimenf FROM datosFiscales df
+$query = "SELECT df.*,rf.descripcion AS regimenf, u.descripcion AS usoNombre FROM datosFiscales df
 LEFT JOIN regimenesFiscales rf ON rf.id=df.regimen
+LEFT JOIN usosCfdi u ON u.id=df.usoFavorito
  WHERE df.id = '$id'";
 $result = $conn->query($query);
 
@@ -29,6 +30,8 @@ if ($result && $result->num_rows > 0) {
         'colonia' => $datos['colonia'] ?? '',
         'municipio' => $datos['municipio'] ?? '',
         'estado' => $datos['estado'] ?? '',
+        'id_usoFavorito' => $datos['usoFavorito'] ?? '',
+        'nombre_usoFavorito' => $datos['usoNombre'] ?? '',
         'telefono' => $datos['telefono'] ?? ''
     ];
 

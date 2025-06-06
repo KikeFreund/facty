@@ -216,6 +216,15 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 document.getElementById('estado').value = data.estado || '';
                 document.getElementById('telefono').value = data.telefono || '';
 
+                // Seleccionar el uso de CFDI favorito si está disponible
+                if (data.id_usoFavorito) {
+                    const selectUsoCfdi = document.getElementById('uso_cfdi');
+                    const opcion = Array.from(selectUsoCfdi.options).find(option => option.value === data.id_usoFavorito);
+                    if (opcion) {
+                        selectUsoCfdi.value = data.id_usoFavorito;
+                    }
+                }
+
                 // Construir la dirección solo si tenemos los datos necesarios
                 const direccion = [
                     data.calle,
@@ -234,6 +243,7 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                 <p class="mb-1"><strong>RFC:</strong> ${data.rfc || 'No disponible'}</p>
                                 <p class="mb-1"><strong>Razón Social:</strong> ${data.razon_social || 'No disponible'}</p>
                                 <p class="mb-1"><strong>Régimen Fiscal:</strong> ${data.regimen_fiscal || 'No disponible'}</p>
+                                <p class="mb-1"><strong>Uso CFDI Favorito:</strong> ${data.nombre_usoFavorito || 'No disponible'}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-1"><strong>Correo:</strong> ${data.correo || 'No disponible'}</p>
