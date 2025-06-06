@@ -76,6 +76,7 @@ $datosFacturacion = [
     'Municipio/Alcaldía' => $datos['municipio'],
     'Estado' => $datos['estado'],
     'País' => 'México',
+    'metodoPago'=>$datos['metodopago'],
     'Teléfono' => $datos['telefono']
 ];
 
