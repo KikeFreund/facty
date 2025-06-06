@@ -13,7 +13,7 @@ if (!$conn) {
 $query = "SELECT t.*, 
                  df.razonSocial, df.rfc, df.correo, df.telefono,
                  df.calle, df.colonia, df.codigoPostal, df.municipio, df.estado,
-                 rf.descripcion as regimen_fiscal,df.constancia,t.metodopago,
+                 rf.descripcion as regimen_fiscal,df.constancia,mp.nombre AS metodopago,
                  uc.clave as clave_cfdi, uc.descripcion as descripcion_cfdi
           FROM ticket t
           LEFT JOIN datosFiscales df ON t.id_datos = df.id
