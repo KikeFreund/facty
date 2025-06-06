@@ -5,7 +5,7 @@ $query_regimenes = ""; // SELECT * FROM regimenes_fiscales
 $query_usos_cfdi = ""; // SELECT * FROM usos_cfdi
 $id_usuario=$_SESSION['id_usuario'];
 $query_datos_fiscales = "SELECT * FROM datosFiscales WHERE id_usuario = '$id_usuario'"; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
-$result_datos_fiscales =  $conn->query($consultasql);
+$result_datos_fiscales =  $conn->query($query_datos_fiscales);
 ?>
 
 <body class="bg-light">
