@@ -174,7 +174,9 @@ $conn->close();
                             <div class="card card-body">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h5 class="card-title mb-0">Ticket</h5>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#ticketCollapse">
+                                    <button class="btn btn-sm btn-outline-secondary" 
+                                            type="button" 
+                                            onclick="document.getElementById('ticketCollapse').classList.remove('show')">
                                         <i class="bi bi-x-lg"></i> Ocultar Ticket
                                     </button>
                                 </div>
