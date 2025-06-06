@@ -159,18 +159,31 @@ $conn->close();
                         </div>
 
                         <?php if ($datos['imagen_ticket']): ?>
+                        <!-- Debug de la imagen -->
+                        <?php
+                        $ruta_ticket = "https://movilistica.com/archivos/tickets/" . $datos['imagen_ticket'];
+                        echo "<!-- Debug: Ruta del ticket: " . htmlspecialchars($ruta_ticket) . " -->";
+                        echo "<!-- Debug: Nombre del archivo: " . htmlspecialchars($datos['imagen_ticket']) . " -->";
+                        ?>
                         <!-- Sección colapsable para el ticket -->
                         <div class="collapse mb-4" id="ticketCollapse">
                             <div class="card card-body">
                                 <h5 class="card-title mb-3">Ticket</h5>
                                 <div class="text-center">
-                                    <img src="https://movilistica.com/archivos/tickets/<?= htmlspecialchars($datos['imagen_ticket']) ?>" 
+                                    <img src="<?= $ruta_ticket ?>" 
                                          class="img-fluid" 
                                          style="max-height: 500px;"
-                                         alt="Ticket">
+                                         alt="Ticket"
+                                         onerror="this.onerror=null; console.log('Error al cargar la imagen:', this.src); this.src='assets/img/error-image.png';">
+                                    <?php if (empty($datos['imagen_ticket'])): ?>
+                                        <p class="text-muted mt-2">No hay imagen de ticket disponible</p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
+                        <?php else: ?>
+                        <!-- Debug cuando no hay imagen -->
+                        <?php echo "<!-- Debug: No hay imagen de ticket en los datos -->"; ?>
                         <?php endif; ?>
 
                         <div class="row g-3">
