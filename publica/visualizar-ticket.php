@@ -4,6 +4,11 @@ require_once('assets/php/conexiones/conexionMySqli.php');
 $id_ticket = $_GET['id'] ?? null;
 if (!$id_ticket) die("Falta el ID.");
 
+// Debug de conexión
+if (!$conn) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
+
 // Consulta para obtener los datos del ticket y datos fiscales
 $query = "SELECT t.*, 
                  df.razonSocial, df.rfc, df.correo, df.telefono,
@@ -16,16 +21,38 @@ $query = "SELECT t.*,
           LEFT JOIN usosCfdi uc ON t.usoCfdi = uc.id
           WHERE t.id = ?";
 
+// Debug de la consulta
+echo "<!-- Query: " . htmlspecialchars($query) . " -->";
+
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id_ticket);
-$stmt->execute();
+if (!$stmt) {
+    die("Error en la preparación de la consulta: " . $conn->error);
+}
+
+if (!$stmt->bind_param("i", $id_ticket)) {
+    die("Error al vincular parámetros: " . $stmt->error);
+}
+
+if (!$stmt->execute()) {
+    die("Error al ejecutar la consulta: " . $stmt->error);
+}
+
 $result = $stmt->get_result();
+if (!$result) {
+    die("Error al obtener resultados: " . $stmt->error);
+}
 
 if ($result->num_rows === 0) {
     die("Ticket no encontrado.");
 }
 
 $datos = $result->fetch_assoc();
+if (!$datos) {
+    die("Error al obtener datos: " . $stmt->error);
+}
+
+// Debug de datos obtenidos
+echo "<!-- Datos obtenidos: " . print_r($datos, true) . " -->";
 
 // URLs
 $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
