@@ -103,7 +103,7 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                         <?php
                                         // Aquí iría el while para los usos de CFDI
                                         while($uso = $result_usos_cfdi->fetch_assoc()) {
-                                            echo "<option value='{$uso['clave']}'>{$uso['clave']} - {$uso['descripcion']}</option>";
+                                            echo "<option value='{$uso['id']}'>{$uso['clave']} - {$uso['descripcion']}</option>";
                                         }
                                         ?>
                                     </select>
