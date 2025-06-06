@@ -73,8 +73,8 @@ try {
         $nombreImagen = procesarImagen($_FILES['imagen_ticket']);
     }
 
-    // Generar número de ticket y fecha
-    $numeroTicket = generarNumeroTicket($conn);
+    // Obtener número de ticket (si se proporcionó)
+    $numeroTicket = $_POST['numeroTicket'] ?? '';
     $fecha = date('Y-m-d H:i:s');
 
     // Preparar la consulta SQL
@@ -116,9 +116,9 @@ try {
     // Redirigir al usuario con mensaje de éxito
     $_SESSION['mensaje'] = [
         'tipo' => 'success',
-        'texto' => "Ticket generado exitosamente. Número de ticket: {$numeroTicket}"
+        'texto' => "Ticket generado exitosamente" . ($numeroTicket ? ". Número de ticket: {$numeroTicket}" : "")
     ];
-    header('Location: generar_qr.php?id=$idTicket');
+    header("Location: ../publica/generar_qr.php?id={$idTicket}");
     exit;
 
 } catch (Exception $e) {

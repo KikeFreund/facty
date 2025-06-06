@@ -37,6 +37,19 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                 </div>
                             </div>
 
+                            <!-- Número de Ticket (Opcional) -->
+                            <div class="mb-4">
+                                <label for="numeroTicket" class="form-label">Número de Ticket (Opcional)</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="numeroTicket" 
+                                       name="numeroTicket" 
+                                       placeholder="Ingresa el número de ticket">
+                                <small class="form-text text-muted">
+                                    Si no ingresas un número, se dejará vacío
+                                </small>
+                            </div>
+
                             <!-- Imagen del Ticket -->
                             <div class="mb-4">
                                 <label for="imagen_ticket" class="form-label">Imagen del Ticket</label>
