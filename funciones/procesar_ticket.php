@@ -119,7 +119,7 @@ try {
         'tipo' => 'success',
         'texto' => "Ticket generado exitosamente" . ($numeroTicket ? ". Número de ticket: {$numeroTicket}" : "")
     ];
-    header("Location: ../publica/generar_qr.php?id={$idTicket}");
+    header("Location: generar_qr.php?id={$idTicket}");
     exit;
 
 } catch (Exception $e) {
