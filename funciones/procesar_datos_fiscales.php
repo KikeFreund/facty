@@ -166,8 +166,7 @@ try {
 
     // Redirigir con mensaje de éxito
     $_SESSION['mensaje'] = "Datos fiscales registrados correctamente";
-    echo "<!-- Debug: Mensaje de éxito guardado en sesión -->\n";
-    echo "Datos fiscales registrados correctamente";
+    header('Location: ../index');
     exit();
 
 } catch (Exception $e) {
@@ -175,9 +174,9 @@ try {
     echo "<!-- Debug Error: " . $e->getMessage() . " -->\n";
     echo "<!-- Debug Error Trace: " . $e->getTraceAsString() . " -->\n";
     
-    // Mostrar error
+    // Guardar error en sesión y redirigir
     $_SESSION['error'] = $e->getMessage();
-    echo "Error: " . $e->getMessage();
+    header('Location: ../registrar-datos-fiscales');
     exit();
 }
 ?> 
