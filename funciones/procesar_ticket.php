@@ -8,6 +8,18 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
+// Función para generar número de ticket
+function generarNumeroTicket($conn) {
+    // Obtener el último número de ticket
+    $query = "SELECT MAX(CAST(SUBSTRING(numeroTicket, 4) AS UNSIGNED)) as ultimo_numero FROM tickets";
+    $result = $conn->query($query);
+    $row = $result->fetch_assoc();
+    
+    // Generar nuevo número
+    $siguiente_numero = ($row['ultimo_numero'] ?? 0) + 1;
+    return 'TKT' . str_pad($siguiente_numero, 6, '0', STR_PAD_LEFT);
+}
+
 // Función para validar y procesar la imagen
 function procesarImagen($archivo) {
     $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -52,7 +64,7 @@ function procesarImagen($archivo) {
 
 try {
     // Validar datos requeridos
-    $camposRequeridos = ['monto', 'datos_fiscales', 'uso_cfdi', 'rfc', 'razon_social', 'regimen_fiscal'];
+    $camposRequeridos = ['monto', 'datos_fiscales', 'uso_cfdi'];
     foreach ($camposRequeridos as $campo) {
         if (!isset($_POST[$campo]) || empty($_POST[$campo])) {
             throw new Exception("El campo {$campo} es requerido.");
@@ -71,26 +83,20 @@ try {
         $nombreImagen = procesarImagen($_FILES['imagen_ticket']);
     }
 
+    // Generar número de ticket y fecha
+    $numeroTicket = generarNumeroTicket($conn);
+    $fecha = date('Y-m-d H:i:s');
+
     // Preparar la consulta SQL
     $query = "INSERT INTO tickets (
-        id_usuario, 
+        id_cliente, 
         monto, 
-        id_datos_fiscales, 
-        uso_cfdi, 
-        rfc, 
-        razon_social, 
-        regimen_fiscal, 
-        correo, 
-        calle, 
-        cp, 
-        colonia, 
-        municipio, 
-        estado, 
-        telefono, 
-        imagen_ticket, 
-        fecha_creacion, 
-        estado_ticket
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'pendiente')";
+        usoCfdi,
+        numeroTicket,
+        fecha, 
+        id_datos, 
+        imagen_ticket
+    ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($query);
     if (!$stmt) {
@@ -99,21 +105,13 @@ try {
 
     // Vincular parámetros
     $stmt->bind_param(
-        'idsssssssssssss',
+        'idsssss',
         $_SESSION['id_usuario'],
         $monto,
-        $_POST['datos_fiscales'],
         $_POST['uso_cfdi'],
-        $_POST['rfc'],
-        $_POST['razon_social'],
-        $_POST['regimen_fiscal'],
-        $_POST['correo'],
-        $_POST['calle'],
-        $_POST['cp'],
-        $_POST['colonia'],
-        $_POST['municipio'],
-        $_POST['estado'],
-        $_POST['telefono'],
+        $numeroTicket,
+        $fecha,
+        $_POST['datos_fiscales'],
         $nombreImagen
     );
 
@@ -128,7 +126,7 @@ try {
     // Redirigir al usuario con mensaje de éxito
     $_SESSION['mensaje'] = [
         'tipo' => 'success',
-        'texto' => 'Ticket generado exitosamente. ID: ' . $idTicket
+        'texto' => "Ticket generado exitosamente. Número de ticket: {$numeroTicket}"
     ];
     header('Location: ../cliente/tickets.php');
     exit;
