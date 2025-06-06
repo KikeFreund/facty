@@ -82,7 +82,7 @@ try {
     $ruta_constancia = procesarConstancia($_FILES, $_SESSION['id_usuario']);
 
     // Preparar la consulta SQL para inserción
-    $query = "INSERT INTO datosFiscales (id_usuario, razonSocial, rfc, regimen, uso_cfdi, 
+    $query = "INSERT INTO datosFiscales (id_usuario, razonSocial, rfc, regimen, usoFavorito, 
               correo, telefono, calle, colonia, codigoPostal, municipio, estado, constancia) 
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
