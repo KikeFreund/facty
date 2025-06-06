@@ -101,7 +101,7 @@ try {
 
     // Redirigir con mensaje de éxito
     $_SESSION['mensaje'] = "Datos fiscales registrados correctamente";
-    header('Location: ../registrar-datos-fiscales');
+  //  header('Location: ../registrar-datos-fiscales');
     exit();
 
 } catch (Exception $e) {
