@@ -1,26 +1,53 @@
 <?php
+require_once('../assets/php/conexiones/conexionMySqli.php');
+
 $id_ticket = $_GET['id'] ?? null;
 if (!$id_ticket) die("Falta el ID.");
 
+// Consulta para obtener los datos del ticket y datos fiscales
+$query = "SELECT t.*, 
+                 df.razonSocial, df.rfc, df.correo, df.telefono,
+                 df.calle, df.colonia, df.cp, df.municipio, df.estado,
+                 rf.descripcion as regimen_fiscal,
+                 uc.clave as clave_cfdi, uc.descripcion as descripcion_cfdi
+          FROM ticket t
+          LEFT JOIN datosFiscales df ON t.id_datos = df.id
+          LEFT JOIN regimenesFiscales rf ON df.regimen = rf.id
+          LEFT JOIN usosCfdi uc ON t.usoCfdi = uc.id
+          WHERE t.id = ?";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id_ticket);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    die("Ticket no encontrado.");
+}
+
+$datos = $result->fetch_assoc();
+
+// URLs
 $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://factu.movilistica.com/visualizar-ticket?id=$id_ticket";
 $urlQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
-$urlConstancia='';
-// Datos de facturación (estos vendrían de la base de datos)
+$urlConstancia = '';
+
+// Datos de facturación
 $datosFacturacion = [
-    'ID de Ticket' => $id_ticket,
-    'Régimen Fiscal' => 'Persona Física con actividades empresariales y/o profesionales',
-    'RFC' => 'ABC123456XYZ',
-    'Uso de CFDI' => 'G01 - Adquisición de mercancías',
-    'Nombre o Razón Social' => 'Juan Pérez García',
-    'Correo Electrónico' => 'correo@ejemplo.com',
-    'Calle y Número' => 'Av. Reforma 123',
-    'Colonia' => 'Centro',
-    'Código Postal' => '06000',
-    'Municipio/Alcaldía' => 'Cuauhtémoc',
-    'Estado' => 'Ciudad de México',
+    'ID de Ticket' => $datos['id'],
+    'Régimen Fiscal' => $datos['regimen_fiscal'],
+    'RFC' => $datos['rfc'],
+    'Uso de CFDI' => $datos['clave_cfdi'] . ' - ' . $datos['descripcion_cfdi'],
+    'Nombre o Razón Social' => $datos['razonSocial'],
+    'Correo Electrónico' => $datos['correo'],
+    'Calle y Número' => $datos['calle'],
+    'Colonia' => $datos['colonia'],
+    'Código Postal' => $datos['cp'],
+    'Municipio/Alcaldía' => $datos['municipio'],
+    'Estado' => $datos['estado'],
     'País' => 'México',
-    'Teléfono' => '5555555555'
+    'Teléfono' => $datos['telefono']
 ];
 
 // Construir el mensaje con todos los datos
@@ -49,6 +76,10 @@ $mensaje .= "Estado: {$datosFacturacion['Estado']}\n";
 $mensaje .= "País: {$datosFacturacion['País']}\n\n";
 
 $mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correctos antes de procesar la factura.";
+
+// Cerrar la conexión
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -98,22 +129,22 @@ $mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correct
 
                             <div class="col-md-6">
                                 <label class="form-label">ID de Ticket</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($id_ticket) ?></p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['ID de Ticket']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Régimen Fiscal</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">Persona Física con actividades empresariales y/o profesionales</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Régimen Fiscal']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">RFC</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">ABC123456XYZ</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['RFC']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Uso de CFDI</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">G01 - Adquisición de mercancías</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Uso de CFDI']) ?></p>
                             </div>
 
                             <!-- Datos de Contacto -->
@@ -123,12 +154,12 @@ $mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correct
 
                             <div class="col-md-6">
                                 <label class="form-label">Nombre o Razón Social</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">Juan Pérez García</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Nombre o Razón Social']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Correo Electrónico</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">correo@ejemplo.com</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Correo Electrónico']) ?></p>
                             </div>
 
                             <!-- Dirección Fiscal -->
@@ -138,37 +169,37 @@ $mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correct
 
                             <div class="col-md-6">
                                 <label class="form-label">Calle y Número</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">Av. Reforma 123</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Calle y Número']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Colonia</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">Centro</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Colonia']) ?></p>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="form-label">Código Postal</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">06000</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Código Postal']) ?></p>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="form-label">Municipio/Alcaldía</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">Cuauhtémoc</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Municipio/Alcaldía']) ?></p>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="form-label">Estado</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">Ciudad de México</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Estado']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">País</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">México</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['País']) ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Teléfono</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)">5555555555</p>
+                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Teléfono']) ?></p>
                             </div>
                         </div>
                     </div>
@@ -215,22 +246,7 @@ $mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correct
     }
 
     function copiarTodo() {
-        const datos = {
-            'ID de Ticket': '<?= htmlspecialchars($id_ticket) ?>',
-            'Régimen Fiscal': 'Persona Física con actividades empresariales y/o profesionales',
-            'RFC': 'ABC123456XYZ',
-            'Uso de CFDI': 'G01 - Adquisición de mercancías',
-            'Nombre o Razón Social': 'Juan Pérez García',
-            'Correo Electrónico': 'correo@ejemplo.com',
-            'Calle y Número': 'Av. Reforma 123',
-            'Colonia': 'Centro',
-            'Código Postal': '06000',
-            'Municipio/Alcaldía': 'Cuauhtémoc',
-            'Estado': 'Ciudad de México',
-            'País': 'México',
-            'Teléfono': '5555555555'
-        };
-
+        const datos = <?= json_encode($datosFacturacion) ?>;
         const texto = Object.entries(datos)
             .map(([key, value]) => `${key}: ${value}`)
             .join('\n');
