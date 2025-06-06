@@ -13,7 +13,7 @@ if (!$conn) {
 $query = "SELECT t.*, 
                  df.razonSocial, df.rfc, df.correo, df.telefono,
                  df.calle, df.colonia, df.codigoPostal, df.municipio, df.estado,
-                 rf.descripcion as regimen_fiscal,
+                 rf.descripcion as regimen_fiscal,df.constancia,
                  uc.clave as clave_cfdi, uc.descripcion as descripcion_cfdi
           FROM ticket t
           LEFT JOIN datosFiscales df ON t.id_datos = df.id
@@ -53,12 +53,12 @@ if (!$datos) {
 
 // Debug de datos obtenidos
 echo "<!-- Datos obtenidos: " . print_r($datos, true) . " -->";
-
+$constancia=$datos['constancia'];
 // URLs
 $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://factu.movilistica.com/visualizar-ticket?id=$id_ticket";
 $urlQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
-$urlConstancia = '';
+$urlConstancia = "https://movilistica.com/$constancia";
 
 // Datos de facturación
 $datosFacturacion = [
