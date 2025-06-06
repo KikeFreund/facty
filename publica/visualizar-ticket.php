@@ -137,6 +137,16 @@ $conn->close();
                                     <button onclick="enviarWhatsApp()" class="btn btn-success">
                                         <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
                                     </button>
+                                    <?php if ($datos['imagen_ticket']): ?>
+                                    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#ticketCollapse">
+                                        <i class="bi bi-receipt"></i> Ver Ticket
+                                    </button>
+                                    <?php endif; ?>
+                                    <?php if ($constancia): ?>
+                                    <a href="<?= $urlConstancia ?>" class="btn btn-secondary" target="_blank">
+                                        <i class="bi bi-file-earmark-text"></i> Descargar Constancia Fiscal
+                                    </a>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="mt-3">
                                     <label for="telefono" class="form-label">Enviar por WhatsApp (con código de país)</label>
@@ -147,6 +157,21 @@ $conn->close();
                                 </div>
                             </div>
                         </div>
+
+                        <?php if ($datos['imagen_ticket']): ?>
+                        <!-- Sección colapsable para el ticket -->
+                        <div class="collapse mb-4" id="ticketCollapse">
+                            <div class="card card-body">
+                                <h5 class="card-title mb-3">Ticket</h5>
+                                <div class="text-center">
+                                    <img src="https://movilistica.com/archivos/tickets/<?= htmlspecialchars($datos['imagen_ticket']) ?>" 
+                                         class="img-fluid" 
+                                         style="max-height: 500px;"
+                                         alt="Ticket">
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
 
                         <div class="row g-3">
                             <!-- Datos Fiscales -->
