@@ -7,6 +7,8 @@ $result_usos_cfdi = $conn->query($query_usos_cfdi);
 $id_usuario=$_SESSION['id_usuario'];
 $query_datos_fiscales = "SELECT * FROM datosFiscales WHERE id_usuario = '$id_usuario'"; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
 $result_datos_fiscales =  $conn->query($query_datos_fiscales);
+$query_metodos_pago = "SELECT * FROM metodosPago "; // SELECT * FROM datos_fiscales WHERE id_usuario = ?
+$result_metodos_pago =  $conn->query($query_metodos_pago);
 ?>
 
 <body class="bg-light">
@@ -111,7 +113,26 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                         Por favor selecciona un uso de CFDI
                                     </div>
                                 </div>
-
+  <!-- Metodos de pago -->
+  <div class="mb-4">
+                                <h5 class="border-bottom pb-2">Metodos de pago</h5>
+                                
+                                <!-- Select de Datos Fiscales -->
+                                <div class="mb-3">
+                                    <label for="metodopago" class="form-label">Seleccionar Metodo de Pago</label>
+                                    <select class="form-select" id="metodopago" name="metodopago" required >
+                                        <option value="">Selecciona tu metodo de pago</option>
+                                        <?php
+                                        // Aquí iría el while para los datos fiscales
+                                        while($pago = $result_metodos_pago->fetch_assoc()) {
+                                            echo "<option value='{$pago['id']}'>{$pago['nombre']} </option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Por favor selecciona tu metodo de pago
+                                    </div>
+                                </div>
                                 <!-- Campos ocultos para los datos fiscales -->
                                 <input type="hidden" id="rfc" name="rfc">
                                 <input type="hidden" id="razon_social" name="razon_social">

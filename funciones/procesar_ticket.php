@@ -121,8 +121,9 @@ try {
         numeroTicket,
         fecha, 
         id_datos, 
+        metodoPago,
         imagen_ticket
-    ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    ) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 
     $stmt = $conn->prepare($query);
     if (!$stmt) {
@@ -138,6 +139,7 @@ try {
         $numeroTicket,
         $fecha,
         $_POST['datos_fiscales'],
+        $_POST['metodopago'],
         $nombreImagen
     );
 
