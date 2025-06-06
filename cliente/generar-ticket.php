@@ -203,6 +203,8 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 }
 
                 console.log('Datos recibidos:', data); // Debug
+                console.log('ID Uso Favorito:', data.id_usoFavorito); // Debug específico del uso favorito
+                console.log('Nombre Uso Favorito:', data.nombre_usoFavorito); // Debug del nombre
 
                 // Llenar los campos ocultos
                 document.getElementById('rfc').value = data.rfc || '';
@@ -219,9 +221,16 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 // Seleccionar el uso de CFDI favorito del dato fiscal seleccionado
                 if (data.id_usoFavorito) {
                     const selectUsoCfdi = document.getElementById('uso_cfdi');
-                    const opcion = Array.from(selectUsoCfdi.options).find(option => option.value === data.id_usoFavorito);
+                    console.log('Select CFDI:', selectUsoCfdi); // Debug del elemento select
+                    console.log('Opciones disponibles:', Array.from(selectUsoCfdi.options).map(opt => ({value: opt.value, text: opt.text}))); // Debug de las opciones
+                    const opcion = Array.from(selectUsoCfdi.options).find(option => {
+                        console.log('Comparando:', option.value, 'con', data.id_usoFavorito); // Debug de la comparación
+                        return option.value === data.id_usoFavorito;
+                    });
+                    console.log('Opción encontrada:', opcion); // Debug de la opción encontrada
                     if (opcion) {
                         selectUsoCfdi.value = data.id_usoFavorito;
+                        console.log('Valor establecido:', selectUsoCfdi.value); // Debug del valor establecido
                     }
                 }
 
