@@ -1,5 +1,7 @@
 <form action="">
+<label for="">Monto</label>
 <input type="text">
+
 <label for="">Datos Fiscales</label>
 <select name="" id="">
     <option value="">1</option>
