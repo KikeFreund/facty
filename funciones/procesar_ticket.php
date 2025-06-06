@@ -114,7 +114,7 @@ try {
     echo "</pre>";
 
     // Preparar la consulta SQL
-    $query = "INSERT INTO tickets (
+    $query = "INSERT INTO ticket (
         id_cliente, 
         monto, 
         usoCfdi,
