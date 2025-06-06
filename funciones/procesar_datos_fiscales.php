@@ -107,7 +107,7 @@ try {
 } catch (Exception $e) {
     // Redirigir con mensaje de error
     $_SESSION['error'] = $e->getMessage();
-    header('Location: ../registrar-datos-fiscales');
+   // header('Location: ../registrar-datos-fiscales');
     exit();
 }
 ?> 
