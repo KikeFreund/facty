@@ -127,7 +127,7 @@ try {
         'tipo' => 'error',
         'texto' => $e->getMessage()
     ];
-    header('Location: ../cliente/generar-ticket.php');
+    header('Location: ../generar-ticket');
     exit;
 } finally {
     // Cerrar la conexión
