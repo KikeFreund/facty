@@ -37,6 +37,30 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                 </div>
                             </div>
 
+                            <!-- Imagen del Ticket -->
+                            <div class="mb-4">
+                                <label for="imagen_ticket" class="form-label">Imagen del Ticket</label>
+                                <input type="file" 
+                                       class="form-control" 
+                                       id="imagen_ticket" 
+                                       name="imagen_ticket" 
+                                       accept="image/*"
+                                       onchange="previewImage(this)">
+                                <div class="invalid-feedback">
+                                    Por favor selecciona una imagen válida
+                                </div>
+                                <small class="form-text text-muted">
+                                    Formatos aceptados: JPG, PNG, GIF, WEBP. Tamaño máximo: 5MB
+                                </small>
+                                <!-- Vista previa de la imagen -->
+                                <div id="preview_container" class="mt-2" style="display: none;">
+                                    <img id="preview_image" class="img-thumbnail" style="max-height: 200px;">
+                                    <button type="button" class="btn btn-sm btn-danger mt-2" onclick="removeImage()">
+                                        <i class="bi bi-trash"></i> Eliminar imagen
+                                    </button>
+                                </div>
+                            </div>
+
                             <!-- Datos Fiscales -->
                             <div class="mb-4">
                                 <h5 class="border-bottom pb-2">Datos Fiscales</h5>
@@ -225,5 +249,47 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
             this.value = 0;
         }
     });
+
+    // Función para previsualizar la imagen
+    function previewImage(input) {
+        const previewContainer = document.getElementById('preview_container');
+        const previewImage = document.getElementById('preview_image');
+        const file = input.files[0];
+
+        // Validar el tipo de archivo
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor selecciona un archivo de imagen válido');
+                input.value = '';
+                previewContainer.style.display = 'none';
+                return;
+            }
+
+            // Validar el tamaño (5MB máximo)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('La imagen no debe superar los 5MB');
+                input.value = '';
+                previewContainer.style.display = 'none';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            previewContainer.style.display = 'none';
+        }
+    }
+
+    // Función para eliminar la imagen
+    function removeImage() {
+        const input = document.getElementById('imagen_ticket');
+        const previewContainer = document.getElementById('preview_container');
+        input.value = '';
+        previewContainer.style.display = 'none';
+    }
     </script>
 </body>
