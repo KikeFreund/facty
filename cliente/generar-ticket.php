@@ -44,13 +44,13 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                                        class="form-control" 
                                        id="imagen_ticket" 
                                        name="imagen_ticket" 
-                                       accept="image/*"
+                                       accept=".jpg,.jpeg,.png"
                                        onchange="previewImage(this)">
                                 <div class="invalid-feedback">
                                     Por favor selecciona una imagen válida
                                 </div>
                                 <small class="form-text text-muted">
-                                    Formatos aceptados: JPG, PNG, GIF, WEBP. Tamaño máximo: 5MB
+                                    Formatos aceptados: JPG, JPEG, PNG. Tamaño máximo: 5MB
                                 </small>
                                 <!-- Vista previa de la imagen -->
                                 <div id="preview_container" class="mt-2" style="display: none;">
@@ -258,8 +258,9 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
 
         // Validar el tipo de archivo
         if (file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Por favor selecciona un archivo de imagen válido');
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!validTypes.includes(file.type)) {
+                alert('Por favor selecciona una imagen en formato JPG, JPEG o PNG');
                 input.value = '';
                 previewContainer.style.display = 'none';
                 return;
