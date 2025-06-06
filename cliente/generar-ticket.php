@@ -89,20 +89,8 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
 
                                 <!-- Vista previa de datos fiscales -->
                                 <div id="vista_previa" class="card bg-light mb-3" style="display: none;">
-                                    <div class="card-body">
-                                        <h6 class="card-title">Datos Fiscales Seleccionados</h6>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p class="mb-1"><strong>RFC:</strong> <span id="preview_rfc"></span></p>
-                                                <p class="mb-1"><strong>Razón Social:</strong> <span id="preview_razon_social"></span></p>
-                                                <p class="mb-1"><strong>Régimen Fiscal:</strong> <span id="preview_regimen_fiscal"></span></p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="mb-1"><strong>Correo:</strong> <span id="preview_correo"></span></p>
-                                                <p class="mb-1"><strong>Teléfono:</strong> <span id="preview_telefono"></span></p>
-                                                <p class="mb-1"><strong>Dirección:</strong> <span id="preview_direccion"></span></p>
-                                            </div>
-                                        </div>
+                                    <div id="vista_previa_content">
+                                        <!-- El contenido se actualizará dinámicamente -->
                                     </div>
                                 </div>
                             </div>
@@ -152,14 +140,17 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
 
     // Función para cargar los datos fiscales
     function cargarDatosFiscales(id) {
+        const vistaPrevia = document.getElementById('vista_previa');
+        const vistaPreviaContent = document.getElementById('vista_previa_content');
+        
         if (!id) {
-            document.getElementById('vista_previa').style.display = 'none';
+            vistaPrevia.style.display = 'none';
             return;
         }
 
         // Mostrar indicador de carga
-        document.getElementById('vista_previa').style.display = 'block';
-        document.getElementById('vista_previa').innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+        vistaPrevia.style.display = 'block';
+        vistaPreviaContent.innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
 
         // Llamada AJAX para obtener los datos fiscales
         fetch(`funciones/obtener_datos_fiscales.php?id=${id}`)
@@ -188,13 +179,6 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                 document.getElementById('estado').value = data.estado || '';
                 document.getElementById('telefono').value = data.telefono || '';
 
-                // Actualizar la vista previa
-                document.getElementById('preview_rfc').textContent = data.rfc || 'No disponible';
-                document.getElementById('preview_razon_social').textContent = data.razon_social || 'No disponible';
-                document.getElementById('preview_regimen_fiscal').textContent = data.regimen_fiscal || 'No disponible';
-                document.getElementById('preview_correo').textContent = data.correo || 'No disponible';
-                document.getElementById('preview_telefono').textContent = data.telefono || 'No disponible';
-                
                 // Construir la dirección solo si tenemos los datos necesarios
                 const direccion = [
                     data.calle,
@@ -203,23 +187,21 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
                     data.estado,
                     data.cp ? `CP ${data.cp}` : ''
                 ].filter(Boolean).join(', ');
-                
-                document.getElementById('preview_direccion').textContent = direccion || 'No disponible';
 
-                // Restaurar la vista previa normal
-                document.getElementById('vista_previa').innerHTML = `
+                // Actualizar la vista previa
+                vistaPreviaContent.innerHTML = `
                     <div class="card-body">
                         <h6 class="card-title">Datos Fiscales Seleccionados</h6>
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>RFC:</strong> <span id="preview_rfc">${data.rfc || 'No disponible'}</span></p>
-                                <p class="mb-1"><strong>Razón Social:</strong> <span id="preview_razon_social">${data.razon_social || 'No disponible'}</span></p>
-                                <p class="mb-1"><strong>Régimen Fiscal:</strong> <span id="preview_regimen_fiscal">${data.regimen_fiscal || 'No disponible'}</span></p>
+                                <p class="mb-1"><strong>RFC:</strong> ${data.rfc || 'No disponible'}</p>
+                                <p class="mb-1"><strong>Razón Social:</strong> ${data.razon_social || 'No disponible'}</p>
+                                <p class="mb-1"><strong>Régimen Fiscal:</strong> ${data.regimen_fiscal || 'No disponible'}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Correo:</strong> <span id="preview_correo">${data.correo || 'No disponible'}</span></p>
-                                <p class="mb-1"><strong>Teléfono:</strong> <span id="preview_telefono">${data.telefono || 'No disponible'}</span></p>
-                                <p class="mb-1"><strong>Dirección:</strong> <span id="preview_direccion">${direccion || 'No disponible'}</span></p>
+                                <p class="mb-1"><strong>Correo:</strong> ${data.correo || 'No disponible'}</p>
+                                <p class="mb-1"><strong>Teléfono:</strong> ${data.telefono || 'No disponible'}</p>
+                                <p class="mb-1"><strong>Dirección:</strong> ${direccion || 'No disponible'}</p>
                             </div>
                         </div>
                     </div>
@@ -227,7 +209,7 @@ $result_datos_fiscales =  $conn->query($query_datos_fiscales);
             })
             .catch(error => {
                 console.error('Error al cargar los datos fiscales:', error);
-                document.getElementById('vista_previa').innerHTML = `
+                vistaPreviaContent.innerHTML = `
                     <div class="card-body">
                         <div class="alert alert-danger mb-0">
                             <i class="bi bi-exclamation-triangle"></i> Error al cargar los datos fiscales: ${error.message}
