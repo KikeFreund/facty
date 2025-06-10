@@ -10,7 +10,8 @@ if (!isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Obtener información del usuario
-$query_usuario = "SELECT * FROM usuarios WHERE id = ?";
+$query_usuario = "SELECT c.* FROM usuarios u
+INNER JOIN cliente c ON c.id_usuario=u.id WHERE id = ?";
 $stmt_usuario = $conn->prepare($query_usuario);
 $stmt_usuario->bind_param("i", $id_usuario);
 $stmt_usuario->execute();
