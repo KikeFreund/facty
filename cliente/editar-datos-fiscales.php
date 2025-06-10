@@ -11,7 +11,7 @@ $id_usuario = $_SESSION['id_usuario'];
 $id_datos = $_GET['id'] ?? null;
 
 if (!$id_datos) {
-    header('Location: informacion-personal.php');
+    header('Location: informacion-personal');
     exit();
 }
 
@@ -23,7 +23,7 @@ $stmt_verificar->execute();
 $datos_fiscales = $stmt_verificar->get_result();
 
 if ($datos_fiscales->num_rows === 0) {
-    header('Location: informacion-personal.php');
+    header('Location: informacion-personal');
     exit();
 }
 
@@ -193,7 +193,7 @@ $usos = $conn->query($query_usos);
                                         <?php if ($datos['constancia']): ?>
                                             <div class="alert alert-info">
                                                 <i class="bi bi-file-earmark-pdf"></i> 
-                                                Constancia actual: <a href="../<?= $datos['constancia'] ?>" target="_blank">Ver archivo</a>
+                                                Constancia actual: <a href="https::/movilisitica.com/<?= $datos['constancia'] ?>" target="_blank">Ver archivo</a>
                                             </div>
                                         <?php endif; ?>
                                         <label for="constancia" class="form-label">Nueva Constancia (PDF) - Opcional</label>
