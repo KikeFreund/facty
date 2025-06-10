@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($stmt->execute()) {
                 echo "Factura subida correctamente.";
+                header("Location: index.php?id={$idTicket}");
             } else {
                 echo "Error al guardar en la base de datos: " . $stmt->error;
             }
