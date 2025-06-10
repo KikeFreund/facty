@@ -82,9 +82,8 @@ $datosFacturacion = [
 
 // Construir el mensaje con todos los datos
 $mensaje = "📋 *Datos para Facturación*\n\n";
-$mensaje .= "🔗 *Enlaces:*\n";
-$mensaje .= "Ver Ticket: $urlTicket\n";
-$mensaje .= "Constancia de situacion fiscal: $urlConstancia\n\n";
+
+// $mensaje .= "Constancia de situacion fiscal: $urlConstancia\n\n";
 
 $mensaje .= "📝 *Datos Fiscales:*\n";
 $mensaje .= "ID de Ticket: {$datosFacturacion['ID de Ticket']}\n";
@@ -106,7 +105,11 @@ $mensaje .= "Municipio/Alcaldía: {$datosFacturacion['Municipio/Alcaldía']}\n";
 $mensaje .= "Estado: {$datosFacturacion['Estado']}\n";
 $mensaje .= "País: {$datosFacturacion['País']}\n\n";
 
-$mensaje .= "⚠️ *Nota:* Por favor, verifica que todos los datos sean correctos antes de procesar la factura.";
+$mensaje .= "🔗 *Enlaces:*\n";
+$mensaje .= "Para ver el ticket de compra, puede ingresar a mi espacio, por medio del siguiente enlace:
+:*\n";
+$mensaje .= "Ver Ticket: $urlTicket\n";
+$mensaje .= "⚠️ *Nota:*Por favor, puedes mandar la factura a mi espacio, a través del mismo enlace que compartí anteriormente.";
 
 // Cerrar la conexión
 $stmt->close();
