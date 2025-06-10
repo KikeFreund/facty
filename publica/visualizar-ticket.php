@@ -366,7 +366,7 @@ $conn->close();
 
   <div class="mb-3">
     <label for="ticket_id" class="form-label">ID del Ticket</label>
-    <input type="text" class="form-control" id="ticket_id" name="ticket_id"  value='<?php echo $id_ticket;?>' placeholder="Ej. 12345" required>
+    <input type="hidden" class="form-control" id="ticket_id" name="ticket_id"  value='<?php echo $id_ticket;?>' placeholder="Ej. 12345" required>
   </div>
 
   <div class="mb-3">
