@@ -41,6 +41,9 @@ switch ($uri) {
                                     case 'registrar-datos-fiscales':
                                         require 'pages/registrar-datos-fiscales.php';
                                         break;
+                                        case 'editar-datos-fiscales':
+                                            require 'pages/editar-datos-fiscales.php';
+                                            break;
 
     case 'facturacion':
         require 'pages/facturacion.php';
