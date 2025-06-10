@@ -86,6 +86,7 @@ $mensaje = "📋 *Datos para Facturación*\n\n";
 // $mensaje .= "Constancia de situacion fiscal: $urlConstancia\n\n";
 
 $mensaje .= "📝 *Datos Fiscales:*\n";
+$mensaje .= "Nombre/Razón Social: {$datosFacturacion['Nombre o Razón Social']}\n";
 $mensaje .= "ID de Ticket: {$datosFacturacion['ID de Ticket']}\n";
 $mensaje .= "Régimen Fiscal: {$datosFacturacion['Régimen Fiscal']}\n";
 $mensaje .= "RFC: {$datosFacturacion['RFC']}\n";
@@ -93,7 +94,7 @@ $mensaje .= "Metodo de Pago: {$datosFacturacion['metodoPago']}\n";
 $mensaje .= "Uso de CFDI: {$datosFacturacion['Uso de CFDI']}\n\n";
 
 $mensaje .= "👤 *Datos de Contacto:*\n";
-$mensaje .= "Nombre/Razón Social: {$datosFacturacion['Nombre o Razón Social']}\n";
+
 $mensaje .= "Correo: {$datosFacturacion['Correo Electrónico']}\n";
 $mensaje .= "Teléfono: {$datosFacturacion['Teléfono']}\n\n";
 
