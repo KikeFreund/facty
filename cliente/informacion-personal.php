@@ -265,7 +265,7 @@ $datos_fiscales = $stmt_datos->get_result();
         // Función para editar datos
         function editarDatos(id) {
             if (confirm('¿Deseas editar estos datos fiscales?')) {
-                window.location.href = `editar-datos-fiscales.php?id=${id}`;
+                window.location.href = `editar-datos-fiscales?id=${id}`;
             }
         }
 
