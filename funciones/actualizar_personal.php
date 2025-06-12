@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('../assets/php/conexiones/conexionMySqli.php');
 
 // Verificar si el usuario está logueado
@@ -12,27 +13,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_usuario = $_SESSION['id_usuario'];
         $nombre = trim($_POST['nombre']);
         $apellido = trim($_POST['apellido']);
-        $telefono = trim($_POST['telefono']);
 
         // Validar campos
-        if (empty($nombre) || empty($apellido) || empty($telefono)) {
+        if (empty($nombre) || empty($apellido)) {
             throw new Exception('Todos los campos son requeridos');
         }
 
-        // Validar teléfono (solo números y algunos caracteres especiales)
-        if (!preg_match('/^[\d\s\-\+\(\)]+$/', $telefono)) {
-            throw new Exception('Formato de teléfono inválido');
-        }
-
         // Actualizar información del usuario
-        $query = "UPDATE usuarios SET nombre = ?, apellido = ?, telefono = ? WHERE id = ?";
+        $query = "UPDATE usuarios SET nombre = ?, apellido = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
         
         if (!$stmt) {
             throw new Exception("Error en la preparación de la consulta: " . $conn->error);
         }
 
-        $stmt->bind_param("sssi", $nombre, $apellido, $telefono, $id_usuario);
+        $stmt->bind_param("ssi", $nombre, $apellido, $id_usuario);
 
         if (!$stmt->execute()) {
             throw new Exception("Error al actualizar los datos: " . $stmt->error);

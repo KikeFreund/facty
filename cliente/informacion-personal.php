@@ -295,9 +295,8 @@ $datos_fiscales = $stmt_datos->get_result();
         document.getElementById('formPersonal').addEventListener('submit', function(e) {
             const nombre = document.getElementById('nombre').value.trim();
             const apellido = document.getElementById('apellido').value.trim();
-            const telefono = document.getElementById('telefono').value.trim();
             
-            if (!nombre || !apellido || !telefono) {
+            if (!nombre || !apellido) {
                 e.preventDefault();
                 alert('Por favor completa todos los campos');
                 return false;

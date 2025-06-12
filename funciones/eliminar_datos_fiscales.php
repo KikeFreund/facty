@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('../assets/php/conexiones/conexionMySqli.php');
 header('Content-Type: application/json');
 
