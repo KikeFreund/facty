@@ -56,9 +56,7 @@ if ($cliente_id !== '') {
                   <div class="d-flex flex-column">
                     <strong>#<?= $f['ticket_id'] ?></strong>
                     <small class="text-muted"><?= htmlspecialchars($f['ticket_titulo']) ?></small>
-                    <span class="badge bg-<?= $f['ticket_estado'] === 'completado' ? 'success' : ($f['ticket_estado'] === 'en_proceso' ? 'warning' : 'secondary') ?>">
-                      <?= ucfirst(str_replace('_', ' ', $f['ticket_estado'])) ?>
-                    </span>
+                   
                   </div>
                 </td>
                 <td>
