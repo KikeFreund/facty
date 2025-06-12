@@ -40,11 +40,7 @@
                         <i class="fas fa-plus-circle me-1"></i>Generar Ticket
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'visualizar-ticket') ? 'active' : ''; ?>" href="/visualizar-ticket">
-                        <i class="fas fa-eye me-1"></i>Ver Ticket
-                    </a>
-                </li>
+            
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($uri === 'registrar-datos-fiscales') ? 'active' : ''; ?>" href="/registrar-datos-fiscales">
                         <i class="fas fa-plus-circle me-1"></i>Registrar Datos Fiscales
