@@ -360,6 +360,17 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
+<?php 
+if(isset($_SESSION['tipoUsuario'])){
+
+
+
+
+
+?>
 <form action="funciones/subir_factura.php" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm">
   <h4 class="mb-4">Subir factura (PDF + XML)</h4>
 
@@ -385,3 +396,6 @@ $conn->close();
 
   <button type="submit" class="btn btn-primary">Subir archivos</button>
 </form>
+<?php  
+}
+?>
