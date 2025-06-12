@@ -26,7 +26,7 @@ if ($cliente_id !== '') {
     $stmt = $conn->prepare("SELECT f.id, f.nombre_archivo, f.archivo_pdf, f.archivo_xml, f.creado_en, 
                                    t.id as ticket_id, t.titulo as ticket_titulo, t.estado as ticket_estado
                             FROM facturas f
-                            LEFT JOIN ticket t ON f.ticket_id = t.id
+                            LEFT JOIN tickets t ON f.ticket_id = t.id
                             WHERE t.id_cliente = ?
                             ORDER BY f.creado_en DESC");
     $stmt->bind_param("s", $cliente_id);
