@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,11 +5,9 @@
 
  <?php
  
-
 require($ruta."/lista-tickets.php");
 
  ?>
-
 
   
 </body>

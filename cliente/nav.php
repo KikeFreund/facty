@@ -16,6 +16,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?php echo ($uri === 'lista-tickets') ? 'active' : ''; ?>" href="/lista-tickets">
+                        <i class="fas fa-ticket-alt me-1"></i>Mis Tickets
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php echo ($uri === 'informacion-personal') ? 'active' : ''; ?>" href="/informacion-personal">
                         <i class="fas fa-user me-1"></i>Información Personal
                     </a>
@@ -32,7 +37,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($uri === 'generar-ticket') ? 'active' : ''; ?>" href="/generar-ticket">
-                        <i class="fas fa-ticket-alt me-1"></i>Generar Ticket
+                        <i class="fas fa-plus-circle me-1"></i>Generar Ticket
                     </a>
                 </li>
                 <li class="nav-item">
