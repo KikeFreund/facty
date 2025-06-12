@@ -364,7 +364,7 @@ $conn->close();
 
 
 <?php 
-if(isset($_SESSION['tipoUsuario'])){
+if(!isset($_SESSION['tipoUsuario'])){
 
 
 
