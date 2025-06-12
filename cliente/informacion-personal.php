@@ -185,7 +185,7 @@ $datos_fiscales = $stmt_datos->get_result();
                                 <i class="bi bi-file-earmark-text display-1 text-muted"></i>
                                 <h4 class="mt-3 text-muted">No tienes datos fiscales registrados</h4>
                                 <p class="text-muted">Comienza registrando tus primeros datos fiscales</p>
-                                <a href="registrar-datos-fiscales.php" class="btn btn-primary">
+                                <a href="registrar-datos-fiscales" class="btn btn-primary">
                                     <i class="bi bi-plus-circle"></i> Registrar Datos Fiscales
                                 </a>
                             </div>
