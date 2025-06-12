@@ -230,6 +230,9 @@ $conn->close();
                                 <label class="form-label">Metodo de Pago</label>
                                 <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datos['metodopago']) ?></p>
                             </div>
+                            <?php 
+if(!isset($_SESSION['tipoUsuario'])){
+?>
                             <!-- Datos de Contacto -->
                             <div class="col-12 mt-4">
                                 <h5 class="border-bottom pb-2">Datos de Contacto</h5>
@@ -284,6 +287,10 @@ $conn->close();
                                 <label class="form-label">Teléfono</label>
                                 <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Teléfono']) ?></p>
                             </div>
+
+                            <?php  
+}
+?>
                         </div>
                     </div>
                 </div>
@@ -365,11 +372,6 @@ $conn->close();
 
 <?php 
 if(!isset($_SESSION['tipoUsuario'])){
-
-
-
-
-
 ?>
 <form action="funciones/subir_factura.php" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm">
   <h4 class="mb-4">Subir factura (PDF + XML)</h4>
