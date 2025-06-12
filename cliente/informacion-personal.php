@@ -104,11 +104,7 @@ $datos_fiscales = $stmt_datos->get_result();
                                     <input type="text" class="form-control" id="apellido" name="apellido" 
                                            value="<?= htmlspecialchars($usuario['apellido'] ?? '') ?>" required>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="telefono" class="form-label">Teléfono</label>
-                                    <input type="tel" class="form-control" id="telefono" name="telefono" 
-                                           value="<?= htmlspecialchars($usuario['telefono'] ?? '') ?>" required>
-                                </div>
+                                
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="bi bi-save"></i> Actualizar Información
