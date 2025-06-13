@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <!-- Información de copyright -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="mb-3">
                     <h6 class="text-light mb-2">
                         <i class="fas fa-file-invoice"></i> FactyFlow
@@ -83,6 +83,18 @@
                     </a>
                     <a href="funciones/logout.php" class="text-light d-block mb-2">
                         <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Próximas Funciones -->
+            <div class="col-md-1">
+                <h6 class="text-light mb-3">
+                    <i class="fas fa-rocket me-1"></i> Próximas
+                </h6>
+                <div class="footer-links">
+                    <a href="#" onclick="mostrarProximasFunciones()" class="text-light d-block mb-2">
+                        <i class="fas fa-eye me-1"></i> Ver Lista
                     </a>
                 </div>
             </div>
@@ -217,6 +229,240 @@
     </div>
 </div>
 
+<!-- Modal de Próximas Funciones -->
+<div class="modal fade" id="modalProximasFunciones" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-rocket me-2"></i>Próximas Funciones - Roadmap
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Funciones de Gestión Avanzada -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-chart-line me-2"></i>Gestión Avanzada</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                                        <strong>Dashboard Analítico:</strong> Estadísticas de facturación y gastos
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-calendar-alt text-primary me-2"></i>
+                                        <strong>Calendario de Vencimientos:</strong> Recordatorios de pagos y fechas importantes
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-bell text-primary me-2"></i>
+                                        <strong>Notificaciones Push:</strong> Alertas en tiempo real de cambios de estado
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-history text-primary me-2"></i>
+                                        <strong>Historial Completo:</strong> Log de todas las actividades del usuario
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Automatización e IA -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-success">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-robot me-2"></i>Automatización e IA</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-magic text-success me-2"></i>
+                                        <strong>OCR Inteligente:</strong> Lectura automática de tickets con IA
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-brain text-success me-2"></i>
+                                        <strong>Predicción de Gastos:</strong> Análisis predictivo de patrones de consumo
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-sync-alt text-success me-2"></i>
+                                        <strong>Sincronización Automática:</strong> Integración con bancos y sistemas contables
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-cogs text-success me-2"></i>
+                                        <strong>Workflows Automatizados:</strong> Procesos automáticos de facturación
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comunicación y Colaboración -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-info">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="fas fa-comments me-2"></i>Comunicación</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-comment-dots text-info me-2"></i>
+                                        <strong>Chat en Vivo:</strong> Soporte técnico integrado
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-share-alt text-info me-2"></i>
+                                        <strong>Compartir Tickets:</strong> Envío directo a contadores o asesores
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-video text-info me-2"></i>
+                                        <strong>Videollamadas:</strong> Consultas virtuales con especialistas
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-users text-info me-2"></i>
+                                        <strong>Equipos Colaborativos:</strong> Gestión de múltiples usuarios
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integración y Conectividad -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-warning">
+                            <div class="card-header bg-warning text-dark">
+                                <h6 class="mb-0"><i class="fas fa-plug me-2"></i>Integración</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-mobile-alt text-warning me-2"></i>
+                                        <strong>App Móvil:</strong> Aplicación nativa para iOS y Android
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-cloud text-warning me-2"></i>
+                                        <strong>API Pública:</strong> Integración con sistemas externos
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-database text-warning me-2"></i>
+                                        <strong>Backup Automático:</strong> Respaldo en la nube
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-sync text-warning me-2"></i>
+                                        <strong>Sincronización Multi-dispositivo:</strong> Datos actualizados en tiempo real
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reportes y Análisis -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-danger">
+                            <div class="card-header bg-danger text-white">
+                                <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>Reportes</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-file-pdf text-danger me-2"></i>
+                                        <strong>Reportes Personalizados:</strong> Generación de informes a medida
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-download text-danger me-2"></i>
+                                        <strong>Exportación Masiva:</strong> Descarga de múltiples facturas
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-chart-pie text-danger me-2"></i>
+                                        <strong>Análisis Fiscal:</strong> Reportes para declaraciones
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-print text-danger me-2"></i>
+                                        <strong>Impresión Remota:</strong> Envío a impresoras de red
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seguridad y Cumplimiento -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-dark">
+                            <div class="card-header bg-dark text-white">
+                                <h6 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Seguridad</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-fingerprint text-dark me-2"></i>
+                                        <strong>Autenticación Biométrica:</strong> Login con huella digital
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-key text-dark me-2"></i>
+                                        <strong>2FA Avanzado:</strong> Autenticación de dos factores
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-eye-slash text-dark me-2"></i>
+                                        <strong>Encriptación End-to-End:</strong> Protección total de datos
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-audit text-dark me-2"></i>
+                                        <strong>Auditoría Completa:</strong> Trazabilidad de todas las acciones
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline de Lanzamiento -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="fas fa-calendar me-2"></i>Timeline de Lanzamiento</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-md-3">
+                                        <div class="border rounded p-3">
+                                            <h6 class="text-primary">Fase 1</h6>
+                                            <small>Q1 2024</small>
+                                            <p class="mb-0">Dashboard y Notificaciones</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="border rounded p-3">
+                                            <h6 class="text-success">Fase 2</h6>
+                                            <small>Q2 2024</small>
+                                            <p class="mb-0">OCR y App Móvil</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="border rounded p-3">
+                                            <h6 class="text-info">Fase 3</h6>
+                                            <small>Q3 2024</small>
+                                            <p class="mb-0">IA y Automatización</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="border rounded p-3">
+                                            <h6 class="text-warning">Fase 4</h6>
+                                            <small>Q4 2024</small>
+                                            <p class="mb-0">Integración Completa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 function mostrarAyuda() {
     new bootstrap.Modal(document.getElementById('modalAyuda')).show();
@@ -228,6 +474,10 @@ function mostrarContacto() {
 
 function mostrarFAQ() {
     new bootstrap.Modal(document.getElementById('modalFAQ')).show();
+}
+
+function mostrarProximasFunciones() {
+    new bootstrap.Modal(document.getElementById('modalProximasFunciones')).show();
 }
 </script>
 
