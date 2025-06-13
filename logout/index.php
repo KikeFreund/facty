@@ -40,7 +40,7 @@
 
         <form action="visualizar-ticket" method="GET" class="mx-auto" style="max-width: 500px;">
             <div class="input-group mb-3">
-                <input type="text" name="id" class="form-control" placeholder="ID de facturación" required>
+                <input type="text" name="id" class="form-control" placeholder="ID de ticket" required>
                 <button class="btn btn-primary" type="submit">Buscar</button>
             </div>
         </form>
