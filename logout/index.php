@@ -34,8 +34,8 @@
 
         <!-- Formulario de búsqueda -->
         <div class="text-center mb-4">
-            <h2>Buscar datos para facturación</h2>
-            <p>Ingresa el ID de datos fiscales.</p>
+            <h2>Buscar numero de ticket</h2>
+            <p>Ingresa el ID de ticket.</p>
         </div>
 
         <form action="visualizar-ticket" method="GET" class="mx-auto" style="max-width: 500px;">
