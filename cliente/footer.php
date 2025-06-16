@@ -1,3 +1,32 @@
+<link rel="stylesheet" href="assets/css/footer-styles.css">
+
+<style>
+/* Estilos inline para garantizar que los enlaces sean blancos */
+.footer a.footer-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    transition: all 0.3s ease !important;
+    padding: 4px 0 !important;
+    border-radius: 4px !important;
+}
+
+.footer a.footer-link:hover {
+    color: #17a2b8 !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    padding-left: 8px !important;
+    transform: translateX(5px) !important;
+    text-decoration: none !important;
+}
+
+.footer a.footer-link i {
+    width: 16px !important;
+    text-align: center !important;
+    color: inherit !important;
+}
+</style>
+
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -21,16 +50,16 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Navegación</h6>
                 <div class="footer-links">
-                    <a href="/" class="footer-link">
+                    <a href="/" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-home me-1"></i> Inicio
                     </a>
-                    <a href="/lista-tickets" class="footer-link">
+                    <a href="/lista-tickets" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-ticket-alt me-1"></i> Mis Tickets
                     </a>
-                    <a href="/facturas" class="footer-link">
+                    <a href="/facturas" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-file-invoice-dollar me-1"></i> Facturas
                     </a>
-                    <a href="/informacion-personal" class="footer-link">
+                    <a href="/informacion-personal" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-user me-1"></i> Perfil
                     </a>
                 </div>
@@ -40,13 +69,13 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Datos Fiscales</h6>
                 <div class="footer-links">
-                    <a href="/registrar-datos-fiscales" class="footer-link">
+                    <a href="/registrar-datos-fiscales" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-plus-circle me-1"></i> Registrar Datos
                     </a>
-                    <a href="/editar-datos-fiscales" class="footer-link">
+                    <a href="/editar-datos-fiscales" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-edit me-1"></i> Editar Datos
                     </a>
-                    <a href="/informacion-personal" class="footer-link">
+                    <a href="/informacion-personal" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-list me-1"></i> Ver Todos
                     </a>
                 </div>
@@ -56,13 +85,13 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Herramientas</h6>
                 <div class="footer-links">
-                    <a href="/generar-ticket" class="footer-link">
+                    <a href="/generar-ticket" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-plus me-1"></i> Nuevo Ticket
                     </a>
-                    <a href="/lector-qr" class="footer-link">
+                    <a href="/lector-qr" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-qrcode me-1"></i> Lector QR
                     </a>
-                    <a href="/visualizar-ticket" class="footer-link">
+                    <a href="/visualizar-ticket" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-eye me-1"></i> Ver Ticket
                     </a>
                 </div>
@@ -72,16 +101,16 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Soporte</h6>
                 <div class="footer-links">
-                    <a href="#" onclick="mostrarAyuda()" class="footer-link">
+                    <a href="#" onclick="mostrarAyuda()" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-question-circle me-1"></i> Ayuda
                     </a>
-                    <a href="#" onclick="mostrarContacto()" class="footer-link">
+                    <a href="#" onclick="mostrarContacto()" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-envelope me-1"></i> Contacto
                     </a>
-                    <a href="#" onclick="mostrarFAQ()" class="footer-link">
+                    <a href="#" onclick="mostrarFAQ()" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-info-circle me-1"></i> FAQ
                     </a>
-                    <a href="funciones/logout.php" class="footer-link">
+                    <a href="funciones/logout.php" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
                     </a>
                 </div>
@@ -93,7 +122,7 @@
                     <i class="fas fa-rocket me-1"></i> Próximas
                 </h6>
                 <div class="footer-links">
-                    <a href="#" onclick="mostrarProximasFunciones()" class="footer-link">
+                    <a href="#" onclick="mostrarProximasFunciones()" class="footer-link" style="color: #ffffff !important; text-decoration: none !important;">
                         <i class="fas fa-eye me-1"></i> Ver Lista
                     </a>
                 </div>

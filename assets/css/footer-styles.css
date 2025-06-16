@@ -1,0 +1,67 @@
+/* Estilos específicos para el footer - Alta especificidad */
+.footer .footer-link,
+.footer a.footer-link,
+.footer .footer-links a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    transition: all 0.3s ease !important;
+    padding: 4px 0 !important;
+    border-radius: 4px !important;
+    font-weight: 400 !important;
+}
+
+.footer .footer-link:hover,
+.footer a.footer-link:hover,
+.footer .footer-links a:hover {
+    color: #17a2b8 !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    padding-left: 8px !important;
+    transform: translateX(5px) !important;
+    text-decoration: none !important;
+}
+
+.footer .footer-link i,
+.footer a.footer-link i,
+.footer .footer-links a i {
+    width: 16px !important;
+    text-align: center !important;
+    color: inherit !important;
+}
+
+/* Mejorar visibilidad del footer */
+.footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+    color: #ffffff !important;
+    padding: 3rem 0 1rem 0 !important;
+    margin-top: 3rem !important;
+}
+
+.footer h6 {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+}
+
+.footer-links {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .footer .footer-link,
+    .footer a.footer-link,
+    .footer .footer-links a {
+        font-size: 0.9rem !important;
+        padding: 6px 0 !important;
+    }
+    
+    .footer .footer-link:hover,
+    .footer a.footer-link:hover,
+    .footer .footer-links a:hover {
+        padding-left: 5px !important;
+        transform: translateX(3px) !important;
+    }
+} 
