@@ -149,7 +149,7 @@ require('assets/php/conexiones/conexionMySqli.php');
     </style>
 </head>
 <body class="bg-light">
-    <?php include 'nav.php'; ?>
+ 
 
     <div class="container py-5">
         <div class="row justify-content-center">
