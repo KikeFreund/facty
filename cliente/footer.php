@@ -21,16 +21,16 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Navegación</h6>
                 <div class="footer-links">
-                    <a href="/" class="text-light d-block mb-2">
+                    <a href="/" class="footer-link">
                         <i class="fas fa-home me-1"></i> Inicio
                     </a>
-                    <a href="/lista-tickets" class="text-light d-block mb-2">
+                    <a href="/lista-tickets" class="footer-link">
                         <i class="fas fa-ticket-alt me-1"></i> Mis Tickets
                     </a>
-                    <a href="/facturas" class="text-light d-block mb-2">
+                    <a href="/facturas" class="footer-link">
                         <i class="fas fa-file-invoice-dollar me-1"></i> Facturas
                     </a>
-                    <a href="/informacion-personal" class="text-light d-block mb-2">
+                    <a href="/informacion-personal" class="footer-link">
                         <i class="fas fa-user me-1"></i> Perfil
                     </a>
                 </div>
@@ -40,13 +40,13 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Datos Fiscales</h6>
                 <div class="footer-links">
-                    <a href="/registrar-datos-fiscales" class="text-light d-block mb-2">
+                    <a href="/registrar-datos-fiscales" class="footer-link">
                         <i class="fas fa-plus-circle me-1"></i> Registrar Datos
                     </a>
-                    <a href="/editar-datos-fiscales" class="text-light d-block mb-2">
+                    <a href="/editar-datos-fiscales" class="footer-link">
                         <i class="fas fa-edit me-1"></i> Editar Datos
                     </a>
-                    <a href="/informacion-personal" class="text-light d-block mb-2">
+                    <a href="/informacion-personal" class="footer-link">
                         <i class="fas fa-list me-1"></i> Ver Todos
                     </a>
                 </div>
@@ -56,13 +56,13 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Herramientas</h6>
                 <div class="footer-links">
-                    <a href="/generar-ticket" class="text-light d-block mb-2">
+                    <a href="/generar-ticket" class="footer-link">
                         <i class="fas fa-plus me-1"></i> Nuevo Ticket
                     </a>
-                    <a href="/lector-qr" class="text-light d-block mb-2">
+                    <a href="/lector-qr" class="footer-link">
                         <i class="fas fa-qrcode me-1"></i> Lector QR
                     </a>
-                    <a href="/visualizar-ticket" class="text-light d-block mb-2">
+                    <a href="/visualizar-ticket" class="footer-link">
                         <i class="fas fa-eye me-1"></i> Ver Ticket
                     </a>
                 </div>
@@ -72,16 +72,16 @@
             <div class="col-md-2">
                 <h6 class="text-light mb-3">Soporte</h6>
                 <div class="footer-links">
-                    <a href="#" onclick="mostrarAyuda()" class="text-light d-block mb-2">
+                    <a href="#" onclick="mostrarAyuda()" class="footer-link">
                         <i class="fas fa-question-circle me-1"></i> Ayuda
                     </a>
-                    <a href="#" onclick="mostrarContacto()" class="text-light d-block mb-2">
+                    <a href="#" onclick="mostrarContacto()" class="footer-link">
                         <i class="fas fa-envelope me-1"></i> Contacto
                     </a>
-                    <a href="#" onclick="mostrarFAQ()" class="text-light d-block mb-2">
+                    <a href="#" onclick="mostrarFAQ()" class="footer-link">
                         <i class="fas fa-info-circle me-1"></i> FAQ
                     </a>
-                    <a href="funciones/logout.php" class="text-light d-block mb-2">
+                    <a href="funciones/logout.php" class="footer-link">
                         <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
                     </a>
                 </div>
@@ -93,7 +93,7 @@
                     <i class="fas fa-rocket me-1"></i> Próximas
                 </h6>
                 <div class="footer-links">
-                    <a href="#" onclick="mostrarProximasFunciones()" class="text-light d-block mb-2">
+                    <a href="#" onclick="mostrarProximasFunciones()" class="footer-link">
                         <i class="fas fa-eye me-1"></i> Ver Lista
                     </a>
                 </div>
@@ -120,6 +120,7 @@
         </div>
     </div>
 </footer>
+
 
 <!-- Modal de Ayuda -->
 <div class="modal fade" id="modalAyuda" tabindex="-1">
