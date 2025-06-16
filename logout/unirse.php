@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $invitacion_valida) {
             $conn->commit();
             
             // Redirigir al login con mensaje de éxito
-            header("Location: /pages/login.php?registro=exitoso&invitacion=1");
+            header("Location: login?registro=exitoso&invitacion=1");
             exit();
             
         } catch (Exception $e) {

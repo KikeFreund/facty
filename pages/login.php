@@ -11,6 +11,10 @@ function generarTokenSeguro($longitud = 64) {
     return bin2hex(random_bytes($longitud / 2)); // 64 caracteres
 }
 
+// Verificar si viene de un registro exitoso por invitación
+$registro_exitoso = isset($_GET['registro']) && $_GET['registro'] === 'exitoso';
+$invitacion = isset($_GET['invitacion']) && $_GET['invitacion'] === '1';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $_POST['usuario'] ?? '';
     $clave = $_POST['clave'] ?? '';
@@ -63,6 +67,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>Ingresa tus credenciales para continuar</p>
         </div>
 
+        <?php if ($registro_exitoso && $invitacion): ?>
+        <div class="welcome-message show">
+            <div class="welcome-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h4>¡Te damos la bienvenida!</h4>
+            <p>Tu cuenta ha sido creada exitosamente. Inicia sesión para comenzar esta increíble historia con FactyFlow.</p>
+            <div class="welcome-features">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Facturación simplificada</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Gestión de tickets</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Reportes detallados</span>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <?php if (isset($error)): ?>
         <div class="error-message show">
             <i class="fas fa-exclamation-circle me-2"></i>
@@ -91,6 +119,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
+<style>
+.welcome-message {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+    animation: slideInDown 0.6s ease-out;
+}
+
+.welcome-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+}
+
+.welcome-message h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.welcome-message p {
+    margin-bottom: 20px;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.welcome-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+}
+
+.feature-item i {
+    color: #fff;
+    font-size: 1rem;
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .welcome-features {
+        flex-direction: column;
+    }
+    
+    .feature-item {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+</style>
+
 <script>
     function generarDeviceId() {
         return btoa(navigator.userAgent + screen.width + screen.height + Math.random()).substring(0, 64);
@@ -108,6 +224,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     document.getElementById('device_id').value = deviceId;
+    
+    // Auto-scroll al formulario si hay mensaje de bienvenida
+    <?php if ($registro_exitoso && $invitacion): ?>
+    setTimeout(function() {
+        document.querySelector('form').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }, 1000);
+    <?php endif; ?>
 </script>
 <?php
 }
