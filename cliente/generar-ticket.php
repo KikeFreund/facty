@@ -101,7 +101,7 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                                 
                                 <!-- Vista previa de la imagen -->
                                 <div id="preview_container" class="mt-2" style="display: none;">
-                                    <img id="preview_image" class="img-thumbnail" style="max-height: 200px;">
+                                    <img id="preview_image" class="img-thumbnail" style="max-height: 200px;" onerror="this.style.display='none';">
                                     <button type="button" class="btn btn-sm btn-danger mt-2" onclick="removeImage()">
                                         <i class="bi bi-trash"></i> Eliminar imagen
                                     </button>
@@ -216,7 +216,7 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                         <video id="video" autoplay style="max-width: 100%; height: auto;"></video>
                         <canvas id="canvas" style="display: none;"></canvas>
                         <div id="fotoTomada" style="display: none;">
-                            <img id="fotoPreview" class="img-fluid" style="max-height: 400px;">
+                            <img id="fotoPreview" class="img-fluid" style="max-height: 400px;" onerror="this.style.display='none';">
                         </div>
                     </div>
                 </div>

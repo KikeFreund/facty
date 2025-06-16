@@ -220,7 +220,7 @@ $conn->close();
                                              class="img-fluid mb-3" 
                                              style="max-height: 500px;"
                                              alt="Ticket"
-                                             onerror="this.onerror=null; console.log('Error al cargar la imagen:', this.src); this.src='assets/img/error-image.png';">
+                                             onerror="this.style.display='none';">
                                     <?php endif; ?>
                                     
                                     <?php if ($datos['foto_ticket']): ?>
@@ -231,7 +231,7 @@ $conn->close();
                                              class="img-fluid" 
                                              style="max-height: 500px;"
                                              alt="Foto del Ticket"
-                                             onerror="this.onerror=null; console.log('Error al cargar la foto:', this.src); this.src='assets/img/error-image.png';">
+                                             onerror="this.style.display='none';">
                                     <?php endif; ?>
                                 </div>
                             </div>
