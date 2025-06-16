@@ -225,7 +225,7 @@ $conn->close();
                                     
                                     <?php if ($datos['foto_ticket']): ?>
                                         <?php
-                                        $ruta_foto = "https://movilistica.com/archivos/fotos_tickets/" . $datos['foto_ticket'];
+                                        //$ruta_foto = "https://movilistica.com/archivos/fotos_tickets/" . $datos['foto_ticket'];
                                         ?>
                                         <img src="<?= $ruta_foto ?>" 
                                              class="img-fluid" 
