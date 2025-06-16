@@ -121,6 +121,62 @@
     </div>
 </footer>
 
+<style>
+/* Estilos para los enlaces del footer */
+.footer-link {
+    color: #ffffff !important;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    padding: 4px 0;
+    border-radius: 4px;
+}
+
+.footer-link:hover {
+    color: #17a2b8 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 8px;
+    transform: translateX(5px);
+}
+
+.footer-link i {
+    width: 16px;
+    text-align: center;
+}
+
+/* Mejorar visibilidad del footer */
+.footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ffffff;
+    padding: 3rem 0 1rem 0;
+    margin-top: 3rem;
+}
+
+.footer h6 {
+    color: #ffffff !important;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .footer-link {
+        font-size: 0.9rem;
+        padding: 6px 0;
+    }
+    
+    .footer-link:hover {
+        padding-left: 5px;
+        transform: translateX(3px);
+    }
+}
+</style>
 
 <!-- Modal de Ayuda -->
 <div class="modal fade" id="modalAyuda" tabindex="-1">
