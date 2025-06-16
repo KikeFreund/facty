@@ -1,31 +1,5 @@
 <link rel="stylesheet" href="assets/css/footer-styles.css">
 
-<style>
-/* Estilos inline para garantizar que los enlaces sean blancos */
-.footer a.footer-link {
-    color: #ffffff !important;
-    text-decoration: none !important;
-    display: block !important;
-    margin-bottom: 0.5rem !important;
-    transition: all 0.3s ease !important;
-    padding: 4px 0 !important;
-    border-radius: 4px !important;
-}
-
-.footer a.footer-link:hover {
-    color: #17a2b8 !important;
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    padding-left: 8px !important;
-    transform: translateX(5px) !important;
-    text-decoration: none !important;
-}
-
-.footer a.footer-link i {
-    width: 16px !important;
-    text-align: center !important;
-    color: inherit !important;
-}
-</style>
 
 <footer class="footer">
     <div class="container">
