@@ -90,7 +90,7 @@
                 </div>
             </div>
             
-            <!-- Próximas Funciones -->
+            <!-- Próximas Funciones
             <div class="col-md-1">
                 <h6 class="text-light mb-3">
                     <i class="fas fa-rocket me-1"></i> Próximas
@@ -101,7 +101,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <!-- Línea separadora -->
         <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
