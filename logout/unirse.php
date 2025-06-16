@@ -8,9 +8,10 @@ $error = '';
 
 if ($id_invitacion) {
     // Verificar si la invitación existe y no ha sido usada
-    $stmt = $conn->prepare("SELECT i.*, u.nombre, u.apellido 
+    $stmt = $conn->prepare("SELECT i.*, c.nombre, c.apellido 
                            FROM invitaciones i 
                            JOIN usuarios u ON i.id_usuario = u.id 
+                           JOIN clientes c ON u.id= c.id_usuario
                            WHERE i.id = ? AND i.usada = 0");
     $stmt->bind_param("i", $id_invitacion);
     $stmt->execute();
