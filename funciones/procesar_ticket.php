@@ -78,14 +78,6 @@ function procesarFotoCamara($datosBase64) {
 }
 
 try {
-    // Debug de datos recibidos
-    echo "<pre>";
-    echo "POST recibido:\n";
-    print_r($_POST);
-    echo "\nFILES recibido:\n";
-    print_r($_FILES);
-    echo "</pre>";
-
     // Validar datos requeridos
     $camposRequeridos = ['monto', 'datos_fiscales', 'uso_cfdi', 'descripcion'];
     foreach ($camposRequeridos as $campo) {
@@ -94,61 +86,28 @@ try {
         }
     }
 
-    // Debug de campos requeridos
-    echo "<pre>";
-    echo "Campos requeridos validados:\n";
-    foreach ($camposRequeridos as $campo) {
-        echo "{$campo}: " . ($_POST[$campo] ?? 'no definido') . "\n";
-    }
-    echo "</pre>";
-
     // Validar monto
     $monto = filter_var($_POST['monto'], FILTER_VALIDATE_FLOAT);
     if ($monto === false || $monto <= 0) {
         throw new Exception('El monto debe ser un número válido mayor a 0.');
     }
 
-    // Debug del monto
-    echo "<pre>";
-    echo "Monto procesado: {$monto}\n";
-    echo "</pre>";
-
     // Procesar la imagen si se subió una
     $nombreImagen = null;
     if (isset($_FILES['imagen_ticket']) && $_FILES['imagen_ticket']['error'] !== UPLOAD_ERR_NO_FILE) {
         $nombreImagen = procesarImagen($_FILES['imagen_ticket']);
-        echo "<pre>";
-        echo "Imagen procesada: {$nombreImagen}\n";
-        echo "</pre>";
     }
 
     // Procesar foto de la cámara si se proporcionó
     $nombreFoto = null;
     if (isset($_POST['foto_camara']) && !empty($_POST['foto_camara'])) {
         $nombreFoto = procesarFotoCamara($_POST['foto_camara']);
-        echo "<pre>";
-        echo "Foto de cámara procesada: {$nombreFoto}\n";
-        echo "</pre>";
     }
 
     // Obtener número de ticket (si se proporcionó)
     $numeroTicket = $_POST['numeroTicket'] ?? '';
     $descripcion = $_POST['descripcion'] ?? '';
     $fecha = date('Y-m-d H:i:s');
-
-    // Debug de datos finales
-    echo "<pre>";
-    echo "Datos finales para insertar:\n";
-    echo "ID Cliente: {$_SESSION['id_usuario']}\n";
-    echo "Monto: {$monto}\n";
-    echo "Descripción: {$descripcion}\n";
-    echo "Uso CFDI: {$_POST['uso_cfdi']}\n";
-    echo "Número Ticket: {$numeroTicket}\n";
-    echo "Fecha: {$fecha}\n";
-    echo "ID Datos: {$_POST['datos_fiscales']}\n";
-    echo "Imagen: {$nombreImagen}\n";
-    echo "Foto: {$nombreFoto}\n";
-    echo "</pre>";
 
     // Preparar la consulta SQL
     $query = "INSERT INTO ticket (
