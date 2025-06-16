@@ -261,3 +261,134 @@ a:not(.btn):not(.nav-link):hover {
 } 
 
 
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.link-container {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    border: 2px dashed #dee2e6;
+}
+
+.copy-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.copy-btn:hover {
+    background: #218838;
+}
+
+.whatsapp-btn {
+    background: #25d366;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+}
+
+.whatsapp-btn:hover {
+    background: #128c7e;
+    color: white;
+}
+
+.contact-selector {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: none;
+}
+
+.contact-item {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+}
+
+.contact-item:hover {
+    background: #f8f9fa;
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.invitation-item {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.invitation-item:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status-pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-usada {
+    background: #d4edda;
+    color: #155724;
+}
