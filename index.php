@@ -48,6 +48,10 @@ switch ($uri) {
                                                 require 'pages/lista-tickets.php';
                                                 break;
 
+                                                case 'invitacion-amigo':
+                                                    require 'pages/invitacion-amigo.php';
+                                                    break;
+
     case 'facturacion':
         require 'pages/facturacion.php';
         break;
