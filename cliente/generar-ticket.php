@@ -21,6 +21,9 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                     </div>
                     <div class="card-body">
                         <form action="../funciones/procesar_ticket.php" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+                            <!-- Campo oculto para foto de cámara -->
+                            <input type="hidden" id="foto_camara" name="foto_camara" value="">
+                            
                             <!-- Monto -->
                             <div class="mb-4">
                                 <label for="monto" class="form-label">Monto a Facturar</label>
@@ -37,6 +40,24 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                                         Por favor ingresa un monto válido
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Descripción del Ticket -->
+                            <div class="mb-4">
+                                <label for="descripcion" class="form-label">Descripción del Ticket</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="descripcion" 
+                                       name="descripcion" 
+                                       placeholder="Ej. Pollos Morales - Desayuno, Gasolina Shell, Supermercado Walmart"
+                                       maxlength="200"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa una descripción del ticket
+                                </div>
+                                <small class="form-text text-muted">
+                                    Describe brevemente qué compraste o el servicio que recibiste
+                                </small>
                             </div>
 
                             <!-- Número de Ticket (Opcional) -->
@@ -67,6 +88,17 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                                 <small class="form-text text-muted">
                                     Formatos aceptados: JPG, JPEG, PNG. Tamaño máximo: 5MB
                                 </small>
+                                
+                                <!-- Botón para tomar foto -->
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-outline-primary" onclick="tomarFoto()">
+                                        <i class="fas fa-camera me-2"></i>Tomar Foto del Ticket
+                                    </button>
+                                    <small class="form-text text-muted d-block mt-1">
+                                        Usa la cámara de tu dispositivo para tomar una foto del ticket
+                                    </small>
+                                </div>
+                                
                                 <!-- Vista previa de la imagen -->
                                 <div id="preview_container" class="mt-2" style="display: none;">
                                     <img id="preview_image" class="img-thumbnail" style="max-height: 200px;">
@@ -169,8 +201,46 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
         </div>
     </div>
 
+    <!-- Modal para tomar foto -->
+    <div class="modal fade" id="modalCamara" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-camera me-2"></i>Tomar Foto del Ticket
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <video id="video" autoplay style="max-width: 100%; height: auto;"></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <div id="fotoTomada" style="display: none;">
+                            <img id="fotoPreview" class="img-fluid" style="max-height: 400px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnCapturar" onclick="capturarFoto()">
+                        <i class="fas fa-camera me-2"></i>Capturar Foto
+                    </button>
+                    <button type="button" class="btn btn-success" id="btnUsarFoto" style="display: none;" onclick="usarFoto()">
+                        <i class="fas fa-check me-2"></i>Usar Esta Foto
+                    </button>
+                    <button type="button" class="btn btn-warning" id="btnNuevaFoto" style="display: none;" onclick="nuevaFoto()">
+                        <i class="fas fa-redo me-2"></i>Nueva Foto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    let stream = null;
+    let fotoCapturada = null;
+
     // Validación del formulario
     (function () {
         'use strict'
@@ -345,5 +415,115 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
         input.value = '';
         previewContainer.style.display = 'none';
     }
+
+    // Función para tomar foto
+    function tomarFoto() {
+        const modal = new bootstrap.Modal(document.getElementById('modalCamara'));
+        modal.show();
+        
+        // Inicializar cámara
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(mediaStream) {
+                stream = mediaStream;
+                const video = document.getElementById('video');
+                video.srcObject = mediaStream;
+                
+                // Mostrar video y ocultar foto
+                document.getElementById('video').style.display = 'block';
+                document.getElementById('fotoTomada').style.display = 'none';
+                document.getElementById('btnCapturar').style.display = 'inline-block';
+                document.getElementById('btnUsarFoto').style.display = 'none';
+                document.getElementById('btnNuevaFoto').style.display = 'none';
+            })
+            .catch(function(err) {
+                console.error('Error al acceder a la cámara:', err);
+                alert('No se pudo acceder a la cámara. Asegúrate de dar permisos de cámara.');
+            });
+    }
+
+    // Función para capturar foto
+    function capturarFoto() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        
+        // Configurar canvas con las dimensiones del video
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        
+        // Dibujar el frame actual del video en el canvas
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Convertir a blob
+        canvas.toBlob(function(blob) {
+            fotoCapturada = blob;
+            
+            // Mostrar preview
+            const fotoPreview = document.getElementById('fotoPreview');
+            fotoPreview.src = URL.createObjectURL(blob);
+            
+            // Ocultar video y mostrar foto
+            document.getElementById('video').style.display = 'none';
+            document.getElementById('fotoTomada').style.display = 'block';
+            document.getElementById('btnCapturar').style.display = 'none';
+            document.getElementById('btnUsarFoto').style.display = 'inline-block';
+            document.getElementById('btnNuevaFoto').style.display = 'inline-block';
+        }, 'image/jpeg', 0.8);
+    }
+
+    // Función para usar la foto capturada
+    function usarFoto() {
+        if (fotoCapturada) {
+            // Convertir blob a base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                
+                // Asignar al campo oculto
+                document.getElementById('foto_camara').value = base64Data;
+                
+                // Crear un archivo a partir del blob para el input de archivo (opcional)
+                const file = new File([fotoCapturada], 'ticket_foto.jpg', { type: 'image/jpeg' });
+                const input = document.getElementById('imagen_ticket');
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+                
+                // Mostrar preview
+                previewImage(input);
+                
+                // Cerrar modal
+                bootstrap.Modal.getInstance(document.getElementById('modalCamara')).hide();
+                
+                // Limpiar cámara
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
+            };
+            reader.readAsDataURL(fotoCapturada);
+        }
+    }
+
+    // Función para tomar nueva foto
+    function nuevaFoto() {
+        // Limpiar foto anterior
+        fotoCapturada = null;
+        
+        // Mostrar video y ocultar foto
+        document.getElementById('video').style.display = 'block';
+        document.getElementById('fotoTomada').style.display = 'none';
+        document.getElementById('btnCapturar').style.display = 'inline-block';
+        document.getElementById('btnUsarFoto').style.display = 'none';
+        document.getElementById('btnNuevaFoto').style.display = 'none';
+    }
+
+    // Limpiar cámara cuando se cierre el modal
+    document.getElementById('modalCamara').addEventListener('hidden.bs.modal', function () {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+    });
     </script>
 </body>

@@ -23,7 +23,7 @@ $cliente_id = $_SESSION['id_usuario'];
 <?php
 if ($cliente_id !== '') {
     // Consulta para obtener todos los tickets del cliente
-    $stmt = $conn->prepare("SELECT t.id, t.monto, t.fecha, t.numeroTicket, t.usoCfdi, t.metodoPago,
+    $stmt = $conn->prepare("SELECT t.id, t.monto, t.fecha, t.numeroTicket, t.usoCfdi, t.metodoPago, t.descripcion,
                                    df.razonSocial, df.rfc, uc.descripcion as uso_cfdi_desc,
                                    mp.nombre as metodo_pago_nombre,
                                    (SELECT COUNT(*) FROM facturas f WHERE f.ticket_id = t.id) as num_facturas
@@ -64,6 +64,13 @@ if ($cliente_id !== '') {
                                         <?= date('d/m/Y H:i', strtotime($ticket['fecha'])) ?>
                                     </small>
                                 </div>
+                                
+                                <?php if ($ticket['descripcion']) { ?>
+                                    <div class="mb-2">
+                                        <small class="text-muted">Descripción:</small>
+                                        <div class="fw-bold text-dark"><?= htmlspecialchars($ticket['descripcion']) ?></div>
+                                    </div>
+                                <?php } ?>
                                 
                                 <?php if ($ticket['numeroTicket']) { ?>
                                     <div class="mb-2">

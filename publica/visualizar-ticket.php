@@ -110,7 +110,7 @@ $mensaje .= "🔗 *Enlaces:*\n";
 $mensaje .= "Para ver el ticket de compra, puede ingresar a mi espacio, por medio del siguiente enlace:
 :*\n";
 $mensaje .= "Ver Ticket: $urlTicket\n";
-$mensaje .= "⚠️ *Nota:*Por favor, puedes mandar la factura a mi espacio, a través del mismo enlace que compartí anteriormente.";
+$mensaje .= "⚠️ *Nota:*Por favor, puedes mandar la factura a mi espacio, a través del mismo enlace que compartí anteriormente.";
 
 // Cerrar la conexión
 $stmt->close();
@@ -133,6 +133,39 @@ $conn->close();
                         <h3 class="mb-0 text-center">Datos para Facturación</h3>
                     </div>
                     <div class="card-body">
+                        <!-- Información del Ticket -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="border-bottom pb-2">Información del Ticket</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">ID de Ticket</label>
+                                        <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['ID de Ticket']) ?></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Monto</label>
+                                        <p class="copiable form-control" onclick="copiarTexto(this)">$<?= number_format($datos['monto'], 2) ?></p>
+                                    </div>
+                                    <?php if ($datos['descripcion']) { ?>
+                                    <div class="col-12">
+                                        <label class="form-label">Descripción</label>
+                                        <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datos['descripcion']) ?></p>
+                                    </div>
+                                    <?php } ?>
+                                    <?php if ($datos['numeroTicket']) { ?>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Número de Ticket</label>
+                                        <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datos['numeroTicket']) ?></p>
+                                    </div>
+                                    <?php } ?>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Fecha</label>
+                                        <p class="copiable form-control" onclick="copiarTexto(this)"><?= date('d/m/Y H:i', strtotime($datos['fecha'])) ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row mb-4">
                             <div class="col-md-6 text-center mb-3">
                                 <img src="<?= $archivoQR ?>" class="img-thumbnail" style="max-width: 200px;">
@@ -145,7 +178,7 @@ $conn->close();
                                     <button onclick="enviarWhatsApp()" class="btn btn-success">
                                         <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
                                     </button>
-                                    <?php if ($datos['imagen_ticket']): ?>
+                                    <?php if ($datos['imagen_ticket'] || $datos['foto_ticket']): ?>
                                     <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#ticketCollapse">
                                         <i class="bi bi-receipt"></i> Ver Ticket
                                     </button>
@@ -166,13 +199,7 @@ $conn->close();
                             </div>
                         </div>
 
-                        <?php if ($datos['imagen_ticket']): ?>
-                        <!-- Debug de la imagen -->
-                        <?php
-                        $ruta_ticket = "https://movilistica.com/archivos/tickets/" . $datos['imagen_ticket'];
-                        echo "<!-- Debug: Ruta del ticket: " . htmlspecialchars($ruta_ticket) . " -->";
-                        echo "<!-- Debug: Nombre del archivo: " . htmlspecialchars($datos['imagen_ticket']) . " -->";
-                        ?>
+                        <?php if ($datos['imagen_ticket'] || $datos['foto_ticket']): ?>
                         <!-- Sección colapsable para el ticket -->
                         <div class="collapse mb-4" id="ticketCollapse">
                             <div class="card card-body">
@@ -185,31 +212,36 @@ $conn->close();
                                     </button>
                                 </div>
                                 <div class="text-center">
-                                    <img src="<?= $ruta_ticket ?>" 
-                                         class="img-fluid" 
-                                         style="max-height: 500px;"
-                                         alt="Ticket"
-                                         onerror="this.onerror=null; console.log('Error al cargar la imagen:', this.src); this.src='assets/img/error-image.png';">
-                                    <?php if (empty($datos['imagen_ticket'])): ?>
-                                        <p class="text-muted mt-2">No hay imagen de ticket disponible</p>
+                                    <?php if ($datos['imagen_ticket']): ?>
+                                        <?php
+                                        $ruta_ticket = "https://movilistica.com/archivos/tickets/" . $datos['imagen_ticket'];
+                                        ?>
+                                        <img src="<?= $ruta_ticket ?>" 
+                                             class="img-fluid mb-3" 
+                                             style="max-height: 500px;"
+                                             alt="Ticket"
+                                             onerror="this.onerror=null; console.log('Error al cargar la imagen:', this.src); this.src='assets/img/error-image.png';">
+                                    <?php endif; ?>
+                                    
+                                    <?php if ($datos['foto_ticket']): ?>
+                                        <?php
+                                        $ruta_foto = "https://movilistica.com/archivos/fotos_tickets/" . $datos['foto_ticket'];
+                                        ?>
+                                        <img src="<?= $ruta_foto ?>" 
+                                             class="img-fluid" 
+                                             style="max-height: 500px;"
+                                             alt="Foto del Ticket"
+                                             onerror="this.onerror=null; console.log('Error al cargar la foto:', this.src); this.src='assets/img/error-image.png';">
                                     <?php endif; ?>
                                 </div>
                             </div>
                         </div>
-                        <?php else: ?>
-                        <!-- Debug cuando no hay imagen -->
-                        <?php echo "<!-- Debug: No hay imagen de ticket en los datos -->"; ?>
                         <?php endif; ?>
 
                         <div class="row g-3">
                             <!-- Datos Fiscales -->
                             <div class="col-12">
                                 <h5 class="border-bottom pb-2">Datos Fiscales</h5>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label">ID de Ticket</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['ID de Ticket']) ?></p>
                             </div>
 
                             <div class="col-md-6">

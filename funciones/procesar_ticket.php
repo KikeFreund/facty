@@ -8,8 +8,6 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-
-
 // Función para validar y procesar la imagen
 function procesarImagen($archivo) {
     $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -52,6 +50,33 @@ function procesarImagen($archivo) {
     return $nombreArchivo;
 }
 
+// Función para procesar foto tomada con la cámara
+function procesarFotoCamara($datosBase64) {
+    // Verificar que los datos no estén vacíos
+    if (empty($datosBase64)) {
+        return null;
+    }
+
+    // Crear directorio si no existe
+    $directorio = '../../archivos/fotos_tickets/';
+    if (!file_exists($directorio)) {
+        mkdir($directorio, 0777, true);
+    }
+
+    // Generar nombre único para el archivo
+    $nombreArchivo = uniqid('foto_ticket_') . '.jpg';
+    $rutaCompleta = $directorio . $nombreArchivo;
+
+    // Decodificar y guardar la imagen
+    $datosImagen = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $datosBase64));
+    
+    if (file_put_contents($rutaCompleta, $datosImagen) === false) {
+        throw new Exception('Error al guardar la foto de la cámara.');
+    }
+
+    return $nombreArchivo;
+}
+
 try {
     // Debug de datos recibidos
     echo "<pre>";
@@ -62,7 +87,7 @@ try {
     echo "</pre>";
 
     // Validar datos requeridos
-    $camposRequeridos = ['monto', 'datos_fiscales', 'uso_cfdi'];
+    $camposRequeridos = ['monto', 'datos_fiscales', 'uso_cfdi', 'descripcion'];
     foreach ($camposRequeridos as $campo) {
         if (!isset($_POST[$campo]) || empty($_POST[$campo])) {
             throw new Exception("El campo {$campo} es requerido.");
@@ -97,8 +122,18 @@ try {
         echo "</pre>";
     }
 
+    // Procesar foto de la cámara si se proporcionó
+    $nombreFoto = null;
+    if (isset($_POST['foto_camara']) && !empty($_POST['foto_camara'])) {
+        $nombreFoto = procesarFotoCamara($_POST['foto_camara']);
+        echo "<pre>";
+        echo "Foto de cámara procesada: {$nombreFoto}\n";
+        echo "</pre>";
+    }
+
     // Obtener número de ticket (si se proporcionó)
     $numeroTicket = $_POST['numeroTicket'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
     $fecha = date('Y-m-d H:i:s');
 
     // Debug de datos finales
@@ -106,24 +141,28 @@ try {
     echo "Datos finales para insertar:\n";
     echo "ID Cliente: {$_SESSION['id_usuario']}\n";
     echo "Monto: {$monto}\n";
+    echo "Descripción: {$descripcion}\n";
     echo "Uso CFDI: {$_POST['uso_cfdi']}\n";
     echo "Número Ticket: {$numeroTicket}\n";
     echo "Fecha: {$fecha}\n";
     echo "ID Datos: {$_POST['datos_fiscales']}\n";
     echo "Imagen: {$nombreImagen}\n";
+    echo "Foto: {$nombreFoto}\n";
     echo "</pre>";
 
     // Preparar la consulta SQL
     $query = "INSERT INTO ticket (
         id_cliente, 
         monto, 
+        descripcion,
         usoCfdi,
         numeroTicket,
         fecha, 
         id_datos, 
         metodoPago,
-        imagen_ticket
-    ) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+        imagen_ticket,
+        foto_ticket
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($query);
     if (!$stmt) {
@@ -132,21 +171,22 @@ try {
 
     // Vincular parámetros
     $stmt->bind_param(
-        'idssssss',
+        'idssssssss',
         $_SESSION['id_usuario'],
         $monto,
+        $descripcion,
         $_POST['uso_cfdi'],
         $numeroTicket,
         $fecha,
         $_POST['datos_fiscales'],
         $_POST['metodopago'],
-        $nombreImagen
+        $nombreImagen,
+        $nombreFoto
     );
 
     // Ejecutar la consulta
     if (!$stmt->execute()) {
         throw new Exception('Error al guardar el ticket: ' . $stmt->error);
-    
     }
 
     $idTicket = $stmt->insert_id;
