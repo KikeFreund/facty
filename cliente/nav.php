@@ -40,6 +40,11 @@
                         <i class="fas fa-plus-circle me-1"></i>Generar Ticket
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo ($uri === 'invitacion-amigo') ? 'active' : ''; ?>" href="/invitacion-amigo">
+                        <i class="fas fa-user-plus me-1"></i>Invitar Amigo
+                    </a>
+                </li>
             
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($uri === 'registrar-datos-fiscales') ? 'active' : ''; ?>" href="/registrar-datos-fiscales">
