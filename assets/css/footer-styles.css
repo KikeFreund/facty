@@ -16,7 +16,6 @@
 .footer a.footer-link:hover,
 .footer .footer-links a:hover {
     color: #17a2b8 !important;
-
     padding-left: 8px !important;
     transform: translateX(5px) !important;
     text-decoration: none !important;
@@ -30,9 +29,24 @@
     color: inherit !important;
 }
 
+/* Hacer que text-muted sea blanco en el footer */
+.footer .text-muted {
+    color: #ffffff !important;
+    opacity: 0.8 !important;
+}
+
+.footer .text-muted.small {
+    color: #ffffff !important;
+    opacity: 0.7 !important;
+}
+
+.footer p.text-muted {
+    color: #ffffff !important;
+    opacity: 0.8 !important;
+}
+
 /* Mejorar visibilidad del footer */
 .footer {
-
     color: #ffffff !important;
     padding: 3rem 0 1rem 0 !important;
     margin-top: 3rem !important;
@@ -63,5 +77,9 @@
     .footer .footer-links a:hover {
         padding-left: 5px !important;
         transform: translateX(3px) !important;
+    }
+    
+    .footer .text-muted {
+        font-size: 0.85rem !important;
     }
 } 
