@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         
         // Obtener todas las invitaciones del usuario
         $query = "SELECT i.*, 
-                         u.nombre as nombre_referido, 
-                         u.apellido as apellido_referido,
+                         c.nombre as nombre_referido, 
+                         c.apellido as apellido_referido,
                          u.correo as correo_referido,
                          CASE 
                              WHEN i.usada = 1 THEN 'Usada'
@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                          END as estado
                   FROM invitaciones i 
                   LEFT JOIN usuarios u ON i.id_referido = u.id
+                  LEFT JOIN clientes c ON u.id = c.id_usuario
                   WHERE i.id_usuario = ?
                   ORDER BY i.fecha_generacion DESC";
         

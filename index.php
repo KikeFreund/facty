@@ -52,6 +52,11 @@ switch ($uri) {
                                                     require 'pages/invitacion-amigo.php';
                                                     break;
 
+                                                    case 'unirse':
+                                                        require 'pages/unirse.php';
+                                                        break;
+    
+
     case 'facturacion':
         require 'pages/facturacion.php';
         break;
