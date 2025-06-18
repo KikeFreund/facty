@@ -95,7 +95,7 @@ $mensaje .= "Uso de CFDI: {$datosFacturacion['Uso de CFDI']}\n\n";
 
 $mensaje .= "👤 *Datos de Contacto:*\n";
 
-$mensaje .= "Correo: {$datosFacturacion['Correo Electrónico']}\n";
+
 $mensaje .= "Teléfono: {$datosFacturacion['Teléfono']}\n\n";
 
 $mensaje .= "📍 *Dirección Fiscal:*\n";
@@ -275,10 +275,7 @@ if(!isset($_SESSION['tipoUsuario'])){
                                 <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Nombre o Razón Social']) ?></p>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Correo Electrónico</label>
-                                <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datosFacturacion['Correo Electrónico']) ?></p>
-                            </div>
+                          
 
                             <!-- Dirección Fiscal -->
                             <div class="col-12 mt-4">
