@@ -13,7 +13,7 @@
           <a class="nav-link" href="index">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="ver-tickets">Ver Tickets</a>
+          <a class="nav-link" href="lista-tickets">Ver Tickets</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="registrar-datos-fiscales">Registrar Datos Fiscales</a>

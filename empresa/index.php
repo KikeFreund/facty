@@ -8,7 +8,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Ver Tickets</h5>
             <p class="card-text">Consulta los tickets que te han dado los clientes.</p>
-            <a href="ver-tickets" class="btn btn-primary">Ir a Tickets</a>
+            <a href="lista-tickets" class="btn btn-primary">Ir a Tickets</a>
           </div>
         </div>
       </div>
