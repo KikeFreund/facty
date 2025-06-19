@@ -1,7 +1,7 @@
 <?php
 
 require_once 'assets/php/conexiones/conexionMySqli.php';
-session_start();
+//session_start();
 $empresa_id = $_SESSION['id_usuario'] ?? null;
 
 if (!$empresa_id) {
