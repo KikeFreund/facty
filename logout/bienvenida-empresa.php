@@ -115,10 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --bs-primary: #11998e;
-            --bs-primary-rgb: 17, 153, 142;
-        }
+      
         
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -128,32 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex-direction: column;
         }
         
-        .navbar {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+     
         
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-        
-        .navbar-nav .nav-link {
-            color: white !important;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .navbar-nav .nav-link:hover {
-            color: rgba(255, 255, 255, 0.8) !important;
-            transform: translateY(-1px);
-        }
-        
-        .navbar-nav .nav-link.active {
-            color: #fff !important;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-        }
         
         .welcome-container {
             background: rgba(255, 255, 255, 0.95);
