@@ -55,6 +55,9 @@ switch ($uri) {
                                                     case 'unirse':
                                                         require 'pages/unirse.php';
                                                         break;
+                                                        case 'bienvenida-empresa':
+                                                            require 'pages/bienvenida-empresa.php';
+                                                            break;
     
 
     case 'facturacion':

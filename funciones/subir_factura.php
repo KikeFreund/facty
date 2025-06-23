@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($stmt->execute()) {
                 echo "Factura subida correctamente.";
-                header("Location: ../index?id={$idTicket}");
+                header("Location: ../logout/bienvenida-empresa.php?id={$ticket_id}");
             } else {
                 echo "Error al guardar en la base de datos: " . $stmt->error;
             }
