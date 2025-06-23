@@ -499,7 +499,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-md-3">
                         <div class="text-center">
                             <i class="fas fa-clock text-primary" style="font-size: 2rem;"></i>
-                            <h6 class="mt-2">Soporte 24/7</h6>
+                            <h6 class="mt-2">Soporte </h6>
                         </div>
                     </div>
                 </div>
