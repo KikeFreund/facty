@@ -241,25 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 1.1rem;
             opacity: 0.9;
         }
-        
-        .footer {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            padding: 1.5rem 0;
-            margin-top: auto;
-            box-shadow: 0 -2px 10px rgba(17, 153, 142, 0.2);
-        }
-        
-        .footer p {
-            margin: 0;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-        
-        .footer i {
-            color: #fff;
-            margin-right: 0.5rem;
-        }
+   
     </style>
 </head>
 <body>
