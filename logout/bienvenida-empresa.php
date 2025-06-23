@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="col-md-6">
                             <p><strong>Cliente:</strong> <?= htmlspecialchars($ticket['razonSocial'] ?? 'N/A') ?></p>
                             <p><strong>RFC:</strong> <?= htmlspecialchars($ticket['rfc'] ?? 'N/A') ?></p>
-                            <p><strong>Descripción:</strong> <?= htmlspecialchars($ticket['descripcion'] ?? 'N/A') ?></p>
+                            
                         </div>
                     </div>
                 </div>
