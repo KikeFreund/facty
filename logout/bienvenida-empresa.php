@@ -1,6 +1,9 @@
 <?php
 require_once('../assets/php/conexiones/conexionMySqli.php');
 
+// Variable para el nav
+$uri = 'bienvenida-empresa';
+
 // Obtener el ID del ticket de la URL
 $ticket_id = $_GET['id'] ?? null;
 
@@ -112,10 +115,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --bs-primary: #11998e;
+            --bs-primary-rgb: 17, 153, 142;
+        }
+        
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: rgba(255, 255, 255, 0.8) !important;
+            transform: translateY(-1px);
+        }
+        
+        .navbar-nav .nav-link.active {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
         }
         
         .welcome-container {
@@ -125,6 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             backdrop-filter: blur(10px);
             margin: 2rem auto;
             max-width: 1200px;
+            flex: 1;
         }
         
         .hero-section {
@@ -229,6 +267,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .stat-label {
             font-size: 1.1rem;
             opacity: 0.9;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 10px rgba(17, 153, 142, 0.2);
+        }
+        
+        .footer p {
+            margin: 0;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .footer i {
+            color: #fff;
+            margin-right: 0.5rem;
         }
     </style>
 </head>
