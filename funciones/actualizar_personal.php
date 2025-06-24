@@ -39,16 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensaje'] = "No se realizaron cambios en la información";
         }
 
-        header('Location: ../cliente/informacion-personal.php');
+        header('Location: ../informacion-personal');
         exit();
 
     } catch (Exception $e) {
         $_SESSION['error'] = $e->getMessage();
-        header('Location: ../cliente/informacion-personal.php');
+        header('Location: ../informacion-personal');
         exit();
     }
 } else {
-    header('Location: ../cliente/informacion-personal.php');
+    header('Location: ../informacion-personal');
     exit();
 }
 ?> 
