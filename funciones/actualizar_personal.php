@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Actualizar información del usuario
-        $query = "UPDATE usuarios SET nombre = ?, apellido = ? WHERE id = ?";
+        $query = "UPDATE clientes SET nombre = ?, apellido = ? WHERE id_usuario = ?";
         $stmt = $conn->prepare($query);
         
         if (!$stmt) {
