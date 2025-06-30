@@ -15,46 +15,37 @@
                         <i class="fas fa-home me-1"></i>Inicio
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'lista-tickets') ? 'active' : ''; ?>" href="/lista-tickets">
-                        <i class="fas fa-ticket-alt me-1"></i>Mis Tickets
+                <!-- Dropdown Tickets -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo in_array($uri, ['generar-ticket', 'lista-tickets', 'lector-qr']) ? 'active' : ''; ?>" href="#" id="ticketsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ticket-alt me-1"></i>Tickets
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="ticketsDropdown">
+                        <li><a class="dropdown-item" href="/generar-ticket"><i class="fas fa-plus-circle me-1"></i>Generar Ticket</a></li>
+                        <li><a class="dropdown-item" href="/lista-tickets"><i class="fas fa-ticket-alt me-1"></i>Mis Tickets</a></li>
+                        <li><a class="dropdown-item" href="/lector-qr"><i class="fas fa-qrcode me-1"></i>Lector QR</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'informacion-personal') ? 'active' : ''; ?>" href="/informacion-personal">
-                        <i class="fas fa-user me-1"></i>Información Personal
+                <!-- Dropdown Facturación -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo in_array($uri, ['facturas', 'registrar-datos-fiscales', 'editar-datos-fiscales']) ? 'active' : ''; ?>" href="#" id="facturacionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-file-invoice-dollar me-1"></i>Facturación
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="facturacionDropdown">
+                        <li><a class="dropdown-item" href="/facturas"><i class="fas fa-file-invoice-dollar me-1"></i>Facturas</a></li>
+                        <li><a class="dropdown-item" href="/registrar-datos-fiscales"><i class="fas fa-plus-circle me-1"></i>Registrar Datos Fiscales</a></li>
+                        <li><a class="dropdown-item" href="/editar-datos-fiscales"><i class="fas fa-edit me-1"></i>Editar Datos Fiscales</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'facturas') ? 'active' : ''; ?>" href="/facturas">
-                        <i class="fas fa-file-invoice-dollar me-1"></i>Facturas
+                <!-- Dropdown Cuenta -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo in_array($uri, ['informacion-personal', 'invitacion-amigo']) ? 'active' : ''; ?>" href="#" id="cuentaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-1"></i>Cuenta
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'lector-qr') ? 'active' : ''; ?>" href="/lector-qr">
-                        <i class="fas fa-qrcode me-1"></i>Lector QR
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'generar-ticket') ? 'active' : ''; ?>" href="/generar-ticket">
-                        <i class="fas fa-plus-circle me-1"></i>Generar Ticket
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'invitacion-amigo') ? 'active' : ''; ?>" href="/invitacion-amigo">
-                        <i class="fas fa-user-plus me-1"></i>Invitar Amigo
-                    </a>
-                </li>
-            
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'registrar-datos-fiscales') ? 'active' : ''; ?>" href="/registrar-datos-fiscales">
-                        <i class="fas fa-plus-circle me-1"></i>Registrar Datos Fiscales
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($uri === 'editar-datos-fiscales') ? 'active' : ''; ?>" href="/editar-datos-fiscales">
-                        <i class="fas fa-edit me-1"></i>Editar Datos Fiscales
-                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="cuentaDropdown">
+                        <li><a class="dropdown-item" href="/informacion-personal"><i class="fas fa-user me-1"></i>Información Personal</a></li>
+                        <li><a class="dropdown-item" href="/invitacion-amigo"><i class="fas fa-user-plus me-1"></i>Invitar Amigo</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($uri === 'login') ? 'active' : ''; ?>" href="funciones/logout.php">
