@@ -6,7 +6,7 @@
     <div class="container">
         <div class="welcome-section text-center rounded shadow-sm">
             <h1 class="display-4">Bienvenido al Panel de Cliente</h1>
-            <p class="lead">Aquí podrás gestionar tus servicios y consultar tu información</p>
+            <p class="lead">Tu espacio para compartir tickets y recibir facturas sin complicaciones.</p>
         </div>
 
         <!-- Aquí puedes agregar más contenido según necesites -->
