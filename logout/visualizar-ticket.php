@@ -407,7 +407,7 @@ $conn->close();
                             <div class="mb-3">
                                 <label for="ticket_id" class="form-label">ID del Ticket</label>
                                 <input type="hidden" class="form-control" id="ticket_id" name="ticket_id" value='<?php echo $id_ticket;?>' placeholder="Ej. 12345" required>
-                                <p class="form-control-plaintext"><?php echo $id_ticket;?></p>
+                                <!-- <p class="form-control-plaintext"><?php echo $id_ticket;?></p> -->
                             </div>
 
                             <div class="mb-3">
