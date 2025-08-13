@@ -146,13 +146,13 @@ if ($stmt) {
                 </h2>
                 <p class="text-center text-muted">Gestiona y consulta todas tus facturas</p>
                 
-                <?php if (!$has_new_fields): ?>
+                <!-- <?php if (!$has_new_fields): ?>
                 <div class="alert alert-warning text-center" style="max-width: 600px; margin: 0 auto;">
                     <i class="bi bi-exclamation-triangle me-2"></i>
                     <strong>Actualización recomendada:</strong> Para aprovechar todas las funcionalidades, 
                     ejecuta el script SQL en <code>sql/actualizar_tabla_ticket_facturas.sql</code>
                 </div>
-                <?php endif; ?>
+                <?php endif; ?> -->
             </div>
         </div>
 
