@@ -81,36 +81,26 @@ $datosFacturacion = [
 ];
 
 // Construir el mensaje con todos los datos
-$mensaje = "📋 *Datos para Facturación*\n\n";
+$mensaje = "📋 Datos para Facturación\n\n";
 
-// $mensaje .= "Constancia de situacion fiscal: $urlConstancia\n\n";
+$mensaje .= "🧾 Ticket: ID #{$datosFacturacion['ID de Ticket']}\n";
+$mensaje .= "💳 Pago: {$datosFacturacion['metodoPago']}\n";
+$mensaje .= "💼 Uso CFDI: {$datosFacturacion['Uso de CFDI']}\n\n";
 
-$mensaje .= "📝 *Datos Fiscales:*\n";
-$mensaje .= "Nombre/Razón Social: {$datosFacturacion['Nombre o Razón Social']}\n";
-$mensaje .= "ID de Ticket: {$datosFacturacion['ID de Ticket']}\n";
-$mensaje .= "Régimen Fiscal: {$datosFacturacion['Régimen Fiscal']}\n";
-$mensaje .= "RFC: {$datosFacturacion['RFC']}\n";
-$mensaje .= "Metodo de Pago: {$datosFacturacion['metodoPago']}\n";
-$mensaje .= "Uso de CFDI: {$datosFacturacion['Uso de CFDI']}\n\n";
+$mensaje .= "📌 RFC: {$datosFacturacion['RFC']}\n";
+$mensaje .= "🏛 Régimen: {$datosFacturacion['Régimen Fiscal']}\n\n";
 
-$mensaje .= "👤 *Datos de Contacto:*\n";
+$mensaje .= "📞 Contacto: {$datosFacturacion['Teléfono']}\n";
+$mensaje .= "🌐 Ver Ticket y Datos Fiscales:\n";
+$mensaje .= "$urlTicket\n\n";
 
+$mensaje .= "📎 Importante:\n";
+$mensaje .= "Puedes ver mi ticket, mis datos fiscales y subir la factura directamente en el enlace anterior.\n\n";
 
-$mensaje .= "Teléfono: {$datosFacturacion['Teléfono']}\n\n";
+$mensaje .= "☁ Por favor, NO enviar por correo. Sube la factura ahí mismo para almacenarla en mi espacio.\n\n";
 
-$mensaje .= "📍 *Dirección Fiscal:*\n";
-$mensaje .= "Calle y Número: {$datosFacturacion['Calle y Número']}\n";
-$mensaje .= "Colonia: {$datosFacturacion['Colonia']}\n";
-$mensaje .= "C.P.: {$datosFacturacion['Código Postal']}\n";
-$mensaje .= "Municipio/Alcaldía: {$datosFacturacion['Municipio/Alcaldía']}\n";
-$mensaje .= "Estado: {$datosFacturacion['Estado']}\n";
-$mensaje .= "País: {$datosFacturacion['País']}\n\n";
-
-$mensaje .= "🔗 *Enlaces:*\n";
-$mensaje .= "Para ver el ticket de compra, puede ingresar a mi espacio, por medio del siguiente enlace:
-:*\n";
-$mensaje .= "Ver Ticket: $urlTicket\n";
-$mensaje .= "⚠️ *Nota:*Por favor, puedes mandar la factura a mi espacio, a través del mismo enlace que compartí anteriormente.";
+$mensaje .= "🔁 ¿No puedes abrir el link?\n";
+$mensaje .= "Responde este mensaje con la factura o pídeme reenviar por otro medio.";
 
 // Cerrar la conexión
 $stmt->close();
