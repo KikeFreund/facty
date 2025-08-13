@@ -114,7 +114,8 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                                 
                                 <!-- Select de Datos Fiscales -->
                                 <div class="mb-3">
-                                    <label for="datos_fiscales" class="form-label">Seleccionar Datos Fiscales</label>
+                                    <label for="datos_fiscales" class="form-label">Aquí elige tu razón social y RFC para solicitar tu factura.
+                                    </label>
                                     <select class="form-select" id="datos_fiscales" name="datos_fiscales" required onchange="cargarDatosFiscales(this.value)">
                                         <option value="">Selecciona tus datos fiscales</option>
                                         <?php
@@ -131,7 +132,8 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
 
                                 <!-- Uso de CFDI -->
                                 <div class="mb-3">
-                                    <label for="uso_cfdi" class="form-label">Uso de CFDI</label>
+                                    <label for="uso_cfdi" class="form-label">Selecciona el uso que le darás a esta factura.
+                                    </label>
                                     <select class="form-select" id="uso_cfdi" name="uso_cfdi" required>
                                         <option value="">Selecciona un uso de CFDI</option>
                                         <?php
@@ -147,7 +149,7 @@ $result_metodos_pago =  $conn->query($query_metodos_pago);
                                 </div>
   <!-- Metodos de pago -->
   <div class="mb-4">
-                                <h5 class="border-bottom pb-2">Metodos de pago</h5>
+                                <h5 class="border-bottom pb-2"> Indica cómo pagaste esta compra.</h5>
                                 
                                 <!-- Select de Datos Fiscales -->
                                 <div class="mb-3">

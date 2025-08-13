@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -8,7 +7,7 @@
  <?php
  
 
-require("publica/visualizar-ticket.php");
+require($ruta."/visualizar-ticket.php");
 
  ?>
 
