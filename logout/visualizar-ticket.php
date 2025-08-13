@@ -366,7 +366,7 @@ $conn->close();
                     </div>
                 </div>
 
-                <!-- QR y botones de acción -->
+                <!-- QR y botones de acción
                 <div class="card shadow-sm mb-4" style="border-radius: 15px;">
                     <div class="card-body">
                         <div class="row">
@@ -389,7 +389,7 @@ $conn->close();
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <?php 
                 if(!isset($_SESSION['tipoUsuario'])){
