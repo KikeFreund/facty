@@ -23,7 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'marcar_recibida') {
     }
     
     // Redirigir para evitar reenvío del formulario
-    header("Location: facturas.php?filtro=" . $filtro);
+    header("Location: facturas?filtro=" . $filtro);
     exit;
 }
 
