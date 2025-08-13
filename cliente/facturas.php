@@ -14,23 +14,12 @@ if (isset($_POST['action']) && $_POST['action'] === 'marcar_recibida') {
     $nota = "Recibida manualmente el " . date('d/m/Y H:i') . " por: " . $canal;
     if ($otro_canal) $nota .= " - " . $otro_canal;
     
-    // Verificar si los campos existen antes de actualizar
-    $check_fields = $conn->query("SHOW COLUMNS FROM ticket LIKE 'estado_factura'");
-    if ($check_fields->num_rows > 0) {
-        $stmt = $conn->prepare("UPDATE ticket SET estado_factura = 'recibida_manual', nota_factura = ? WHERE id = ? AND id_cliente = ?");
-        if ($stmt) {
-            $stmt->bind_param("sis", $nota, $ticket_id, $cliente_id);
-            $stmt->execute();
-            $stmt->close();
-        }
-    } else {
-        // Si los campos no existen, solo actualizar con nota en descripción
-        $stmt = $conn->prepare("UPDATE ticket SET descripcion = CONCAT(descripcion, ' - ', ?) WHERE id = ? AND id_cliente = ?");
-        if ($stmt) {
-            $stmt->bind_param("sis", $nota, $ticket_id, $cliente_id);
-            $stmt->execute();
-            $stmt->close();
-        }
+    // Actualizar la descripción del ticket con la nota
+    $stmt = $conn->prepare("UPDATE ticket SET descripcion = CONCAT(COALESCE(descripcion, ''), ' - ', ?) WHERE id = ? AND id_cliente = ?");
+    if ($stmt) {
+        $stmt->bind_param("sis", $nota, $ticket_id, $cliente_id);
+        $stmt->execute();
+        $stmt->close();
     }
     
     // Redirigir para evitar reenvío del formulario
@@ -38,39 +27,19 @@ if (isset($_POST['action']) && $_POST['action'] === 'marcar_recibida') {
     exit;
 }
 
-// Verificar si los campos nuevos existen
-$check_fields = $conn->query("SHOW COLUMNS FROM ticket LIKE 'estado_factura'");
-$has_new_fields = $check_fields->num_rows > 0;
-
-// Obtener tickets del cliente
-if ($has_new_fields) {
-    $query = "SELECT t.*, 
-                     df.razonSocial, df.rfc,
-                     f.id as factura_id, f.nombre_archivo, f.archivo_pdf, f.archivo_xml, f.creado_en as fecha_factura,
-                     CASE 
-                         WHEN f.id IS NOT NULL THEN 'facturada'
-                         WHEN t.estado_factura = 'recibida_manual' THEN 'recibida_manual'
-                         ELSE 'pendiente'
-                     END as estado
-              FROM ticket t
-              LEFT JOIN datosFiscales df ON t.id_datos = df.id
-              LEFT JOIN facturas f ON t.id = f.ticket_id
-              WHERE t.id_cliente = ?";
-} else {
-    // Consulta compatible con estructura actual
-    $query = "SELECT t.*, 
-                     df.razonSocial, df.rfc,
-                     f.id as factura_id, f.nombre_archivo, f.archivo_pdf, f.archivo_xml, f.creado_en as fecha_factura,
-                     CASE 
-                         WHEN f.id IS NOT NULL THEN 'facturada'
-                         WHEN t.descripcion LIKE '%Recibida manualmente%' THEN 'recibida_manual'
-                         ELSE 'pendiente'
-                     END as estado
-              FROM ticket t
-              LEFT JOIN datosFiscales df ON t.id_datos = df.id
-              LEFT JOIN facturas f ON t.id = f.ticket_id
-              WHERE t.id_cliente = ?";
-}
+// Obtener tickets del cliente usando solo la estructura existente
+$query = "SELECT t.*, 
+                 df.razonSocial, df.rfc,
+                 f.id as factura_id, f.nombre_archivo, f.archivo_pdf, f.archivo_xml, f.creado_en as fecha_factura,
+                 CASE 
+                     WHEN f.id IS NOT NULL THEN 'facturada'
+                     WHEN t.descripcion LIKE '%Recibida manualmente%' THEN 'recibida_manual'
+                     ELSE 'pendiente'
+                 END as estado
+          FROM ticket t
+          LEFT JOIN datosFiscales df ON t.id_datos = df.id
+          LEFT JOIN facturas f ON t.id = f.ticket_id
+          WHERE t.id_cliente = ?";
 
 $params = [$cliente_id];
 $types = "s";
@@ -79,17 +48,9 @@ $types = "s";
 if ($filtro === 'facturadas') {
     $query .= " AND f.id IS NOT NULL";
 } elseif ($filtro === 'pendientes') {
-    if ($has_new_fields) {
-        $query .= " AND f.id IS NULL AND (t.estado_factura IS NULL OR t.estado_factura != 'recibida_manual')";
-    } else {
-        $query .= " AND f.id IS NULL AND t.descripcion NOT LIKE '%Recibida manualmente%'";
-    }
+    $query .= " AND f.id IS NULL AND t.descripcion NOT LIKE '%Recibida manualmente%'";
 } elseif ($filtro === 'recibidas_manual') {
-    if ($has_new_fields) {
-        $query .= " AND t.estado_factura = 'recibida_manual'";
-    } else {
-        $query .= " AND t.descripcion LIKE '%Recibida manualmente%'";
-    }
+    $query .= " AND t.descripcion LIKE '%Recibida manualmente%'";
 }
 
 if ($mes) {
@@ -107,24 +68,7 @@ if ($stmt) {
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
-    // Si la consulta falla, usar una consulta más simple
-    $query = "SELECT t.*, 
-                     df.razonSocial, df.rfc,
-                     f.id as factura_id, f.nombre_archivo, f.archivo_pdf, f.archivo_xml, f.creado_en as fecha_factura,
-                     CASE 
-                         WHEN f.id IS NOT NULL THEN 'facturada'
-                         ELSE 'pendiente'
-                     END as estado
-              FROM ticket t
-              LEFT JOIN datosFiscales df ON t.id_datos = df.id
-              LEFT JOIN facturas f ON t.id = f.ticket_id
-              WHERE t.id_cliente = ?
-              ORDER BY t.fecha DESC";
-    
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $cliente_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $result = null;
 }
 ?>
 
@@ -145,14 +89,6 @@ if ($stmt) {
                     <i class="bi bi-receipt me-2"></i>Mis Facturas
                 </h2>
                 <p class="text-center text-muted">Gestiona y consulta todas tus facturas</p>
-                
-                <!-- <?php if (!$has_new_fields): ?>
-                <div class="alert alert-warning text-center" style="max-width: 600px; margin: 0 auto;">
-                    <i class="bi bi-exclamation-triangle me-2"></i>
-                    <strong>Actualización recomendada:</strong> Para aprovechar todas las funcionalidades, 
-                    ejecuta el script SQL en <code>sql/actualizar_tabla_ticket_facturas.sql</code>
-                </div>
-                <?php endif; ?> -->
             </div>
         </div>
 
@@ -185,7 +121,7 @@ if ($stmt) {
         </div>
 
         <!-- Contenido -->
-        <?php if ($result->num_rows > 0): ?>
+        <?php if ($result && $result->num_rows > 0): ?>
             <div class="row g-4">
                 <?php while ($ticket = $result->fetch_assoc()): ?>
                     <div class="col-md-6 col-lg-4">
@@ -266,15 +202,7 @@ if ($stmt) {
                                     <!-- RECIBIDAS MANUALMENTE -->
                                     <div class="alert alert-info py-2 mb-3" style="font-size: 0.9rem;">
                                         <i class="bi bi-info-circle me-2"></i>
-                                        <?php 
-                                        if ($has_new_fields && isset($ticket['nota_factura'])) {
-                                            echo htmlspecialchars($ticket['nota_factura']);
-                                        } elseif (strpos($ticket['descripcion'], 'Recibida manualmente') !== false) {
-                                            echo htmlspecialchars($ticket['descripcion']);
-                                        } else {
-                                            echo 'Recibida manualmente';
-                                        }
-                                        ?>
+                                        <?= htmlspecialchars($ticket['descripcion']) ?>
                                     </div>
                                     
                                     <div class="d-grid">
