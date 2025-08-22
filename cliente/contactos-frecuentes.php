@@ -8,7 +8,7 @@ if (!isset($_SESSION['id_usuario'])) {
 }
 
 require_once('assets/php/conexiones/conexionMySqli.php');
-require_once('../funciones/buscar_contacto_frecuente.php');
+require_once('funciones/buscar_contacto_frecuente.php');
 
 $mensaje = '';
 $tipo_mensaje = '';
