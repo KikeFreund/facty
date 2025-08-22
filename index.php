@@ -58,6 +58,9 @@ switch ($uri) {
                                                         case 'bienvenida-empresa':
                                                             require 'pages/bienvenida-empresa.php';
                                                             break;
+                                                            case 'contactos-frecuentes':
+                                                                require 'pages/contactos-frecuentes.php';
+                                                                break;
     
 
     case 'facturacion':
