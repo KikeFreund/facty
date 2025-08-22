@@ -39,7 +39,7 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <?php include '../cliente/nav.php'; ?>
+
 
     <div class="container py-5">
         <div class="row">
@@ -293,6 +293,5 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
     }
     </script>
 
-    <?php include '../cliente/footer.php'; ?>
 </body>
 </html>
