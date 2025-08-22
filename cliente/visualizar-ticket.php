@@ -1,6 +1,6 @@
 <?php
 require_once('assets/php/conexiones/conexionMySqli.php');
-require_once('../funciones/buscar_contacto_frecuente.php');
+require_once('funciones/buscar_contacto_frecuente.php');
 
 $id_ticket = $_GET['id'] ?? null;
 if (!$id_ticket) die("Falta el ID.");
