@@ -502,7 +502,7 @@ $conn->close();
 
     // Función para cargar contactos frecuentes
     function cargarContactosFrecuentes() {
-        fetch('funciones/ajax_obtener_contactos_frecuentes.php')
+        fetch('../funciones/ajax_obtener_contactos_frecuentes.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.contactos) {
