@@ -11,8 +11,8 @@ if (!isset($_SESSION['id_usuario'])) {
 }
 
 // Usar rutas absolutas desde la raíz del proyecto
-require_once('../assets/php/conexiones/conexionMySqli.php');
-require_once('../funciones/buscar_contacto_frecuente.php');
+require_once('assets/php/conexiones/conexionMySqli.php');
+require_once('funciones/buscar_contacto_frecuente.php');
 
 $mensaje = '';
 $tipo_mensaje = '';
@@ -39,7 +39,7 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <?php include 'nav.php'; ?>
+    <?php include '../cliente/nav.php'; ?>
 
     <div class="container py-5">
         <div class="row">
@@ -293,6 +293,6 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
     }
     </script>
 
-    <?php include 'footer.php'; ?>
+    <?php include '../cliente/footer.php'; ?>
 </body>
 </html>
