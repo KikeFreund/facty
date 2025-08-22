@@ -1,5 +1,6 @@
 <?php
 require_once('assets/php/conexiones/conexionMySqli.php');
+require_once('../funciones/buscar_contacto_frecuente.php');
 
 $id_ticket = $_GET['id'] ?? null;
 if (!$id_ticket) die("Falta el ID.");
@@ -56,6 +57,7 @@ if (!$datos) {
 // Debug de datos obtenidos
 echo "<!-- Datos obtenidos: " . print_r($datos, true) . " -->";
 $constancia=$datos['constancia'];
+
 // URLs
 $archivoQR = "https://movilistica.com/archivos/qrs/qr_$id_ticket.png";
 $urlTicket = "https://factu.movilistica.com/visualizar-ticket?id=$id_ticket";
@@ -162,12 +164,48 @@ $conn->close();
                                 </button>
                             </div>
 
-                            <!-- Campo de teléfono -->
+                            <!-- Campo de teléfono con búsqueda de contactos frecuentes -->
                             <div class="col-12">
-                                <label for="telefono" class="form-label">Número de teléfono (con código de país)</label>
+                                <label for="telefono" class="form-label">
+                                    <i class="bi bi-telephone me-2"></i>Número de teléfono (con código de país)
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                    <input type="tel" class="form-control" id="telefono" placeholder="Ej. 5215555555555" style="border-radius: 0 10px 10px 0;">
+                                    <input type="tel" 
+                                           class="form-control" 
+                                           id="telefono" 
+                                           placeholder="Ej. 5215555555555" 
+                                           style="border-radius: 0 10px 10px 0;"
+                                           onblur="buscarContactoFrecuente(this.value)"
+                                           oninput="ocultarResultadoBusqueda()">
+                                    <button class="btn btn-outline-secondary" 
+                                            type="button"
+                                            onclick="buscarContactoFrecuente(document.getElementById('telefono').value)">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Ingresa el teléfono para buscar contactos frecuentes automáticamente
+                                </small>
+                            </div>
+
+                            <!-- Resultado de búsqueda de contacto frecuente -->
+                            <div id="resultadoBusqueda" class="col-12" style="display: none;">
+                                <div class="alert alert-success border-0" style="background: linear-gradient(135deg, #d4edda, #c3e6cb); border-radius: 10px;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-check-circle-fill me-2 text-success"></i>
+                                        <h6 class="mb-0">Contacto frecuente encontrado</h6>
+                                    </div>
+                                    <div id="datosContacto" class="mb-2"></div>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-sm btn-outline-success" onclick="usarDatosContacto()">
+                                            <i class="bi bi-check me-1"></i>Usar estos datos
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="ocultarResultadoBusqueda()">
+                                            <i class="bi bi-x me-1"></i>Ocultar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -234,7 +272,7 @@ $conn->close();
                                                 <p class="copiable form-control" onclick="copiarTexto(this)"><?= htmlspecialchars($datos['id']) ?></p>
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label">Fecha</label>
+                                                <label class="label">Fecha</label>
                                                 <p class="copiable form-control" onclick="copiarTexto(this)"><?= date('d/m/Y H:i', strtotime($datos['fecha'])) ?></p>
                                             </div>
                                             <div class="col-md-6">
@@ -386,6 +424,9 @@ $conn->close();
     </style>
 
     <script>
+    // Variable global para almacenar el contacto encontrado
+    let contactoEncontrado = null;
+
     function copiarTexto(elemento) {
         const texto = elemento.innerText;
         navigator.clipboard.writeText(texto).then(() => {
@@ -435,6 +476,110 @@ $conn->close();
         
         const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
         window.open(url, '_blank');
+    }
+
+    // Función para buscar contacto frecuente
+    function buscarContactoFrecuente(telefono) {
+        if (!telefono || telefono.length < 7) {
+            ocultarResultadoBusqueda();
+            return;
+        }
+        
+        // Mostrar indicador de carga
+        mostrarIndicadorCarga();
+        
+        // Hacer llamada AJAX al backend
+        fetch(`../funciones/ajax_buscar_contacto.php?telefono=${encodeURIComponent(telefono)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.contacto) {
+                    mostrarContactoEncontrado(data.contacto);
+                } else {
+                    ocultarResultadoBusqueda();
+                    // Si no se encontró, sugerir agregar como contacto frecuente
+                    if (telefono.length >= 10) {
+                        sugerirAgregarContacto(telefono);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                ocultarResultadoBusqueda();
+            });
+    }
+
+    // Función para mostrar el contacto encontrado
+    function mostrarContactoEncontrado(contacto) {
+        contactoEncontrado = contacto;
+        
+        document.getElementById('datosContacto').innerHTML = `
+            <div class="row g-2">
+                <div class="col-12">
+                    <strong class="text-success">${contacto.nombre_empresa}</strong>
+                </div>
+                <div class="col-6">
+                    <small class="text-muted">
+                        <i class="bi bi-telephone me-1"></i>${contacto.telefono}
+                    </small>
+                </div>
+                <div class="col-6">
+                    <small class="text-muted">
+                        <i class="bi bi-tag me-1"></i>${contacto.categoria || 'Sin categoría'}
+                    </small>
+                </div>
+                ${contacto.direccion ? `
+                <div class="col-12">
+                    <small class="text-muted">
+                        <i class="bi bi-geo-alt me-1"></i>${contacto.direccion}
+                    </small>
+                </div>
+                ` : ''}
+            </div>
+        `;
+        
+        document.getElementById('resultadoBusqueda').style.display = 'block';
+    }
+
+    // Función para ocultar el resultado de búsqueda
+    function ocultarResultadoBusqueda() {
+        contactoEncontrado = null;
+        document.getElementById('resultadoBusqueda').style.display = 'none';
+    }
+
+    // Función para usar los datos del contacto
+    function usarDatosContacto() {
+        if (!contactoEncontrado) return;
+        
+        // Aquí podrías implementar la lógica para usar los datos del contacto
+        // Por ejemplo, llenar automáticamente campos en un formulario
+        
+        // Mostrar mensaje de confirmación
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            <i class="bi bi-check-circle me-2"></i>
+            <strong>¡Perfecto!</strong> Los datos del contacto "${contactoEncontrado.nombre_empresa}" están listos para usar.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        // Insertar después del campo de teléfono
+        const telefonoField = document.getElementById('telefono').closest('.col-12');
+        telefonoField.parentNode.insertBefore(alertDiv, telefonoField.nextSibling);
+        
+        // Ocultar resultado de búsqueda
+        ocultarResultadoBusqueda();
+    }
+
+    // Función para mostrar indicador de carga
+    function mostrarIndicadorCarga() {
+        // Implementar si es necesario
+    }
+
+    // Función para sugerir agregar como contacto frecuente
+    function sugerirAgregarContacto(telefono) {
+        // Esta función se puede implementar para sugerir agregar el contacto
+        // cuando no se encuentra en la base de datos
+        console.log(`Sugerencia: Agregar ${telefono} como contacto frecuente`);
     }
     </script>
 

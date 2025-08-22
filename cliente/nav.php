@@ -37,6 +37,12 @@
                         <li><a class="dropdown-item" href="/editar-datos-fiscales"><i class="fas fa-edit me-1"></i>Editar Datos Fiscales</a></li>
                     </ul>
                 </li>
+                <!-- Contactos Frecuentes -->
+                <li class="nav-item">
+                    <a class="nav-link <?php echo ($uri === 'contactos-frecuentes') ? 'active' : ''; ?>" href="/contactos-frecuentes">
+                        <i class="fas fa-star me-1"></i>Contactos Frecuentes
+                    </a>
+                </li>
                 <!-- Dropdown Cuenta -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?php echo in_array($uri, ['informacion-personal', 'invitacion-amigo']) ? 'active' : ''; ?>" href="#" id="cuentaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
