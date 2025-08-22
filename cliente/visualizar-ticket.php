@@ -169,23 +169,35 @@ $conn->close();
                                 <label class="form-label fw-bold">
                                     <i class="bi bi-search me-2"></i>Buscar Contacto Frecuente
                                 </label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                    <input type="text" 
-                                           class="form-control" 
-                                           id="buscarContacto" 
-                                           placeholder="Buscar por nombre de empresa o categoría..."
-                                           style="border-radius: 0 10px 10px 0;"
-                                           oninput="buscarContactosPorTexto(this.value)">
-                                    <button class="btn btn-outline-secondary" 
-                                            type="button"
-                                            onclick="buscarContactosPorTexto(document.getElementById('buscarContacto').value)">
-                                        <i class="bi bi-search"></i>
-                                    </button>
+                                <div class="row g-2">
+                                    <!-- Select para categoría -->
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="categoriaBusqueda" onchange="buscarContactosPorCategoria()">
+                                            <option value="">Todas las categorías</option>
+                                            <option value="Restaurante">🍽️ Restaurante</option>
+                                            <option value="Farmacia">💊 Farmacia</option>
+                                            <option value="Supermercado">🛒 Supermercado</option>
+                                            <option value="Gasolinera">⛽ Gasolinera</option>
+                                            <option value="Servicios">🔧 Servicios</option>
+                                            <option value="Otros">📦 Otros</option>
+                                        </select>
+                                    </div>
+                                    <!-- Campo de texto para nombre -->
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   id="buscarContacto" 
+                                                   placeholder="Buscar por nombre..."
+                                                   style="border-radius: 0 10px 10px 0;"
+                                                   oninput="buscarContactosPorTexto(this.value)">
+                                        </div>
+                                    </div>
                                 </div>
                                 <small class="text-muted">
                                     <i class="bi bi-info-circle me-1"></i>
-                                    Busca contactos frecuentes para reutilizar datos automáticamente
+                                    Selecciona una categoría o escribe el nombre de la empresa
                                 </small>
                             </div>
 
@@ -498,11 +510,53 @@ $conn->close();
             return;
         }
         
+        const categoria = document.getElementById('categoriaBusqueda').value;
+        
         // Mostrar indicador de carga
         mostrarIndicadorCarga();
         
+        // Construir parámetros de búsqueda
+        const params = new URLSearchParams();
+        params.append('texto', texto);
+        if (categoria) {
+            params.append('categoria', categoria);
+        }
+        
         // Hacer llamada AJAX al backend
-        fetch(`../funciones/ajax_buscar_contacto.php?texto=${encodeURIComponent(texto)}`)
+        fetch(`../funciones/ajax_buscar_contacto.php?${params.toString()}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.contactos && data.contactos.length > 0) {
+                    mostrarContactosEncontrados(data.contactos);
+                } else {
+                    ocultarResultadoBusqueda();
+                    // Si no se encontró, sugerir agregar como contacto frecuente
+                    if (texto.length >= 3) {
+                        sugerirAgregarContacto(texto, categoria);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                ocultarResultadoBusqueda();
+            });
+    }
+
+    // Función para buscar contactos frecuentes por categoría
+    function buscarContactosPorCategoria() {
+        const categoria = document.getElementById('categoriaBusqueda').value;
+        const texto = document.getElementById('buscarContacto').value;
+
+        if (!texto || texto.length < 2) {
+            ocultarResultadoBusqueda();
+            return;
+        }
+
+        // Mostrar indicador de carga
+        mostrarIndicadorCarga();
+
+        // Hacer llamada AJAX al backend
+        fetch(`../funciones/ajax_buscar_contacto.php?categoria=${encodeURIComponent(categoria)}&texto=${encodeURIComponent(texto)}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.contactos && data.contactos.length > 0) {
@@ -595,11 +649,55 @@ $conn->close();
     }
 
     // Función para sugerir agregar como contacto frecuente
-    function sugerirAgregarContacto(texto) {
+    function sugerirAgregarContacto(texto, categoria) {
         // Esta función se puede implementar para sugerir agregar el contacto
         // cuando no se encuentra en la base de datos
-        console.log(`Sugerencia: Agregar "${texto}" como contacto frecuente`);
+        console.log(`Sugerencia: Agregar "${texto}" como contacto frecuente (Categoría: ${categoria})`);
     }
+
+    // Función para cargar categorías disponibles
+    function cargarCategoriasDisponibles() {
+        fetch('../funciones/ajax_buscar_contacto.php?action=categorias')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.categorias) {
+                    const select = document.getElementById('categoriaBusqueda');
+                    // Mantener la opción "Todas las categorías"
+                    const todasOption = select.options[0];
+                    select.innerHTML = '';
+                    select.appendChild(todasOption);
+                    
+                    // Agregar las categorías disponibles
+                    data.categorias.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.categoria;
+                        option.textContent = `${getEmojiCategoria(cat.categoria)} ${cat.categoria} (${cat.total})`;
+                        select.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar categorías:', error);
+            });
+    }
+
+    // Función para obtener emoji según categoría
+    function getEmojiCategoria(categoria) {
+        const emojis = {
+            'Restaurante': '🍽️',
+            'Farmacia': '💊',
+            'Supermercado': '🛒',
+            'Gasolinera': '⛽',
+            'Servicios': '🔧',
+            'Otros': '📦'
+        };
+        return emojis[categoria] || '📋';
+    }
+
+    // Cargar categorías al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarCategoriasDisponibles();
+    });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

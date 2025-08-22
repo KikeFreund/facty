@@ -282,6 +282,75 @@ function buscarContactosPorTexto($texto, $usuario_id = null) {
 }
 
 /**
+ * Función para buscar contactos por texto y/o categoría
+ */
+function buscarContactosPorTextoYCategoria($texto = null, $categoria = null, $usuario_id = null) {
+    global $conn;
+    
+    if (!$usuario_id && isset($_SESSION['id_usuario'])) {
+        $usuario_id = $_SESSION['id_usuario'];
+    }
+    
+    if (!$usuario_id) {
+        return [];
+    }
+    
+    // Construir la consulta SQL dinámicamente
+    $where_conditions = [];
+    $params = [];
+    $types = '';
+    
+    // Agregar condición de usuario
+    $where_conditions[] = "cf.estatus = 1";
+    
+    // Agregar condición de texto si se proporciona
+    if ($texto && strlen($texto) >= 2) {
+        $where_conditions[] = "cf.nombre_empresa LIKE ?";
+        $params[] = "%$texto%";
+        $types .= 's';
+    }
+    
+    // Agregar condición de categoría si se proporciona
+    if ($categoria && !empty($categoria)) {
+        $where_conditions[] = "cf.categoria = ?";
+        $params[] = $categoria;
+        $types .= 's';
+    }
+    
+    $query = "SELECT 
+                    cf.*,
+                    COUNT(hc.id) as total_usos_usuario
+                FROM contactosFrecuentes cf
+                LEFT JOIN historialContactos hc ON cf.id = hc.id_contacto 
+                    AND hc.id_usuario = ?
+                WHERE " . implode(' AND ', $where_conditions) . "
+                GROUP BY cf.id
+                ORDER BY cf.frecuencia_uso DESC, cf.ultimo_uso DESC
+                LIMIT 20";
+    
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        return [];
+    }
+    
+    // Agregar el usuario_id al inicio de los parámetros
+    array_unshift($params, $usuario_id);
+    $types = 'i' . $types;
+    
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $contactos = [];
+    while ($row = $result->fetch_assoc()) {
+        $contactos[] = $row;
+    }
+    
+    $stmt->close();
+    return $contactos;
+}
+
+/**
  * Función para obtener estadísticas de uso de contactos
  */
 function obtenerEstadisticasContactos($usuario_id = null) {
@@ -319,5 +388,42 @@ function obtenerEstadisticasContactos($usuario_id = null) {
     $stmt->close();
     
     return $stats;
+}
+
+/**
+ * Función para obtener todas las categorías disponibles
+ */
+function obtenerCategoriasDisponibles($usuario_id = null) {
+    global $conn;
+    
+    if (!$usuario_id && isset($_SESSION['id_usuario'])) {
+        $usuario_id = $_SESSION['id_usuario'];
+    }
+    
+    if (!$usuario_id) {
+        return [];
+    }
+    
+    $query = "SELECT DISTINCT categoria, COUNT(*) as total
+              FROM contactosFrecuentes 
+              WHERE estatus = 1 AND categoria IS NOT NULL AND categoria != ''
+              GROUP BY categoria
+              ORDER BY total DESC, categoria ASC";
+    
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        return [];
+    }
+    
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $categorias = [];
+    while ($row = $result->fetch_assoc()) {
+        $categorias[] = $row;
+    }
+    
+    $stmt->close();
+    return $categorias;
 }
 ?>

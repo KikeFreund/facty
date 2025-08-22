@@ -2,7 +2,7 @@
 /**
  * Endpoint AJAX para buscar contactos frecuentes
  * Retorna JSON con el resultado de la búsqueda
- * Soporta búsqueda por teléfono o por texto (nombre/categoría)
+ * Soporta búsqueda por teléfono, texto o categoría
  */
 
 header('Content-Type: application/json');
@@ -12,15 +12,38 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 require_once('buscar_contacto_frecuente.php');
 
-// Verificar si se recibió un teléfono o texto para buscar
+// Verificar si se recibió un teléfono, texto o categoría para buscar
 $telefono = $_GET['telefono'] ?? $_POST['telefono'] ?? null;
 $texto = $_GET['texto'] ?? $_POST['texto'] ?? null;
+$categoria = $_GET['categoria'] ?? $_POST['categoria'] ?? null;
+$action = $_GET['action'] ?? $_POST['action'] ?? null;
+
+// Si se solicita obtener categorías
+if ($action === 'categorias') {
+    try {
+        $categorias = obtenerCategoriasDisponibles();
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Categorías obtenidas',
+            'categorias' => $categorias,
+            'total' => count($categorias)
+        ]);
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error al obtener categorías: ' . $e->getMessage(),
+            'categorias' => []
+        ]);
+    }
+    exit;
+}
 
 // Si no se proporcionó ningún parámetro
-if (!$telefono && !$texto) {
+if (!$telefono && !$texto && !$categoria) {
     echo json_encode([
         'success' => false,
-        'message' => 'No se proporcionó teléfono ni texto para buscar',
+        'message' => 'No se proporcionó teléfono, texto ni categoría para buscar',
         'contacto' => null,
         'contactos' => []
     ]);
@@ -64,10 +87,10 @@ try {
         }
     }
     
-    // Búsqueda por texto
-    if ($texto) {
-        // Validar que el texto tenga al menos 2 caracteres
-        if (strlen($texto) < 2) {
+    // Búsqueda por texto y/o categoría
+    if ($texto || $categoria) {
+        // Validar que el texto tenga al menos 2 caracteres si se proporciona
+        if ($texto && strlen($texto) < 2) {
             echo json_encode([
                 'success' => false,
                 'message' => 'El texto de búsqueda debe tener al menos 2 caracteres',
@@ -77,8 +100,8 @@ try {
             exit;
         }
         
-        // Buscar contactos frecuentes por texto
-        $contactos = buscarContactosPorTexto($texto);
+        // Buscar contactos frecuentes por texto y/o categoría
+        $contactos = buscarContactosPorTextoYCategoria($texto, $categoria);
         
         if ($contactos && count($contactos) > 0) {
             echo json_encode([
@@ -86,7 +109,11 @@ try {
                 'message' => 'Contactos encontrados',
                 'contacto' => null,
                 'contactos' => $contactos,
-                'total' => count($contactos)
+                'total' => count($contactos),
+                'filtros' => [
+                    'texto' => $texto,
+                    'categoria' => $categoria
+                ]
             ]);
         } else {
             echo json_encode([
@@ -94,7 +121,11 @@ try {
                 'message' => 'No se encontraron contactos frecuentes',
                 'contacto' => null,
                 'contactos' => [],
-                'sugerencia' => 'Puedes agregar este contacto como frecuente'
+                'sugerencia' => 'Puedes agregar este contacto como frecuente',
+                'filtros' => [
+                    'texto' => $texto,
+                    'categoria' => $categoria
+                ]
             ]);
         }
     }
