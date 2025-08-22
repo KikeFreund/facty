@@ -1,7 +1,7 @@
 <?php
 /**
- * Ejemplo de integración de contactos frecuentes en la generación de tickets
- * Este archivo muestra cómo usar la funcionalidad de contactos frecuentes
+ * Ejemplo de integración de contactos frecuentes simplificados en la generación de tickets
+ * Este archivo muestra cómo usar la funcionalidad de contactos frecuentes con estructura simplificada
  */
 
 require_once('../funciones/buscar_contacto_frecuente.php');
@@ -19,38 +19,26 @@ function generarTicketConContactoFrecuente($datos_ticket) {
     $datos_finales = [];
     
     if ($contacto_encontrado) {
-        // Usar datos del contacto frecuente
+        // Usar datos del contacto frecuente (estructura simplificada)
         $datos_finales = [
             'nombre_empresa' => $contacto_encontrado['nombre_empresa'],
             'telefono' => $contacto_encontrado['telefono'],
-            'rfc' => $contacto_encontrado['rfc'],
-            'razon_social' => $contacto_encontrado['razon_social'],
-            'direccion' => $contacto_encontrado['direccion'],
-            'colonia' => $contacto_encontrado['colonia'],
-            'municipio' => $contacto_encontrado['municipio'],
-            'estado' => $contacto_encontrado['estado'],
-            'codigo_postal' => $contacto_encontrado['codigo_postal'],
             'categoria' => $contacto_encontrado['categoria'],
+            'notas' => $contacto_encontrado['notas'],
             'fuente_datos' => 'contacto_frecuente',
             'id_contacto' => $contacto_encontrado['id']
         ];
         
         // Agregar nota sobre el origen de los datos
-        $datos_finales['nota'] = "Datos obtenidos de contacto frecuente: {$contacto_encontrado['nombre_empresa']}";
+        $datos_finales['nota_origen'] = "Datos obtenidos de contacto frecuente: {$contacto_encontrado['nombre_empresa']}";
         
     } else {
         // Usar datos proporcionados por el cliente
         $datos_finales = [
             'nombre_empresa' => $datos_ticket['nombre_empresa'] ?? 'No especificado',
             'telefono' => $datos_ticket['telefono_empresa'] ?? '',
-            'rfc' => $datos_ticket['rfc'] ?? '',
-            'razon_social' => $datos_ticket['razon_social'] ?? '',
-            'direccion' => $datos_ticket['direccion'] ?? '',
-            'colonia' => $datos_ticket['colonia'] ?? '',
-            'municipio' => $datos_ticket['municipio'] ?? '',
-            'estado' => $datos_ticket['estado'] ?? '',
-            'codigo_postal' => $datos_ticket['codigo_postal'] ?? '',
             'categoria' => $datos_ticket['categoria'] ?? 'General',
+            'notas' => $datos_ticket['notas'] ?? '',
             'fuente_datos' => 'cliente',
             'id_contacto' => null
         ];
@@ -77,7 +65,7 @@ function mostrarFormularioTicket() {
     <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Generar Ticket - Con Contactos Frecuentes</title>
+        <title>Generar Ticket - Con Contactos Frecuentes Simplificados</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body class="bg-light">
@@ -218,7 +206,7 @@ function mostrarFormularioTicket() {
                 });
         }
         
-        // Función para mostrar el contacto encontrado
+        // Función para mostrar el contacto encontrado (estructura simplificada)
         function mostrarContactoEncontrado(contacto) {
             contactoEncontrado = contacto;
             
@@ -226,7 +214,7 @@ function mostrarFormularioTicket() {
                 <strong>${contacto.nombre_empresa}</strong><br>
                 <small class="text-muted">
                     ${contacto.telefono} • ${contacto.categoria || 'Sin categoría'}<br>
-                    ${contacto.direccion || 'Sin dirección'}
+                    ${contacto.notas ? `📝 ${contacto.notas}` : ''}
                 </small>
             `;
             

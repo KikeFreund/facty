@@ -1,20 +1,12 @@
--- Script para crear tabla de contactos frecuentes
--- Esta tabla almacenará información de empresas/comercios frecuentes
+-- Script para crear tabla de contactos frecuentes simplificada
+-- Esta tabla almacenará información básica de empresas/comercios frecuentes
 -- para reutilizar automáticamente cuando se genere un ticket
 
--- Crear tabla de contactos frecuentes
+-- Crear tabla de contactos frecuentes simplificada
 CREATE TABLE `contactosFrecuentes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_empresa` varchar(100) NOT NULL COMMENT 'Nombre de la empresa o comercio',
   `telefono` varchar(20) NOT NULL COMMENT 'Número de teléfono principal',
-  `telefono_alternativo` varchar(20) DEFAULT NULL COMMENT 'Número alternativo si existe',
-  `rfc` varchar(20) DEFAULT NULL COMMENT 'RFC de la empresa si está disponible',
-  `razon_social` varchar(150) DEFAULT NULL COMMENT 'Razón social completa',
-  `direccion` text DEFAULT NULL COMMENT 'Dirección completa',
-  `colonia` varchar(100) DEFAULT NULL,
-  `municipio` varchar(100) DEFAULT NULL,
-  `estado` varchar(100) DEFAULT NULL,
-  `codigo_postal` varchar(10) DEFAULT NULL,
   `categoria` varchar(50) DEFAULT NULL COMMENT 'Categoría del negocio (restaurante, tienda, etc.)',
   `notas` text DEFAULT NULL COMMENT 'Notas adicionales sobre el contacto',
   `frecuencia_uso` int(11) DEFAULT 0 COMMENT 'Contador de veces usado',
@@ -50,10 +42,10 @@ CREATE TABLE `historialContactos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Insertar algunos contactos de ejemplo
-INSERT INTO `contactosFrecuentes` (`nombre_empresa`, `telefono`, `rfc`, `razon_social`, `direccion`, `colonia`, `municipio`, `estado`, `codigo_postal`, `categoria`) VALUES
-('Restaurante El Buen Sabor', '5551234567', 'RBS001010ABC', 'Restaurante El Buen Sabor S.A. de C.V.', 'Av. Principal 123', 'Centro', 'Cuauhtémoc', 'Chihuahua', '31000', 'Restaurante'),
-('Farmacia San José', '5559876543', 'FSJ002020DEF', 'Farmacia San José S.A. de C.V.', 'Calle Secundaria 456', 'San José', 'Chihuahua', 'Chihuahua', '31000', 'Farmacia'),
-('Supermercado Central', '5555555555', 'SMC003030GHI', 'Supermercado Central S.A. de C.V.', 'Blvd. Comercial 789', 'Zona Comercial', 'Chihuahua', 'Chihuahua', '31000', 'Supermercado');
+INSERT INTO `contactosFrecuentes` (`nombre_empresa`, `telefono`, `categoria`, `notas`) VALUES
+('Restaurante El Buen Sabor', '5551234567', 'Restaurante', 'Comida mexicana, horario 8:00-22:00'),
+('Farmacia San José', '5559876543', 'Farmacia', 'Atención 24 horas, entrega a domicilio'),
+('Supermercado Central', '5555555555', 'Supermercado', 'Productos frescos, estacionamiento gratuito');
 
 -- Crear función para buscar contacto por teléfono
 DELIMITER //
@@ -64,10 +56,10 @@ DETERMINISTIC
 BEGIN
     DECLARE contacto_id INT DEFAULT NULL;
     
-    -- Buscar por teléfono principal o alternativo
+    -- Buscar por teléfono principal
     SELECT id INTO contacto_id 
     FROM contactosFrecuentes 
-    WHERE (telefono = telefono_buscar OR telefono_alternativo = telefono_buscar)
+    WHERE telefono = telefono_buscar
     AND estatus = 1
     LIMIT 1;
     
@@ -90,13 +82,6 @@ BEGIN
     SELECT 
         nombre_empresa,
         telefono,
-        rfc,
-        razon_social,
-        direccion,
-        colonia,
-        municipio,
-        estado,
-        codigo_postal,
         categoria,
         notas
     FROM contactosFrecuentes 
@@ -114,13 +99,14 @@ BEGIN
 END //
 DELIMITER ;
 
--- Comentarios sobre la funcionalidad:
+-- Comentarios sobre la funcionalidad simplificada:
 -- 
--- 1. TABLA contactosFrecuentes:
---    - Almacena información de empresas/comercios frecuentes
+-- 1. TABLA contactosFrecuentes (SIMPLIFICADA):
+--    - Solo campos esenciales: nombre, teléfono, categoría, notas
 --    - Campo único en teléfono para evitar duplicados
 --    - Contador de frecuencia de uso
 --    - Categorización para mejor organización
+--    - Notas para información adicional personalizada
 --
 -- 2. TABLA historialContactos:
 --    - Registra cada vez que se usa un contacto
@@ -133,12 +119,12 @@ DELIMITER ;
 --    - Retorna ID del contacto encontrado
 --
 -- 4. PROCEDIMIENTO obtenerDatosContacto:
---    - Obtiene todos los datos del contacto
+--    - Obtiene solo los datos básicos del contacto
 --    - Solo retorna contactos activos
---    - Formato consistente para usar en tickets
+--    - Formato simple para usar en tickets
 --
 -- USO EN LA APLICACIÓN:
 -- 1. Al generar ticket, buscar por teléfono
--- 2. Si se encuentra, usar datos del contacto
--- 3. Si no se encuentra, usar datos del cliente
--- 4. Opción para agregar nuevo contacto frecuente
+-- 2. Si se encuentra, mostrar nombre, categoría y notas
+-- 3. Si no se encuentra, sugerir agregar nuevo contacto
+-- 4. Opción para agregar contacto con datos mínimos

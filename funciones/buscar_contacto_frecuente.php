@@ -22,17 +22,10 @@ function buscarContactoFrecuente($telefono) {
                     id,
                     nombre_empresa,
                     telefono,
-                    rfc,
-                    razon_social,
-                    direccion,
-                    colonia,
-                    municipio,
-                    estado,
-                    codigo_postal,
                     categoria,
                     notas
                 FROM contactosFrecuentes 
-                WHERE (telefono = ? OR telefono_alternativo = ?)
+                WHERE telefono = ?
                 AND estatus = 1
                 LIMIT 1";
     
@@ -41,7 +34,7 @@ function buscarContactoFrecuente($telefono) {
         return null;
     }
     
-    $stmt->bind_param("ss", $telefono, $telefono);
+    $stmt->bind_param("s", $telefono);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -202,27 +195,17 @@ function agregarContactoFrecuente($datos) {
     
     // Insertar nuevo contacto
     $query = "INSERT INTO contactosFrecuentes 
-              (nombre_empresa, telefono, telefono_alternativo, rfc, razon_social, 
-               direccion, colonia, municipio, estado, codigo_postal, categoria, 
-               notas, creado_por) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              (nombre_empresa, telefono, categoria, notas, creado_por) 
+              VALUES (?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($query);
     if (!$stmt) {
         return ['success' => false, 'message' => 'Error al preparar la consulta'];
     }
     
-    $stmt->bind_param("ssssssssssssi", 
+    $stmt->bind_param("ssssi", 
         $datos['nombre_empresa'],
         $telefono,
-        $datos['telefono_alternativo'] ?? null,
-        $datos['rfc'] ?? null,
-        $datos['razon_social'] ?? null,
-        $datos['direccion'] ?? null,
-        $datos['colonia'] ?? null,
-        $datos['municipio'] ?? null,
-        $datos['estado'] ?? null,
-        $datos['codigo_postal'] ?? null,
         $datos['categoria'] ?? null,
         $datos['notas'] ?? null,
         $_SESSION['id_usuario']
@@ -263,8 +246,7 @@ function buscarContactosPorTexto($texto, $usuario_id = null) {
                     AND hc.id_usuario = ?
                 WHERE cf.estatus = 1 
                 AND (cf.nombre_empresa LIKE ? 
-                     OR cf.categoria LIKE ? 
-                     OR cf.razon_social LIKE ?)
+                     OR cf.categoria LIKE ?)
                 GROUP BY cf.id
                 ORDER BY cf.frecuencia_uso DESC, cf.ultimo_uso DESC
                 LIMIT 10";
@@ -274,7 +256,7 @@ function buscarContactosPorTexto($texto, $usuario_id = null) {
         return [];
     }
     
-    $stmt->bind_param("isss", $usuario_id, $texto, $texto, $texto);
+    $stmt->bind_param("iss", $usuario_id, $texto, $texto);
     $stmt->execute();
     $result = $stmt->get_result();
     

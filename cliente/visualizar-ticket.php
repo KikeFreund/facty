@@ -527,10 +527,10 @@ $conn->close();
                         <i class="bi bi-tag me-1"></i>${contacto.categoria || 'Sin categoría'}
                     </small>
                 </div>
-                ${contacto.direccion ? `
+                ${contacto.notas ? `
                 <div class="col-12">
                     <small class="text-muted">
-                        <i class="bi bi-geo-alt me-1"></i>${contacto.direccion}
+                        <i class="bi bi-sticky me-1"></i>${contacto.notas}
                     </small>
                 </div>
                 ` : ''}

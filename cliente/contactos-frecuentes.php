@@ -167,10 +167,10 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
                                         </div>
                                         <?php endif; ?>
                                         
-                                        <?php if ($contacto['direccion']): ?>
+                                        <?php if ($contacto['notas']): ?>
                                         <div class="mb-2">
                                             <small class="text-muted">
-                                                <i class="bi bi-geo-alt me-1"></i><?= htmlspecialchars($contacto['direccion']) ?>
+                                                <i class="bi bi-sticky me-1"></i><?= htmlspecialchars($contacto['notas']) ?>
                                             </small>
                                         </div>
                                         <?php endif; ?>
@@ -202,7 +202,7 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
 
     <!-- Modal para agregar contacto -->
     <div class="modal fade" id="modalAgregarContacto" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
@@ -215,63 +215,32 @@ $estadisticas = obtenerEstadisticasContactos($_SESSION['id_usuario']);
                     <div class="modal-body">
                         <input type="hidden" name="action" value="agregar">
                         
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="nombre_empresa" class="form-label">Nombre de la empresa *</label>
-                                <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="telefono" class="form-label">Teléfono *</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="telefono_alternativo" class="form-label">Teléfono alternativo</label>
-                                <input type="tel" class="form-control" id="telefono_alternativo" name="telefono_alternativo">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="categoria" class="form-label">Categoría</label>
-                                <select class="form-select" id="categoria" name="categoria">
-                                    <option value="">Seleccionar...</option>
-                                    <option value="Restaurante">Restaurante</option>
-                                    <option value="Farmacia">Farmacia</option>
-                                    <option value="Supermercado">Supermercado</option>
-                                    <option value="Gasolinera">Gasolinera</option>
-                                    <option value="Servicios">Servicios</option>
-                                    <option value="Otros">Otros</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="rfc" class="form-label">RFC</label>
-                                <input type="text" class="form-control" id="rfc" name="rfc" placeholder="Ej. ABC123456789">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="razon_social" class="form-label">Razón Social</label>
-                                <input type="text" class="form-control" id="razon_social" name="razon_social">
-                            </div>
-                            <div class="col-12">
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="colonia" class="form-label">Colonia</label>
-                                <input type="text" class="form-control" id="colonia" name="colonia">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="municipio" class="form-label">Municipio</label>
-                                <input type="text" class="form-control" id="municipio" name="municipio">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="estado" class="form-label">Estado</label>
-                                <input type="text" class="form-control" id="estado" name="estado">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="codigo_postal" class="form-label">Código Postal</label>
-                                <input type="text" class="form-control" id="codigo_postal" name="codigo_postal">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="notas" class="form-label">Notas</label>
-                                <input type="text" class="form-control" id="notas" name="notas" placeholder="Información adicional">
-                            </div>
+                        <div class="mb-3">
+                            <label for="nombre_empresa" class="form-label">Nombre de la empresa *</label>
+                            <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono *</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label">Categoría</label>
+                            <select class="form-select" id="categoria" name="categoria">
+                                <option value="">Seleccionar...</option>
+                                <option value="Restaurante">Restaurante</option>
+                                <option value="Farmacia">Farmacia</option>
+                                <option value="Supermercado">Supermercado</option>
+                                <option value="Gasolinera">Gasolinera</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notas" class="form-label">Notas</label>
+                            <textarea class="form-control" id="notas" name="notas" rows="3" placeholder="Información adicional sobre el contacto..."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
