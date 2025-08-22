@@ -167,49 +167,15 @@ $conn->close();
                             <!-- Buscador de Contactos Frecuentes -->
                             <div class="col-12">
                                 <label class="form-label fw-bold">
-                                    <i class="bi bi-search me-2"></i>Buscar Contacto Frecuente
+                                    <i class="bi bi-people me-2"></i>Seleccionar Contacto Frecuente
                                 </label>
-                                <div class="row g-2">
-                                    <!-- Select para categoría -->
-                                    <div class="col-md-6">
-                                        <select class="form-select" id="categoriaBusqueda" onchange="buscarContactosPorCategoria()">
-                                            <option value="">Todas las categorías</option>
-                                            <option value="Restaurante">🍽️ Restaurante</option>
-                                            <option value="Farmacia">💊 Farmacia</option>
-                                            <option value="Supermercado">🛒 Supermercado</option>
-                                            <option value="Gasolinera">⛽ Gasolinera</option>
-                                            <option value="Servicios">🔧 Servicios</option>
-                                            <option value="Otros">📦 Otros</option>
-                                        </select>
-                                    </div>
-                                    <!-- Campo de texto para nombre -->
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                            <input type="text" 
-                                                   class="form-control" 
-                                                   id="buscarContacto" 
-                                                   placeholder="Buscar por nombre..."
-                                                   style="border-radius: 0 10px 10px 0;"
-                                                   oninput="buscarContactosPorTexto(this.value)">
-                                        </div>
-                                    </div>
-                                </div>
+                                <select class="form-select" id="contactoFrecuente" onchange="seleccionarContactoFrecuente()">
+                                    <option value="">Selecciona un contacto frecuente...</option>
+                                </select>
                                 <small class="text-muted">
                                     <i class="bi bi-info-circle me-1"></i>
-                                    Selecciona una categoría o escribe el nombre de la empresa
+                                    Al seleccionar un contacto, se llenará automáticamente el campo de teléfono
                                 </small>
-                            </div>
-
-                            <!-- Resultado de búsqueda de contactos frecuentes -->
-                            <div id="resultadoBusqueda" class="col-12" style="display: none;">
-                                <div class="alert alert-info border-0" style="background: linear-gradient(135deg, #d1ecf1, #bee5eb); border-radius: 10px;">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <i class="bi bi-info-circle-fill me-2 text-info"></i>
-                                        <h6 class="mb-0">Contactos Frecuentes Encontrados</h6>
-                                    </div>
-                                    <div id="listaContactos" class="mb-2"></div>
-                                </div>
                             </div>
 
                             <!-- Campo de teléfono (solo para mostrar) -->
@@ -503,200 +469,67 @@ $conn->close();
         window.open(url, '_blank');
     }
 
-    // Función para buscar contactos frecuentes por texto
-    function buscarContactosPorTexto(texto) {
-        if (!texto || texto.length < 2) {
-            ocultarResultadoBusqueda();
-            return;
-        }
-        
-        const categoria = document.getElementById('categoriaBusqueda').value;
-        
-        // Mostrar indicador de carga
-        mostrarIndicadorCarga();
-        
-        // Construir parámetros de búsqueda
-        const params = new URLSearchParams();
-        params.append('texto', texto);
-        if (categoria) {
-            params.append('categoria', categoria);
-        }
-        
-        // Hacer llamada AJAX al backend
-        fetch(`../funciones/ajax_buscar_contacto.php?${params.toString()}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.contactos && data.contactos.length > 0) {
-                    mostrarContactosEncontrados(data.contactos);
-                } else {
-                    ocultarResultadoBusqueda();
-                    // Si no se encontró, sugerir agregar como contacto frecuente
-                    if (texto.length >= 3) {
-                        sugerirAgregarContacto(texto, categoria);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                ocultarResultadoBusqueda();
-            });
-    }
+    // Función para seleccionar un contacto frecuente
+    function seleccionarContactoFrecuente() {
+        const select = document.getElementById('contactoFrecuente');
+        const contactoSeleccionado = select.value;
 
-    // Función para buscar contactos frecuentes por categoría
-    function buscarContactosPorCategoria() {
-        const categoria = document.getElementById('categoriaBusqueda').value;
-        const texto = document.getElementById('buscarContacto').value;
+        if (contactoSeleccionado) {
+            // Obtener el texto completo de la opción seleccionada
+            const option = select.options[select.selectedIndex];
+            const nombreContacto = option.textContent.split(' (')[0]; // Extraer solo el nombre
+            
+            document.getElementById('telefono').value = contactoSeleccionado;
+            document.getElementById('telefono').readOnly = true; // Deshabilitar para edición
 
-        if (!texto || texto.length < 2) {
-            ocultarResultadoBusqueda();
-            return;
-        }
-
-        // Mostrar indicador de carga
-        mostrarIndicadorCarga();
-
-        // Hacer llamada AJAX al backend
-        fetch(`../funciones/ajax_buscar_contacto.php?categoria=${encodeURIComponent(categoria)}&texto=${encodeURIComponent(texto)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.contactos && data.contactos.length > 0) {
-                    mostrarContactosEncontrados(data.contactos);
-                } else {
-                    ocultarResultadoBusqueda();
-                    // Si no se encontró, sugerir agregar como contacto frecuente
-                    if (texto.length >= 3) {
-                        sugerirAgregarContacto(texto);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                ocultarResultadoBusqueda();
-            });
-    }
-
-    // Función para mostrar múltiples contactos encontrados
-    function mostrarContactosEncontrados(contactos) {
-        let html = '<div class="row g-2">';
-        
-        contactos.forEach(contacto => {
-            html += `
-                <div class="col-12">
-                    <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px;">
-                        <div class="card-body p-3">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <h6 class="mb-1 text-primary">${contacto.nombre_empresa}</h6>
-                                    <small class="text-muted">
-                                        <i class="bi bi-telephone me-1"></i>${contacto.telefono}
-                                        ${contacto.categoria ? ` • <i class="bi bi-tag me-1"></i>${contacto.categoria}` : ''}
-                                    </small>
-                                </div>
-                                <button class="btn btn-sm btn-success" onclick="seleccionarContacto(${JSON.stringify(contacto).replace(/"/g, '&quot;')})">
-                                    <i class="bi bi-check me-1"></i>Usar
-                                </button>
-                            </div>
-                            ${contacto.notas ? `
-                                <small class="text-muted">
-                                    <i class="bi bi-sticky me-1"></i>${contacto.notas}
-                                </small>
-                            ` : ''}
-                        </div>
-                    </div>
-                </div>
+            // Mostrar mensaje de confirmación
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show';
+            alertDiv.innerHTML = `
+                <i class="bi bi-check-circle me-2"></i>
+                <strong>¡Perfecto!</strong> Se ha seleccionado el contacto "${nombreContacto}" con teléfono ${contactoSeleccionado}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
-        });
-        
-        html += '</div>';
-        
-        document.getElementById('listaContactos').innerHTML = html;
-        document.getElementById('resultadoBusqueda').style.display = 'block';
+            
+            // Insertar después del campo de teléfono
+            const telefonoField = document.getElementById('telefono').closest('.col-12');
+            telefonoField.parentNode.insertBefore(alertDiv, telefonoField.nextSibling);
+        } else {
+            document.getElementById('telefono').value = '';
+            document.getElementById('telefono').readOnly = false; // Habilitar para edición
+        }
     }
 
-    // Función para seleccionar un contacto
-    function seleccionarContacto(contacto) {
-        // Llenar el campo de teléfono
-        document.getElementById('telefono').value = contacto.telefono;
-        
-        // Mostrar mensaje de confirmación
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'alert alert-success alert-dismissible fade show';
-        alertDiv.innerHTML = `
-            <i class="bi bi-check-circle me-2"></i>
-            <strong>¡Perfecto!</strong> Se ha seleccionado el contacto "${contacto.nombre_empresa}" con teléfono ${contacto.telefono}.
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        `;
-        
-        // Insertar después del campo de teléfono
-        const telefonoField = document.getElementById('telefono').closest('.col-12');
-        telefonoField.parentNode.insertBefore(alertDiv, telefonoField.nextSibling);
-        
-        // Ocultar resultado de búsqueda
-        ocultarResultadoBusqueda();
-        
-        // Limpiar campo de búsqueda
-        document.getElementById('buscarContacto').value = '';
-    }
-
-    // Función para ocultar el resultado de búsqueda
-    function ocultarResultadoBusqueda() {
-        document.getElementById('resultadoBusqueda').style.display = 'none';
-    }
-
-    // Función para mostrar indicador de carga
-    function mostrarIndicadorCarga() {
-        // Implementar si es necesario
-    }
-
-    // Función para sugerir agregar como contacto frecuente
-    function sugerirAgregarContacto(texto, categoria) {
-        // Esta función se puede implementar para sugerir agregar el contacto
-        // cuando no se encuentra en la base de datos
-        console.log(`Sugerencia: Agregar "${texto}" como contacto frecuente (Categoría: ${categoria})`);
-    }
-
-    // Función para cargar categorías disponibles
-    function cargarCategoriasDisponibles() {
-        fetch('../funciones/ajax_buscar_contacto.php?action=categorias')
+    // Función para cargar contactos frecuentes
+    function cargarContactosFrecuentes() {
+        fetch('../funciones/ajax_obtener_contactos_frecuentes.php')
             .then(response => response.json())
             .then(data => {
-                if (data.success && data.categorias) {
-                    const select = document.getElementById('categoriaBusqueda');
-                    // Mantener la opción "Todas las categorías"
-                    const todasOption = select.options[0];
-                    select.innerHTML = '';
-                    select.appendChild(todasOption);
+                if (data.success && data.contactos) {
+                    const select = document.getElementById('contactoFrecuente');
+                    select.innerHTML = '<option value="">Selecciona un contacto frecuente...</option>';
                     
-                    // Agregar las categorías disponibles
-                    data.categorias.forEach(cat => {
+                    data.contactos.forEach(contacto => {
                         const option = document.createElement('option');
-                        option.value = cat.categoria;
-                        option.textContent = `${getEmojiCategoria(cat.categoria)} ${cat.categoria} (${cat.total})`;
+                        option.value = contacto.telefono;
+                        option.textContent = `${contacto.nombre_empresa} (${contacto.telefono})`;
                         select.appendChild(option);
                     });
+                } else {
+                    const select = document.getElementById('contactoFrecuente');
+                    select.innerHTML = '<option value="">No hay contactos frecuentes disponibles.</option>';
                 }
             })
             .catch(error => {
-                console.error('Error al cargar categorías:', error);
+                console.error('Error al cargar contactos frecuentes:', error);
+                const select = document.getElementById('contactoFrecuente');
+                select.innerHTML = '<option value="">Error al cargar contactos.</option>';
             });
     }
 
-    // Función para obtener emoji según categoría
-    function getEmojiCategoria(categoria) {
-        const emojis = {
-            'Restaurante': '🍽️',
-            'Farmacia': '💊',
-            'Supermercado': '🛒',
-            'Gasolinera': '⛽',
-            'Servicios': '🔧',
-            'Otros': '📦'
-        };
-        return emojis[categoria] || '📋';
-    }
-
-    // Cargar categorías al cargar la página
+    // Cargar contactos al cargar la página
     document.addEventListener('DOMContentLoaded', function() {
-        cargarCategoriasDisponibles();
+        cargarContactosFrecuentes();
     });
     </script>
 

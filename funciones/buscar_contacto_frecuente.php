@@ -282,6 +282,54 @@ function buscarContactosPorTexto($texto, $usuario_id = null) {
 }
 
 /**
+ * Función para obtener todos los contactos frecuentes del usuario
+ */
+function obtenerTodosLosContactosFrecuentes($usuario_id = null) {
+    global $conn;
+    
+    if (!$usuario_id && isset($_SESSION['id_usuario'])) {
+        $usuario_id = $_SESSION['id_usuario'];
+    }
+    
+    if (!$usuario_id) {
+        return [];
+    }
+    
+    $query = "SELECT 
+                    cf.id,
+                    cf.nombre_empresa,
+                    cf.telefono,
+                    cf.categoria,
+                    cf.notas,
+                    cf.frecuencia_uso,
+                    cf.ultimo_uso,
+                    COUNT(hc.id) as total_usos_usuario
+                FROM contactosFrecuentes cf
+                LEFT JOIN historialContactos hc ON cf.id = hc.id_contacto 
+                    AND hc.id_usuario = ?
+                WHERE cf.estatus = 1
+                GROUP BY cf.id
+                ORDER BY cf.frecuencia_uso DESC, cf.ultimo_uso DESC, cf.nombre_empresa ASC";
+    
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        return [];
+    }
+    
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $contactos = [];
+    while ($row = $result->fetch_assoc()) {
+        $contactos[] = $row;
+    }
+    
+    $stmt->close();
+    return $contactos;
+}
+
+/**
  * Función para buscar contactos por texto y/o categoría
  */
 function buscarContactosPorTextoYCategoria($texto = null, $categoria = null, $usuario_id = null) {
