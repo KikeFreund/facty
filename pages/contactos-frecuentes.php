@@ -8,7 +8,8 @@
  <?php
  
 // Incluir el archivo de contactos frecuentes del cliente
-require($ruta."/cliente/contactos-frecuentes.php");
+// La variable $ruta ya contiene el tipo de usuario (cliente, empresa, etc.)
+require($ruta."/contactos-frecuentes.php");
 
  ?>
 

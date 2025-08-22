@@ -10,8 +10,9 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-require_once('assets/php/conexiones/conexionMySqli.php');
-require_once('funciones/buscar_contacto_frecuente.php');
+// Usar rutas absolutas desde la raíz del proyecto
+require_once('../assets/php/conexiones/conexionMySqli.php');
+require_once('../funciones/buscar_contacto_frecuente.php');
 
 $mensaje = '';
 $tipo_mensaje = '';
