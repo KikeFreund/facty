@@ -7,11 +7,10 @@
 
  <?php
  
-
-require($ruta."/contactos-frecuentes.php");
+// Incluir el archivo de contactos frecuentes del cliente
+require($ruta."/cliente/contactos-frecuentes.php");
 
  ?>
-
 
   
 </body>

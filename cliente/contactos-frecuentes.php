@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Verificar si la sesión ya está iniciada para evitar duplicación
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['id_usuario'])) {

@@ -5,6 +5,11 @@
  * Si no se encuentra, retorna null
  */
 
+// Verificar si la sesión está iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once('assets/php/conexiones/conexionMySqli.php');
 
 function buscarContactoFrecuente($telefono) {
@@ -111,7 +116,8 @@ function registrarUsoContacto($contacto_id, $datos_usados) {
     $stmt = $conn->prepare($query);
     if ($stmt) {
         $datos_json = json_encode($datos_usados);
-        $stmt->bind_param("iis", $contacto_id, $_SESSION['id_usuario'], $datos_json);
+        $usuario_id = $_SESSION['id_usuario'];
+        $stmt->bind_param("iis", $contacto_id, $usuario_id, $datos_json);
         $stmt->execute();
         $stmt->close();
     }
@@ -203,12 +209,18 @@ function agregarContactoFrecuente($datos) {
         return ['success' => false, 'message' => 'Error al preparar la consulta'];
     }
     
+    // Crear variables locales para evitar problemas de referencia
+    $nombre_empresa = $datos['nombre_empresa'];
+    $categoria = $datos['categoria'] ?? null;
+    $notas = $datos['notas'] ?? null;
+    $usuario_id = $_SESSION['id_usuario'];
+    
     $stmt->bind_param("ssssi", 
-        $datos['nombre_empresa'],
+        $nombre_empresa,
         $telefono,
-        $datos['categoria'] ?? null,
-        $datos['notas'] ?? null,
-        $_SESSION['id_usuario']
+        $categoria,
+        $notas,
+        $usuario_id
     );
     
     if ($stmt->execute()) {
