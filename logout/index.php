@@ -265,16 +265,7 @@
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="header">
-        <div class="logo">
-            <i class="fas fa-file-invoice"></i>
-            FactyFlow
-        </div>
-        <button class="menu-btn">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
+ 
 
     <!-- Top Actions -->
     <div class="top-actions">
@@ -346,9 +337,7 @@
 
     <!-- Illustration -->
     <div class="illustration-section">
-        <div class="illustration-img">
-            <i class="fas fa-desktop"></i>
-        </div>
+        <img src="assets/img/papeles.jpg" class="illustration-img" alt="Facturación electrónica">
     </div>
 
     <!-- Search Section -->
