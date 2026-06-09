@@ -1,6 +1,6 @@
 <?php
 echo "Hola";
-exit;
+
 // index.php
 require('header.php');
 require('verificacion.php');
